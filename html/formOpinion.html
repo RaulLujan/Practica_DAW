@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    
+    <head>
+        <meta charset="utf-8">
+        <title> Formulario de Opiniones </title>    
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/custom.css">
+    </head>
+
+    <body class="daweb"> 
+        <header class="bg-dark text-white d-flex justify-content-center py-3">
+            <ul class="nav nav-pills">
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Opinión</a></li>
+            <li class="nav-item"><a href="#" class="nav-link text-white">Volver</a></li>
+            </ul>
+        </header>
+        <div class="container">
+            <main class="shadow border mt-4 p-4">
+                <h1>Opinión:</h1>
+                <form>
+                    <div class="mb-2">
+                        <label for="nombre" class="form-label">Nombre del restaurante:</label>
+                        <input type="text" id="nombre" class="form-control" name="nombre" placeholder="Nombre del restaurante" required />
+                    </div>
+                    <select class="form-select mb-2" aria-label="Elige tu valoración entre 1 y 5">
+                        <option disabled selected>Elige tu valoración entre 1 y 5</option>
+                        <option value="1">
+                            <!-- Estrellas -->
+                            <!-- Estrellas doradas -->
+                            &#9733;
+                            <!-- Estrellas sin marcar -->
+                            &#x2606;
+                            &#x2606;
+                            &#x2606;
+                            &#x2606;
+                            <!-- Fin estrellas -->
+                            Uno
+                        </option>
+                        <option value="2">
+                            <!-- Estrellas -->
+                            <!-- Estrellas doradas -->
+                            &#9733;
+                            &#9733;
+                            <!-- Estrellas sin marcar -->
+                            &#x2606;
+                            &#x2606;
+                            &#x2606;
+                            <!-- Fin estrellas -->
+                            Dos
+                        </option>
+                        <option value="3">
+                            <!-- Estrellas -->
+                            <!-- Estrellas doradas -->
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            <!-- Estrellas sin marcar -->
+                            &#x2606;
+                            &#x2606;
+                            <!-- Fin estrellas -->
+                            Tres
+                        </option>
+                        <option value="4">
+                            <!-- Estrellas -->
+                            <!-- Estrellas doradas -->
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            <!-- Estrellas sin marcar -->
+                            &#x2606;
+                            <!-- Fin estrellas -->
+                            Cuatro
+                        </option>
+                        <option value="5">
+                            <!-- Estrellas -->
+                            <!-- Estrellas doradas -->
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            <!-- Estrellas sin marcar -->
+                            <!-- Fin estrellas -->
+                            Cinco
+                        </option>
+                    </select>
+                    <div class="mb-2">
+                        <label for="comentario" class="form-label">Deja tu comentario:</label>
+                        <textarea class="form-control form-control-sm" id="comentario" name="comentario" rows="4"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Comentar</button>
+                        <button type="submit" class="btn btn-light">Modificar</button>
+                        <button type="reset" class="btn btn-light">Borrar</button>
+                    </div>
+                </form>
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>   
+    </body>
+</html>
