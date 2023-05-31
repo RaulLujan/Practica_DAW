@@ -19,6 +19,16 @@ body.daweb {
   background-color: #3D0B37 !important;
 }
 
+.daweb.logincontainer {
+  background-color: #3D0B37;
+}
+
+.logo {
+  height: 2.5rem;
+  overflow: hidden;
+  padding: 0 2rem 0 0;
+}
+
 .daweb .loginForm {
   display: flex;
   flex-direction: column;
@@ -27,6 +37,10 @@ body.daweb {
   padding: 1rem;
   width: 95vw;
   min-height: 100vh;
+}
+
+.daweb .loginForm main{
+  background-color: #F3F9D2;
 }
 
 .daweb .loginForm > * {
@@ -56,6 +70,25 @@ body.daweb {
 
 .gridCards .card-img-top {
   aspect-ratio: 16 / 9;
+}
+
+.gridCards .card-plato .card-img-top {
+  aspect-ratio: 4 / 3;
+}
+
+.card-plato small {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.card-plato.plato-disponible h5 small {
+  visibility: hidden;
+}
+
+.card-plato.plato-no-disponible {
+  cursor: not-allowed;
+  filter: grayscale(1);
+  opacity: 0.7;
 }
 
 /* botones customizados */
