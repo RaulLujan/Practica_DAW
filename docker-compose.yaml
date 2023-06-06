@@ -1,0 +1,51 @@
+version: '3.1'
+services:
+  pasarela:
+    image: pasarela
+    build:
+        context: ./backend-arso
+        dockerfile: Dockerfile-Pasarela
+    restart: always
+    ports:
+      - '8090:8090'
+    environment:
+      zuul.routes.restaurantes.path : '/restaurantes/**'
+      zuul.routes.restaurantes.url : 'http://restaurantes-rest:8080/api/restaurantes'
+      zuul.routes.opiniones.path : '/opiniones/**'
+      zuul.routes.opiniones.url : 'http://opiniones-rest:5204/api/opiniones'
+      URI_MONGODB: 'mongodb+srv://arso-ag-rl:wetsek-3quvji-naNsah@cluster0.h4apf4g.mongodb.net/?retryWrites=true&w=majority'
+      
+  usuarios-rest:
+    image: usuarios
+    build:
+        context: ./backend-arso
+        dockerfile: Dockerfile-Usuarios
+    restart: always
+    ports:
+      - '8081:8080'
+    environment:
+      URI_MONGODB: 'mongodb+srv://arso-ag-rl:wetsek-3quvji-naNsah@cluster0.h4apf4g.mongodb.net/?retryWrites=true&w=majority'
+
+  restaurantes-rest:
+    image: restaurantes
+    build:
+        context: ./backend-arso
+        dockerfile: Dockerfile-Restaurantes
+    restart: always
+    ports:
+      - '8080:8080'
+    environment:
+      URI_MONGODB: 'mongodb+srv://arso-ag-rl:wetsek-3quvji-naNsah@cluster0.h4apf4g.mongodb.net/?retryWrites=true&w=majority'
+      
+  opiniones-rest:
+    image: opiniones
+    build:
+        context: ./backend-arso/opiniones-rest
+        dockerfile: Dockerfile-Opiniones
+    restart: always
+    ports:
+      - '5204:5204'
+    environment:
+      URI_MONGODB: 'mongodb+srv://arso-ag-rl:wetsek-3quvji-naNsah@cluster0.h4apf4g.mongodb.net/?retryWrites=true&w=majority'
+      
+ 
