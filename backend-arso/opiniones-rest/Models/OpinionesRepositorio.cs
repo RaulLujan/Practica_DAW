@@ -11,7 +11,7 @@ namespace Opiniones.Repositorio
     {
 
         const String CONNECTION_MONGO_URI = "URI_MONGODB";
-        const String NAME_DATABASE = "proyecto-ARSO";
+        const String NAME_DATABASE = "BBDD-DAW-RAUL-VICTOR";
 
         private readonly IMongoCollection<Opinion> Opiniones;
 

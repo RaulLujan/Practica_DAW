@@ -31,7 +31,7 @@ namespace Opiniones.Modelo
         public string Correo { get; set; }
         public int Calificacion { get; set; }
         public string Comentario { get; set; }
-
+        public string IdUser { get; set; }
 	}
 
 }

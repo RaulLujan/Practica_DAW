@@ -36,7 +36,7 @@ namespace OpinionesApi.Controllers
         [HttpPost]
         public string Create(Opinion Opinion)
         {
-            return _servicio.Create(Opinion);
+            return  "{\"id\" : \"" +_servicio.Create(Opinion) + "\" }" ;
         }
 
         [HttpPut("{id}")]
