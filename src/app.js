@@ -1,16 +1,34 @@
-import Usuario from './js/beans/Usuario';
+var express = require('express');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
-console.log("################ INI ################");
-var usuario = new Usuario();
-usuario.nombre = "Prueba";
-usuario.apellidos = "Prueba 2";
-usuario.email = "Prueba@um.es";
-usuario.clave = "123";
-usuario.fechaNacimiento = "2012-04-23T18:25:43.511Z";
-usuario.idoauth = "Prueba";
-usuario.rol = "CLIENTE";
-usuario.print();
+var su = require('./js/servicios/ServicioUsuarios');
+var usu = require('./js/beans/Usuario');
 
-console.log("################ FIN ################");
+var app = express();
 
+// view engine setup
+
+app.set('view engine', 'html');
+
+app.get('/', (req, res) => {
+
+    servicio = new su.ServicioUsuarios();
+    servicio.consultarUsuario("6480d348e5f4150f8683f5fd")
+    .then(data => data.json())
+    .then(function(data) {
+          var usuario = new usu.Usuario();
+          usuario.fromJson(data);
+          res.send(usuario.print());
+    })
+   .catch(err => console.log('Solicitud fallida', err));
+
+  })
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+module.exports = app;
 

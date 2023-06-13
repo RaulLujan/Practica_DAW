@@ -1,4 +1,4 @@
-import {Usuario} from "./beans/Usuario.js";
+var usu = require('../beans/Usuario');
 
 // SERVICIO
 class ServicioUsuarios{
@@ -9,18 +9,11 @@ class ServicioUsuarios{
     }
   
     consultarUsuario(id) {
-      fetch(this.urlbase + '/' + id, 
+      return fetch(this.urlbase + '/' + id, 
             {
                 method: 'GET',
                 headers: {"Content-Type": "application/json"},
-            })
-            .then(res => res.json())
-            .then(function(res) {
-              var usuario = new Usuario();
-              usuario.fromJson(res);
-              usuario.print();
-            })
-            .catch(err => console.log('Solicitud fallida', err));
+            });
     }
 
     crearUsuario(usuario) {
@@ -57,35 +50,11 @@ async function consultarUsuario2(id) {
           })
           .catch(err => console.log('Solicitud fallida', err));
 
-  const usuario2 = new Usuario();
+  const usuario2 = new usu.Usuario();
   usuario2.fromJson(await response.json());
-  usuario2.print();
-  return usuario2;
+  return await usuario2;
 }
 
-// PRUEBAS
-servicio = new ServicioUsuarios();
-var usuario = require("../beans/Usuario.js");
-usuario.nombre = "Prueba";
-usuario.apellidos = "Prueba 2";
-usuario.email = "Prueba@um.es";
-usuario.clave = "123";
-usuario.fechaNacimiento = "2012-04-23T18:25:43.511Z";
-usuario.idoauth = "Prueba";
-usuario.rol = "CLIENTE";
-usuario.print();
+exports.ServicioUsuarios = ServicioUsuarios;
+exports.consultarUsuario2 = consultarUsuario2;
 
-//servicio.crearUsuario(usuario);
-
-usuario.id = "6480d348e5f4150f8683f5fd";
-//servicio.consultarUsuario(usuario.id);
-
-usuario.nombre = "Prueba 2";
-//servicio.modificarUsuario(usuario);
-//servicio.consultarUsuario(usuario.id);
-
-console.log("################ INI ################");
-//usuario2 = new Usuario();
-//usuario2 = consultarUsuario2("6480d348e5f4150f8683f5fd");
-
-console.log("################ FIN ################");

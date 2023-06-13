@@ -1,4 +1,4 @@
-export default class Usuario {
+class Usuario {
 
     // Propiedades
     id;
@@ -23,7 +23,9 @@ export default class Usuario {
     }
   
     print(){
-      console.log("Usuario: { id: " + this.id +", nombre: " + this.nombre +  ", apellidos: " + this.apellidos + ", email: " +  this.email + 
-      ",\n clave: " + this.clave + ", fechaNacimiento: " + this.fechaNacimiento + ", idoauth: " + this.idoauth + ", rol: " + this.rol + " }");
+      return "Usuario: { id: " + this.id +", nombre: " + this.nombre +  ", apellidos: " + this.apellidos + ", email: " +  this.email + 
+      ",\n clave: " + this.clave + ", fechaNacimiento: " + this.fechaNacimiento + ", idoauth: " + this.idoauth + ", rol: " + this.rol + " }";
     }
   }
+
+  exports.Usuario = Usuario;

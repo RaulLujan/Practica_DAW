@@ -1,34 +1,36 @@
+var va = require('./Valoracion');
+
 class Opinion {
 
   // Propiedades
   id; 
   nombre;  
-  valoraciones;  
-  numValroaciones;  
-  calificacionMedia;  
-
-  // Contructor
-  constructor(nombre) {
-    this.nombre = nombre;  
-  }
-
-  /*constructor(id, nombre, valoraciones, numValroaciones, calificacionMedia) {
-    this.id = id; 
-    this.nombre = nombre;  
-    this.valoraciones = valoraciones;  
-    this.numValroaciones = numValroaciones;  
-    this.calificacionMedia = calificacionMedia;  
-  }*/
+  valoraciones=[];  
 
 
   // Metodos
   fromJson(json){
-    res = JSON.parse(json);
-    this.id = res.id;
-    this.nombre = res.nombre;
+    this.nombre = json.nombre;
+    const valoraciones = json['valoraciones'];
+    if (valoraciones !== undefined) {
+      for (var i = 0; i < valoraciones.length; i++) {
+        valoracion = new va.Valoracion();
+        valoracion.fromJson(valoraciones[i]);
+        this.valoraciones.push(valoracion);
+      }
+    }
   }
 
-  toJson(){
-    return JSON.stringify(this)
+  print(){
+    console.log("Opinion: { id: " + this.id +", nombre: " + this.nombre + ", ");
+    if(this.valoraciones !== undefined){
+      this.valoraciones.forEach(function(v){
+        v.print()
+      });
+    }
+    console.log(" }");
   }
+ 
 }
+
+exports.Opinion = Opinion;

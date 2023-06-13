@@ -48,11 +48,11 @@ services:
     environment:
       URI_MONGODB: 'mongodb+srv://arso-ag-rl:wetsek-3quvji-naNsah@cluster0.h4apf4g.mongodb.net/?retryWrites=true&w=majority'
       
-  node-server:
-    image: node
-    build:
-        context: .
-        dockerfile: Dockerfile-Node
-    restart: always
-    ports:
-      - '3002:3000'
+  #node-server:
+  #  image: node
+  #  build:
+   #     context: .
+   #     dockerfile: Dockerfile-Node
+   # restart: always
+   # ports:
+  #    - '3002:3000'
