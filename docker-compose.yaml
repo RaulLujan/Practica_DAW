@@ -47,6 +47,19 @@ services:
       - '5204:5204'
     environment:
       URI_MONGODB: 'mongodb+srv://arso-ag-rl:wetsek-3quvji-naNsah@cluster0.h4apf4g.mongodb.net/?retryWrites=true&w=majority'
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: 'Incidencias'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
       
   #node-server:
   #  image: node
