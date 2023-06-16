@@ -2,24 +2,24 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var su = require('./js/servicios/ServicioUsuarios');
-var usu = require('./js/beans/Usuario');
-
 var app = express();
 
 // view engine setup
 
 app.set('view engine', 'html');
 
-app.get('/', (req, res) => {
+const so = require('./js/servicios/ServicioOpiniones');
+const opi = require('./js/beans/Opinion');
 
-    servicio = new su.ServicioUsuarios();
-    servicio.consultarUsuario("6480d348e5f4150f8683f5fd")
+
+app.get('/', (req, res) => {
+    servicio = new so.ServicioOpiniones();
+    servicio.consultarOpinion("648cc6ba7726e6e4f9aa2a09")
     .then(data => data.json())
     .then(function(data) {
-          var usuario = new usu.Usuario();
-          usuario.fromJson(data);
-          res.send(usuario.print());
+          var opinion = new opi.Opinion();
+          opinion.fromJson(data);
+          res.send(opinion.print());
     })
    .catch(err => console.log('Solicitud fallida', err));
 
@@ -30,65 +30,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
-const si = require('./js/servicios/ServicioIncidencias');
 const inc = require('./js/beans/Incidencia');
-
-
-const incidencia = new inc.Incidencia();
-incidencia.idUser = "2";
-incidencia.idRestaurante = "2";
-incidencia.nombrePlato = "Plato 2";
-incidencia.descripcion = "MUUU MALL";
-
 
 
 const mysql = require('mysql2');
 const connection = mysql.createConnection(
       {
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database: 'Incidencias'
+            host: process.env.DB_HOST,
+            port: process.env.DB_PORT,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME
       });
-
-/*si.getConnection().then(conn => {return si.insertarIncidencia(conn, incidencia)})
-      .then(data => {incidencia.id = data; incidencia.print();});
-console.log("################################################");*/
-si.getConnection().then(conn => {return si.borrarIncidencia(conn, 3)})
-      .then(data => {console.log("holaaa " +data)});
-/*console.log("################################################");
-si.getConnection().then(conn => {return si.consultarIncidenciasByPlato(conn)})
-      .then(data => {for (var i = 0; i < data.length; i++) {
-            data[i].print();
-      }});
-
-console.log("################################################");
-si.getConnection().then(conn => {return si.consultarIncidenciasByUsuario(conn)})
-      .then(data => {for (var i = 0; i < data.length; i++) {
-            data[i].print();
-      }});
-
-console.log("################################################");
-si.getConnection().then(conn => {return si.consultarIncidenciasByRestaurante(conn)})
-      .then(data => {for (var i = 0; i < data.length; i++) {
-            data[i].print();
-      }});
-
-console.log("################################################");
-si.getConnection().then(conn => {return si.borrarIncidencia(conn, incidencia.id)}).then(data => {console.log("BORRADO:" + data)});
-si.getConnection().then(conn => {return si.consultarAllIncidencias(conn)})
-      .then(data => {for (var i = 0; i < data.length; i++) {
-            data[i].print();
-      }});
-
-console.log("######################## FIN ########################");
-incidencia.print();*/
-
-
-
-
-
 const sql = 'SELECT * FROM TIncidencias;';
 connection.connect(function(err){
         if(err){console.log(err);}
@@ -104,11 +57,6 @@ connection.connect(function(err){
             }
            }}); 
         }});
-
-
-
-
-
 
 
 module.exports = app;

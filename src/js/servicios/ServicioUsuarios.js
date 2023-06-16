@@ -5,7 +5,7 @@ class ServicioUsuarios{
     urlbase;
   
     constructor() {
-        this.urlbase = 'http://localhost:8081/api/usuarios';
+        this.urlbase = 'http://usuarios-rest:8081/api/usuarios';
     }
   
     consultarUsuario(id) {

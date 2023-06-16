@@ -1,10 +1,11 @@
 var opi = require('../beans/Opinion');
+var va = require('../beans/Valoracion');
 
 class ServicioOpiniones{
     urlbase;
   
     constructor() {
-        this.urlbase = 'http://localhost:5204/api/opiniones';
+        this.urlbase = 'http://opiniones-rest:5204/api/opiniones';
     }
   
     consultarOpinion(id) {
@@ -64,8 +65,8 @@ class ServicioOpiniones{
 exports.ServicioOpiniones = ServicioOpiniones;
 
 // PRUEBAS
-servicio = new ServicioOpiniones();
-opinion = new opi.Opinion();
+var servicio = new ServicioOpiniones();
+var opinion = new opi.Opinion();
 opinion.nombre = "Prueba Web";
 
 //servicio.crearOpinion(opinion);
@@ -75,7 +76,7 @@ opinion.nombre = "Prueba Web 2";
 //servicio.modificarOpinion(opinion);
 //servicio.consultarOpinion(opinion.id);
 
-valoracion = new Valoracion();
+var valoracion = new va.Valoracion();
 valoracion.Id = "1";
 valoracion.Correo = "prueba@um.es";
 valoracion.Calificacion = 5;

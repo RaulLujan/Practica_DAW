@@ -58,14 +58,24 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+  node-server:
+    image: node
+    build:
+        context: .
+        dockerfile: Dockerfile-Node
+    depends_on:
+      - mysql
+    restart: always
+    ports:
+      - '3002:3000'
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: Incidencias
+    links:
+      - mysql
+
 volumes:
   mysql_data:
-      
-  #node-server:
-  #  image: node
-  #  build:
-   #     context: .
-   #     dockerfile: Dockerfile-Node
-   # restart: always
-   # ports:
-  #    - '3002:3000'

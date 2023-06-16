@@ -14,7 +14,7 @@ class Opinion {
     const valoraciones = json['valoraciones'];
     if (valoraciones !== undefined) {
       for (var i = 0; i < valoraciones.length; i++) {
-        valoracion = new va.Valoracion();
+        var valoracion = new va.Valoracion();
         valoracion.fromJson(valoraciones[i]);
         this.valoraciones.push(valoracion);
       }

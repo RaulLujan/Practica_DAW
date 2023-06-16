@@ -36,11 +36,11 @@ public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
 
 		// A partir del usuario identificado con OAuth2, intenta obtener la información del usuario en el sistema
 		
-		//DefaultOAuth2User usuario = (DefaultOAuth2User) authentication.getPrincipal();
+		DefaultOAuth2User usuario = (DefaultOAuth2User) authentication.getPrincipal();
 		
-		//String login = usuario.getAttribute("login");
+		String login = usuario.getAttribute("login");
 		
-		String login = request.getHeader("login");
+		//String login = request.getHeader("login");
 		
 		// En GitHub es necesario que el usuario autorice que se publique su email.
 		
@@ -69,11 +69,11 @@ public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
 			
 			// Opción 1:depuración y pruebas del backend, muestra el token por la salida
 			
-			//response.getOutputStream().write(responseBody.getBytes());
+			response.getOutputStream().write(responseBody.getBytes());
 			
 			// Opción 2: redigire a una página de referencia
 			
-			redirectStrategy.sendRedirect(request, response, "https://www.google.com");
+			//redirectStrategy.sendRedirect(request, response, "https://www.google.com");
 			
 		} else {
 			

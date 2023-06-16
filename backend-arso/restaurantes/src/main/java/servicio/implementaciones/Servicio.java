@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -34,6 +37,7 @@ import utils.Constantes;
 import utils.Utils;
 import utils.api.dbpedia.DbpediaApiConsumer;
 import utils.api.geonames.GeonamesApiConsumer;
+
 
 public class Servicio implements IServicio {
 
@@ -181,6 +185,9 @@ public class Servicio implements IServicio {
 
 		String nombre = "Opinion_" + restaurante.getNombre();
 		String idOpinion = Utils.retrofitOpinionesClient(Constantes.URL_BASE_API_OPINION, nombre);
+	    JsonParser jsonParser = new JsonParser();
+	    JsonObject myJson = (JsonObject) jsonParser.parse(idOpinion);
+	    idOpinion = myJson.get("id").getAsString();
 		restaurante.setIdOpinion(idOpinion);
 		update(restaurante);
 	}
