@@ -186,10 +186,4 @@ class ServicioRestaurantes{
 
 }
 
-
-// PRUEBAS
-servicio = new ServicioRestaurantes();
-restaurante = new Restaurante();
-restaurante.id = '648225188d53b91c1caf3586';
-let token = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3MzhjYTQyNi0yMjE1LTQ3NWEtYmIzYy02ODUwNzVhOTZmMjIiLCJpc3MiOiJQYXNhcmVsYSBadXVsIiwiZXhwIjoxNjg3MDMxMTY5LCJzdWIiOiJSYXVsTHVqYW4iLCJ1c3VhcmlvIjoiUmF1bEx1amFuQHVtLmVzIiwicm9sIjoiQURNSU4ifQ.AsIjAbJXaOWvB2sM6kkHhVtEXrV-1zUxkc2HMeL7Pq0';
-servicio.consultarRestaurante(restaurante.id, token);
+exports.ServicioRestaurantes = ServicioRestaurantes;

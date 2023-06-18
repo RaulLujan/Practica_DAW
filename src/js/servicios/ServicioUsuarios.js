@@ -5,7 +5,7 @@ class ServicioUsuarios{
     urlbase;
   
     constructor() {
-        this.urlbase = 'http://usuarios-rest:8081/api/usuarios';
+        this.urlbase = 'http://usuario-rest:8081/api/usuarios';
     }
   
     consultarUsuario(id) {
@@ -54,7 +54,34 @@ async function consultarUsuario2(id) {
   usuario2.fromJson(await response.json());
   return await usuario2;
 }
+const XMLHttpRequest = require('xhr2');
+
+async function consultarUsuario3(url, methodType){
+  var promiseObj = new Promise(function(resolve, reject){
+    var xhr = new XMLHttpRequest();
+    xhr.open(methodType, url, true);
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.setRequestHeader('Access-Control-Allow-Headers', 'application/json');
+    xhr.setRequestHeader('Content-Type', '*');
+    xhr.setRequestHeader('status-code',200);
+    xhr.send();
+    xhr.onreadystatechange = function(){
+      console.log(xhr);
+      if (xhr.readyState === 4){
+        if (xhr.status === 200){
+          var resp = xhr.responseText;
+          var respJSON = JSON.parse(resp);
+          resolve(respJSON);
+        } else {
+          reject(xhr.status);
+        }
+      }
+    }
+  });
+  return promiseObj;
+}
 
 exports.ServicioUsuarios = ServicioUsuarios;
 exports.consultarUsuario2 = consultarUsuario2;
+exports.consultarUsuario3 = consultarUsuario3;
 

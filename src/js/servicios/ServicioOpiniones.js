@@ -5,7 +5,7 @@ class ServicioOpiniones{
     urlbase;
   
     constructor() {
-        this.urlbase = 'http://opiniones-rest:5204/api/opiniones';
+        this.urlbase = 'http://172.18.0.4:5204/api/opiniones';
     }
   
     consultarOpinion(id) {

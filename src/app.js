@@ -8,56 +8,36 @@ var app = express();
 
 app.set('view engine', 'html');
 
-const so = require('./js/servicios/ServicioOpiniones');
-const opi = require('./js/beans/Opinion');
 
+
+
+
+// ##################### PRUEBAS  #####################
+var su = require('./js/servicios/ServicioUsuarios');
+var usu = require('./js/beans/Usuario');
 
 app.get('/', (req, res) => {
-    servicio = new so.ServicioOpiniones();
-    servicio.consultarOpinion("648cc6ba7726e6e4f9aa2a09")
-    .then(data => data.json())
-    .then(function(data) {
-          var opinion = new opi.Opinion();
-          opinion.fromJson(data);
-          res.send(opinion.print());
-    })
-   .catch(err => console.log('Solicitud fallida', err));
-
+  su.consultarUsuario3('http://usuario-rest:8081/api/usuarios/6480d348e5f4150f8683f5fd', 'GET')
+  .then(data => data.json())
+  .then(function(data) {
+        var usuario = new usu.Usuario();
+        usuario.fromJson(data);
+        res.send(usuario.print());
   })
+ .catch(err => console.log('Solicitud fallida', err));
+
+})
+
+// ##################### PRUEBAS  #####################
+
+
+
+
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-const inc = require('./js/beans/Incidencia');
-
-
-const mysql = require('mysql2');
-const connection = mysql.createConnection(
-      {
-            host: process.env.DB_HOST,
-            port: process.env.DB_PORT,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME
-      });
-const sql = 'SELECT * FROM TIncidencias;';
-connection.connect(function(err){
-        if(err){console.log(err);}
-        else{connection.query(sql ,function(err, result){
-          if(err){console.log(err);}
-          else{
-            const listIncidencias = [];
-            for (var i = 0; i < result.length; i++) {
-              var incidencia = new inc.Incidencia();
-              incidencia.fromJson(result[i]);
-              listIncidencias.push(incidencia);
-              incidencia.print();
-            }
-           }}); 
-        }});
-
 
 module.exports = app;
 
