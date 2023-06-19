@@ -48,11 +48,16 @@ async function consultarUsuario2(id) {
               method: 'GET',
               headers: {"Content-Type": "application/json"},
           })
+          .then(res => {
+            const usuario2 = new usu.Usuario();
+            usuario2.fromJson(res.json());
+            usuario2.print();
+            return res;
+          })
           .catch(err => console.log('Solicitud fallida', err));
 
-  const usuario2 = new usu.Usuario();
-  usuario2.fromJson(await response.json());
-  return await usuario2;
+ 
+  return await response;
 }
 const XMLHttpRequest = require('xhr2');
 
@@ -62,14 +67,16 @@ async function consultarUsuario3(url, methodType){
     xhr.open(methodType, url, true);
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhr.setRequestHeader('Access-Control-Allow-Headers', 'application/json');
-    xhr.setRequestHeader('Content-Type', '*');
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader('status-code',200);
     xhr.send();
     xhr.onreadystatechange = function(){
-      console.log(xhr);
+      console.log("HOLAAA 1" + xhr);
       if (xhr.readyState === 4){
-        if (xhr.status === 200){
+        if (xhr.status === 0){
           var resp = xhr.responseText;
+          console.log("HOLAAA 2" +xhr.upload);
+          console.log("HOLAAA 3" +xhr.body);
           var respJSON = JSON.parse(resp);
           resolve(respJSON);
         } else {
@@ -81,7 +88,21 @@ async function consultarUsuario3(url, methodType){
   return promiseObj;
 }
 
+const axios = require('axios');
+async function consultarUsuario4(id) {
+
+axios.get('http://usuarios-rest:8081/api/usuarios/' + id, {
+  headers: {"Content-Type": "application/json"},
+}).then(data => {
+            const usuario2 = new usu.Usuario();
+            usuario2.fromJson(data.json());
+            usuario2.print();
+          })
+          .catch(err => console.log('Solicitud fallida', err));
+}
+
 exports.ServicioUsuarios = ServicioUsuarios;
 exports.consultarUsuario2 = consultarUsuario2;
 exports.consultarUsuario3 = consultarUsuario3;
+exports.consultarUsuario4 = consultarUsuario4;
 
