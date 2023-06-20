@@ -1,18 +1,28 @@
-const path = require('path');
-module.exports = function(app) {
+var express = require('express')
+var axios = require('axios');
+var router = express.Router()
+//var path = require('path')
+//var servicio = require('./js/servicios/ServicioUsuarios')
 
-    app.get('/',function(req,res){
-        const options = {root: path.join(__dirname)};
-        res.sendFile('server/views/login.html', options); 
-    });
+router.get('/', function(req, res, next) {
+    res.redirect('http://localhost:8090/restaurantes')
+});
 
-// ##################### PRUEBAS  #####################
-var su = require('./js/servicios/ServicioUsuarios');
-var usu = require('./js/beans/Usuario');
+router.get('/restaurantes', function(req, res, next) {
 
-su.consultarUsuario4('6480d348e5f4150f8683f5fd');
+    //servicio.consultarUsuario2('6480d348e5f4150f8683f5fd')
+    
+    axios.get('http://usuarios-rest:8081/api/usuarios/6480d348e5f4150f8683f5fd', {
+      headers: {"Content-Type": "application/json", 'Access-Control-Allow-Origin': '*'},
+    })
+    .then(data => {
+                const usuario2 = new usu.Usuario();
+                usuario2.fromJson(data.json());
+                usuario2.print()
+            })
+    .catch(err => console.log('Solicitud fallida', err));
+    
+    res.render('formRestaurante')
+});
 
-// ##################### PRUEBAS  #####################
-
-
-}
+module.exports = router; 

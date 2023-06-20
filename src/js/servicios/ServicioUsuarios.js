@@ -43,10 +43,11 @@ class ServicioUsuarios{
   }
 
 async function consultarUsuario2(id) {
-  const response = await fetch('http://localhost:8081/api/usuarios/' + id, 
+  const response = await fetch('http://usuarios-rest:8081/api/usuarios/' + id, 
           {
               method: 'GET',
-              headers: {"Content-Type": "application/json"},
+              headers: {"Content-Type": "application/json",
+                        'Access-Control-Allow-Origin': '*'}
           })
           .then(res => {
             const usuario2 = new usu.Usuario();

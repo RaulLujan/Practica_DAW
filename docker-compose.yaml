@@ -67,7 +67,7 @@ services:
       - mysql
     restart: always
     ports:
-      - '3002:3000'
+      - '3000:3000'
     environment:
       DB_HOST: mysql
       DB_PORT: 3306
