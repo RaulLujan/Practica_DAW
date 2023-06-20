@@ -9,17 +9,19 @@ class Restaurante {
   nombre;
   coordenadaX;
   coordenadaY;
+  ciudad;
   idGestor;
   sitiosTuristicos = [];
   platos = [];
   idOpinion;
   resumenValoracion;
 
-  constructor(nombre, coordenadaX, coordenadaY, idGestor) {
+  constructor(nombre, coordenadaX, coordenadaY, idGestor, ciudad) {
     this.nombre = nombre;  
     this.coordenadaX = coordenadaX;
     this.coordenadaY = coordenadaY;
     this.idGestor = idGestor;
+    this.ciudad = ciudad;
   }
 
   // Metodos
@@ -35,6 +37,7 @@ class Restaurante {
     }
    
     this.idGestor = json.idGestor;
+    this.ciudad = json.ciudad;
 
     const sitiosTuristicos = json['sitiosTuristicos'];
     if (sitiosTuristicos !== undefined) {
@@ -65,7 +68,7 @@ class Restaurante {
 
   print(){
       console.log("Restauratne: { id: " + this.id + ", nombre: " + this.nombre + ", " + ", coordenadaX: " + this.coordenadaX + ", " + 
-      ", coordenadaY: " + this.coordenadaY + ", "  + ", idGestor: " + this.idGestor + ", ");
+      ", coordenadaY: " + this.coordenadaY + ", "  + ", idGestor: " + this.idGestor + ", ciudad: " + this.ciudad + ", ");
       if(this.sitiosTuristicos !== undefined){
         this.sitiosTuristicos.forEach(function(v){
           v.print()
