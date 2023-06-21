@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const jwt_decode = require('jwt-decode')
 
 const servicio = require('./js/servicios/ServicioUsuarios')
 const restauranteServicio = require('./js/servicios/ServicioRestaurantes')
@@ -10,17 +11,15 @@ router.get('/', function(req, res, next) {
 
 function ensureIfLogged(req, res, next) {
     if(req.cookies.jwt) {
-        /*
         var decoded = jwt_decode(req.cookies.jwt);
-        res.sub = { decoded.sub };
+        res.cookie('jwt', req.cookies.jwt)
+        res.cookie('userName', decoded.sub)
+        console.log(decoded);
         res.usuario = { ...decoded };
-        */
-      res.cookie('jwt', req.cookies.jwt)
-      next(); // allow the next route to run
+        next();
     } else {
-      // require the user to log in
-      res.clearCookie();
-      res.redirect('/');
+        res.clearCookie();
+        res.redirect('/');
     }
   }
 
@@ -33,7 +32,7 @@ router.get('/restaurantes', ensureIfLogged, async function(req, res, next) {
     //console.log(usuario, usuario.nombre, usuario.email, ' ===== ');
     res.render('formRestaurante', {
         //user: JSON.stringify(usuario),
-        restaurantes: restaurantes,
+        //restaurantes: restaurantes,
     })
 });
 
