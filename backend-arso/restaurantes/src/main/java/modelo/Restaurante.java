@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -27,6 +28,8 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	private String nombre;
 	private Point coordenadas;
 	private String idGestor;
+	private String ciudad;
+	private Date fechaAlta;
 	private List<SitioTuristico> sitiosTuristicos;
 	private List<Plato> platos;
 	private String idOpinion;
@@ -97,6 +100,15 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	public void setResumenValoracion(ResumenValoracion resumenValoracion) {
 		this.resumenValoracion = resumenValoracion;
 	}
+	
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
 
 	public void addPlato(Plato plato) {
 		if (this.platos == null)
@@ -144,12 +156,25 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	public void setIdGestor(String idGestor) {
 		this.idGestor = idGestor;
 	}
+	
+
+
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "Restaurante [id=" + id + ", nombre=" + nombre + ", coordenadas=" + coordenadas + ", idGestor="
-				+ idGestor + ", sitiosTuristicos=" + sitiosTuristicos + ", platos=" + platos + ", idOpinion="
-				+ idOpinion + ", resumenValoracion=" + resumenValoracion + "]";
+				+ idGestor + ", ciudad=" + ciudad + ", fechaAlta=" + fechaAlta + ", sitiosTuristicos="
+				+ sitiosTuristicos + ", platos=" + platos + ", idOpinion=" + idOpinion + ", resumenValoracion="
+				+ resumenValoracion + "]";
 	}
 
 	@Override

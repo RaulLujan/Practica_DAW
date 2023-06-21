@@ -89,5 +89,20 @@ public class ServicioControladorRest {
 		servicio.removeUsuario(id);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
+	
+	// Consulta un usuario a aprtir del parametro oauth
+	// curl -i -X GET -H "Content-type: application/xml"
+	// http://localhost:8081/api/usuarios/oauth/{id}
+	@GET
+	@Path("/oauth/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Consulta un usuario", notes = "Retorna un usuario utilizando su id", response = Usuario.class)
+	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
+			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "usuario no encontrado") })
+	public Response getUsuarioByIdOauth(@ApiParam(value = "id del usuario", required = true) @PathParam("id") String id)
+			throws Exception {
 
+		return Response.status(Response.Status.OK).entity(servicio.findByOAuthId(id)).build();
+	}
+	
 }

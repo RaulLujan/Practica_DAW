@@ -28,7 +28,7 @@ router.get('/restaurantes', ensureIfLogged, async function(req, res, next) {
     console.log(' PRE Llamada COOKIE ===== ', req.cookies, res.cookie);
     console.log(' PRE Llamada ===== ');
     //const usuario = await servicio.consultarUsuario2('6480d348e5f4150f8683f5fd')
-    const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt)
+    //const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt)
 
     //console.log(usuario, usuario.nombre, usuario.email, ' ===== ');
     res.render('formRestaurante', {

@@ -5,6 +5,7 @@ public class Plato {
 	private String nombre;
 	private String descripcion;
 	private double precio;
+	private boolean disponible;
 
 	public String getNombre() {
 		return nombre;
@@ -29,10 +30,21 @@ public class Plato {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
+	
+	
+	public boolean isDisponible() {
+		return disponible;
+	}
+
+	public void setDisponible(boolean disponible) {
+		this.disponible = disponible;
+	}
 
 	@Override
 	public String toString() {
-		return "Plato [nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio + "]";
+		return "Plato [nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio + ", disponible="
+				+ disponible + "]";
 	}
 
 }
+

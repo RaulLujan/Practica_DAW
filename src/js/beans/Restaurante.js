@@ -10,6 +10,7 @@ class Restaurante {
   coordenadaX;
   coordenadaY;
   ciudad;
+  fechaAlta;
   idGestor;
   sitiosTuristicos = [];
   platos = [];
@@ -38,6 +39,7 @@ class Restaurante {
    
     this.idGestor = json.idGestor;
     this.ciudad = json.ciudad;
+    this.fechaAlta = json.fechaAlta;
 
     const sitiosTuristicos = json['sitiosTuristicos'];
     if (sitiosTuristicos !== undefined) {
@@ -68,7 +70,7 @@ class Restaurante {
 
   print(){
       console.log("Restauratne: { id: " + this.id + ", nombre: " + this.nombre + ", " + ", coordenadaX: " + this.coordenadaX + ", " + 
-      ", coordenadaY: " + this.coordenadaY + ", "  + ", idGestor: " + this.idGestor + ", ciudad: " + this.ciudad + ", ");
+      ", coordenadaY: " + this.coordenadaY + ", "  + ", idGestor: " + this.idGestor + ", ciudad: " + this.ciudad + ", fechaAlta: " + this.fechaAlta + ", ");
       if(this.sitiosTuristicos !== undefined){
         this.sitiosTuristicos.forEach(function(v){
           v.print()
