@@ -24,7 +24,7 @@
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/restaurantes" class="nav-link px-2 text-white">Restaurantes</a></li>
           <li><a href="/valoracion" class="nav-link px-2 text-white">Valoraciones</a></li>
-          {{#if userRol}}
+          {{#if userRol === "ADMIN"}}
           <li><a href="/modRestaurante" class="nav-link px-2 text-white">Opiniones</a></li>
           {{/if}}
         </ul>
