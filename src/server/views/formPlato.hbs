@@ -23,7 +23,9 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                   <li><a href="/restaurantes" class="nav-link px-2 text-white">Restaurantes</a></li>
                   <li><a href="/valoracion" class="nav-link px-2 text-white">Valoraciones</a></li>
-                  <li><a href="/ver_opinion" class="nav-link px-2 text-white">Opiniones</a></li>
+                  {{#if userRol}}
+                  <li><a href="/modRestaurante" class="nav-link px-2 text-white">Opiniones</a></li>
+                  {{/if}}
                 </ul>
         
                 <!-- mostrar si logueado -->
@@ -52,7 +54,7 @@
         </header>
         <div class="container">
             <main class="shadow border mt-4 p-4">
-                <h1>Incidencia:</h1>
+                <h1>Plato:</h1>
                 <form class="row">
                     <div class="col-md-6">
                         <label for="nombre" class="form-label">Nombre del plato:</label>

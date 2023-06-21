@@ -35,7 +35,7 @@ class ServicioRestaurantes{
             .catch(err => console.log('Solicitud fallida', err));
     }
 
-    modificarOpinion(restaurante, token) {
+    modificarRestaurante(restaurante, token) {
         fetch(this.urlbase + '/' + restaurante.id,  
               {
                   method: 'PUT',

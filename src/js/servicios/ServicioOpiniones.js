@@ -63,24 +63,3 @@ class ServicioOpiniones{
 }
 
 exports.ServicioOpiniones = ServicioOpiniones;
-
-// PRUEBAS
-var servicio = new ServicioOpiniones();
-var opinion = new opi.Opinion();
-opinion.nombre = "Prueba Web";
-
-//servicio.crearOpinion(opinion);
-
-opinion.id = '6480c02fac49e3cb58503a56';
-opinion.nombre = "Prueba Web 2";
-//servicio.modificarOpinion(opinion);
-//servicio.consultarOpinion(opinion.id);
-
-var valoracion = new va.Valoracion();
-valoracion.Id = "1";
-valoracion.Correo = "prueba@um.es";
-valoracion.Calificacion = 5;
-valoracion.Comentario = "BLABLA";
-valoracion.IdUser = "123";
-//servicio.anadirValoracion(opinion.id, valoracion);
-servicio.consultarOpinion(opinion.id);

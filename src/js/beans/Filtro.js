@@ -1,6 +1,7 @@
 class Filtro{
 
 nombre;
+ciudad;
 coorX;
 coorY;
 distancia;

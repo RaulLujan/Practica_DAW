@@ -14,9 +14,26 @@ function ensureIfLogged(req, res, next) {
         var decoded = jwt_decode(req.cookies.jwt);
         res.cookie('jwt', req.cookies.jwt)
         res.cookie('userName', decoded.sub)
-        console.log(decoded);
         res.usuario = { ...decoded };
         next();
+    } else {
+        res.clearCookie("jwt")
+        res.clearCookie("userName")
+        res.redirect('/');
+    }
+  }
+
+  function ensureIfAdmin(req, res, next) {
+    if(req.cookies.jwt) {
+        var decoded = jwt_decode(req.cookies.jwt);
+        res.cookie('jwt', req.cookies.jwt)
+        res.cookie('userName', decoded.sub)
+        res.usuario = { ...decoded };
+        if (decoded.rol === "ADMIN"){
+            next();
+        } else {
+            res.redirect('back');
+        }
     } else {
         res.clearCookie("jwt")
         res.clearCookie("userName")
@@ -31,8 +48,9 @@ router.get('/restaurantes', ensureIfLogged, async function(req, res, next) {
     //const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt)
 
     //console.log(usuario, usuario.nombre, usuario.email, ' ===== ');
-    res.render('formRestaurante', {
+    res.render('getListRestaurantes', {
         userName: req.cookies.userName,
+        userRol: res.usuario.rol,
         //user: JSON.stringify(usuario),
         //restaurantes: restaurantes,
     })
@@ -41,42 +59,49 @@ router.get('/restaurantes', ensureIfLogged, async function(req, res, next) {
 router.get('/incidencia', ensureIfLogged, async function(req, res, next) {
     res.render('formIncidencia', {
         userName: req.cookies.userName,
+        userRol: res.usuario.rol,
     })
 });
 
 router.get('/opinion', ensureIfLogged, async function(req, res, next) {
     res.render('formOpinion', {
         userName: req.cookies.userName,
+        userRol: res.usuario.rol,
     })
 });
 
 router.get('/plato', ensureIfLogged, async function(req, res, next) {
     res.render('formPlato', {
         userName: req.cookies.userName,
+        userRol: res.usuario.rol,
     })
 });
 
 router.get('/sitio_turistico', ensureIfLogged, async function(req, res, next) {
     res.render('formSitioTuristico', {
         userName: req.cookies.userName,
+        userRol: res.usuario.rol,
     })
 });
 
-router.get('/ver_opinion', ensureIfLogged, async function(req, res, next) {
-    res.render('getOpinion', {
+router.get('/modRestaurante', ensureIfAdmin, async function(req, res, next) {
+    res.render('formRestaurante', {
         userName: req.cookies.userName,
+        userRol: res.usuario.rol,
     })
 });
 
 router.get('/valoracion', ensureIfLogged, async function(req, res, next) {
     res.render('getValoracion', {
         userName: req.cookies.userName,
+        userRol: res.usuario.rol,
     })
 });
 
 router.get('/detalleRestaurante', ensureIfLogged, async function(req, res, next) {
     res.render('detalleRestaurante', {
         userName: req.cookies.userName,
+        userRol: res.usuario.rol,
     })
 });
 
