@@ -144,7 +144,7 @@ class ServicioRestaurantes{
     }
 
     consultarAllRestaurantes(token) {
-        fetch(this.urlbase + '/all', 
+        return fetch(this.urlbase + '/all', 
               {
                   method: 'GET',
                   headers: {"Content-Type": "application/json", "Cookie": "jwt=" + token,},

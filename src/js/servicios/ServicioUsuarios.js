@@ -56,7 +56,7 @@ async function consultarUsuario2(id) {
             return usuario2;
           })
           .catch(err => console.log('Solicitud fallida', err));
-  return await response;
+  return response;
 }
 const XMLHttpRequest = require('xhr2');
 
