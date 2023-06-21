@@ -18,7 +18,8 @@ function ensureIfLogged(req, res, next) {
         res.usuario = { ...decoded };
         next();
     } else {
-        res.clearCookie();
+        res.clearCookie("jwt")
+        res.clearCookie("userName")
         res.redirect('/');
     }
   }
@@ -80,9 +81,10 @@ router.get('/detalleRestaurante', ensureIfLogged, async function(req, res, next)
 });
 
 router.get('/logout', ensureIfLogged, async function(req, res, next) {
-    res.clearCookie()
-    req.clearCookie()
-    res.redirect('/')
+    res.clearCookie("jwt")
+    res.clearCookie("userName")
+    res.redirect('https://github.com/logout')
+    res.end()
 });
 
 /*
