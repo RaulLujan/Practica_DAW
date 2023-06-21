@@ -5,12 +5,12 @@ var routes = require('./src/routes');
 
 
 var app = express();
-
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'src/server/views')); 
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+//Quitar para entregar
+app.disable('view cache');
 
+app.set('views', path.join(__dirname, 'src/server/views')); 
+app.set('view engine', 'hbs');
 
 app.use('/', routes);
 app.use(express.static(__dirname + '/src/public')); 

@@ -5,8 +5,7 @@ var rv = require('../beans/ResumenValoracion');
 var fi = require('../beans/Filtro');
 
 class ServicioRestaurantes{
-    urlbase = 'http://pasarela:8090/restaurantes';
-
+    urlbase = 'http://restaurantes-rest:8080/api/restaurantes';
 
     consultarRestaurante(id, token) {
         fetch(this.urlbase + '/' + id, 

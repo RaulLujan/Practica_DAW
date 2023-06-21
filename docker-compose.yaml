@@ -76,6 +76,5 @@ services:
       DB_NAME: Incidencias
     links:
       - mysql
-
 volumes:
   mysql_data:

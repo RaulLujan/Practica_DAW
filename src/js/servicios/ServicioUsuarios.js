@@ -5,7 +5,7 @@ class ServicioUsuarios{
     urlbase;
   
     constructor() {
-        this.urlbase = 'http://usuario-rest:8081/api/usuarios';
+        this.urlbase = 'http://usuario-rest:8080/api/usuarios';
     }
   
     consultarUsuario(id) {
@@ -43,21 +43,19 @@ class ServicioUsuarios{
   }
 
 async function consultarUsuario2(id) {
-  const response = await fetch('http://usuarios-rest:8081/api/usuarios/' + id, 
+  const response = await fetch('http://usuarios-rest:8080/api/usuarios/' + id, 
           {
               method: 'GET',
-              headers: {"Content-Type": "application/json",
-                        'Access-Control-Allow-Origin': '*'}
+              headers: {"Content-Type": "application/json"}
           })
-          .then(res => {
+          .then(res => res.json())
+          .then(json => {
             const usuario2 = new usu.Usuario();
-            usuario2.fromJson(res.json());
+            usuario2.fromJson(json);
             usuario2.print();
-            return res;
+            return usuario2;
           })
           .catch(err => console.log('Solicitud fallida', err));
-
- 
   return await response;
 }
 const XMLHttpRequest = require('xhr2');
@@ -92,7 +90,7 @@ async function consultarUsuario3(url, methodType){
 const axios = require('axios');
 async function consultarUsuario4(id) {
 
-axios.get('http://usuarios-rest:8081/api/usuarios/' + id, {
+axios.get('http://usuarios-rest:8080/api/usuarios/' + id, {
   headers: {"Content-Type": "application/json"},
 }).then(data => {
             const usuario2 = new usu.Usuario();
