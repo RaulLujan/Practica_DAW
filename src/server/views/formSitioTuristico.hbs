@@ -20,12 +20,16 @@
             </a>
     
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li><a href="detalleRestaurante.hbs" class="nav-link px-2 text-white">Restaurantes</a></li>
-              <li><a href="getValoracion.hbs" class="nav-link px-2 text-white">Valoraciones</a></li>
-              <li><a href="getOpinion.hbs" class="nav-link px-2 text-white">Opiniones</a></li>
+              <li><a href="/restaurantes" class="nav-link px-2 text-white">Restaurantes</a></li>
+              <li><a href="/valoracion" class="nav-link px-2 text-white">Valoraciones</a></li>
+              <li><a href="/ver_opinion" class="nav-link px-2 text-white">Opiniones</a></li>
             </ul>
     
             <!-- mostrar si logueado -->
+            <div class="text-end">
+                    <span class="nav-link px-2 text-white">{{ userName }}</span>
+                    <a href="/logout" type="button" class="btn btn-outline-light me-2">Logout</a>
+            </div>
             <div class="flex-shrink-0 dropdown">
               <a href="#" class="d-block link-secondary text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="//picsum.photos/32" alt="mdo" width="32" height="32" class="rounded-circle">
@@ -33,11 +37,11 @@
               <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="">
                 <li><span class="dropdown-item fw-bold">Administración</span></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="formIncidencia.hbs">Incidencias</a></li>
-                <li><a class="dropdown-item" href="formOpinion.hbs">Opiniones</a></li>
-                <li><a class="dropdown-item" href="formPlato.hbs">Platos</a></li>
-                <li><a class="dropdown-item" href="formRestaurante.hbs">Restaurantes</a></li>
-                <li><a class="dropdown-item" href="formSitioTuristico.hbs">Sitios turísticos</a></li>
+                <li><a class="dropdown-item" href="/incidencia">Incidencias</a></li>
+                <li><a class="dropdown-item" href="/opinion">Opiniones</a></li>
+                <li><a class="dropdown-item" href="/plato">Platos</a></li>
+                <li><a class="dropdown-item" href="/restaurantes">Restaurantes</a></li>
+                <li><a class="dropdown-item" href="/sitio_turistico">Sitios turísticos</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Salir</a></li>
               </ul>

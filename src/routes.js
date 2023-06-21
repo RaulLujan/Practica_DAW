@@ -31,33 +31,58 @@ router.get('/restaurantes', ensureIfLogged, async function(req, res, next) {
 
     //console.log(usuario, usuario.nombre, usuario.email, ' ===== ');
     res.render('formRestaurante', {
+        userName: req.cookies.userName,
         //user: JSON.stringify(usuario),
         //restaurantes: restaurantes,
     })
 });
 
 router.get('/incidencia', ensureIfLogged, async function(req, res, next) {
-    res.render('formIncidencia')
+    res.render('formIncidencia', {
+        userName: req.cookies.userName,
+    })
 });
 
 router.get('/opinion', ensureIfLogged, async function(req, res, next) {
-    res.render('formOpinion')
+    res.render('formOpinion', {
+        userName: req.cookies.userName,
+    })
 });
 
 router.get('/plato', ensureIfLogged, async function(req, res, next) {
-    res.render('formPlato')
+    res.render('formPlato', {
+        userName: req.cookies.userName,
+    })
 });
 
 router.get('/sitio_turistico', ensureIfLogged, async function(req, res, next) {
-    res.render('formSitioTuristico')
+    res.render('formSitioTuristico', {
+        userName: req.cookies.userName,
+    })
 });
 
 router.get('/ver_opinion', ensureIfLogged, async function(req, res, next) {
-    res.render('getOpinion')
+    res.render('getOpinion', {
+        userName: req.cookies.userName,
+    })
 });
 
 router.get('/valoracion', ensureIfLogged, async function(req, res, next) {
-    res.render('getValoracion')
+    res.render('getValoracion', {
+        userName: req.cookies.userName,
+    })
+});
+
+router.get('/detalleRestaurante', ensureIfLogged, async function(req, res, next) {
+    res.render('detalleRestaurante', {
+        userName: req.cookies.userName,
+    })
+});
+
+router.get('/logout', ensureIfLogged, async function(req, res, next) {
+    res.clearCookie()
+    req.clearCookie()
+    res.redirect('/')
 });
 
 /*
