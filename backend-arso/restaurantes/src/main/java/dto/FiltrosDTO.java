@@ -6,6 +6,9 @@ public class FiltrosDTO {
 
 	@SerializedName("nombre")
 	private String nombre;
+	
+	@SerializedName("ciudad")
+	private String ciudad;
 
 	@SerializedName("coorX")
 	private Double coorX;
@@ -69,11 +72,24 @@ public class FiltrosDTO {
 	public void setValoracionMax(Double valoracionMax) {
 		this.valoracionMax = valoracionMax;
 	}
+	
+	
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
 
 	@Override
 	public String toString() {
-		return "FiltrosDTO [nombre=" + nombre + ", coorX=" + coorX + ", coorY=" + coorY + ", distancia=" + distancia
-				+ ", valoracionMin=" + valoracionMin + ", valoracionMax=" + valoracionMax + "]";
+		return "FiltrosDTO [nombre=" + nombre + ", ciudad=" + ciudad + ", coorX=" + coorX + ", coorY=" + coorY
+				+ ", distancia=" + distancia + ", valoracionMin=" + valoracionMin + ", valoracionMax=" + valoracionMax
+				+ "]";
 	}
 
+
+	
 }

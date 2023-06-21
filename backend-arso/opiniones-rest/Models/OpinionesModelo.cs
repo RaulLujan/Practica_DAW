@@ -21,6 +21,14 @@ namespace Opiniones.Modelo
         public void AddValoracion(Valoracion valoracion) {
             Valoraciones.Add(valoracion);
         }
+
+        public void UpdateValoracion(Valoracion valoracion) {
+            for (var i = 0; i < Valoraciones.Count; i++) {
+                if(Valoraciones[i].Id == valoracion.Id){
+                    Valoraciones[i] = valoracion;
+                }
+            }
+        }
     }
 
 

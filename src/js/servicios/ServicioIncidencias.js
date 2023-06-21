@@ -27,7 +27,7 @@ async function insertarIncidencia(connection, incidencia) {
 }
 
 async function consultarAllIncidencias(connection) {
-  const sql = 'SELECT * FROM TIncidencias;';
+  const sql = 'SELECT * FROM TIncidencias ORDER BY FECHA DESC;';
   
   connection.connect(function(err){
     if(err){console.log(err);}
@@ -46,7 +46,7 @@ async function consultarAllIncidencias(connection) {
 }
 
 async function consultarIncidenciasByPlato(connection, nombrePlato) {
-  const sql = 'SELECT * FROM TIncidencias WHERE nombrePlato = \'' + nombrePlato + '\' ;';
+  const sql = 'SELECT * FROM TIncidencias WHERE nombrePlato = \'' + nombrePlato + '\' ORDER BY FECHA DESC;';
   
   connection.connect(function(err){
     if(err){console.log(err);}
@@ -66,7 +66,7 @@ async function consultarIncidenciasByPlato(connection, nombrePlato) {
   
 
 async function consultarIncidenciasByRestaurante(connection, idRestaurante) {
-  const sql = 'SELECT * FROM TIncidencias WHERE idRestaurante = \'' + idRestaurante + '\' ;';
+  const sql = 'SELECT * FROM TIncidencias WHERE idRestaurante = \'' + idRestaurante + '\' ORDER BY FECHA DESC;';
   
   connection.connect(function(err){
     if(err){console.log(err);}
@@ -85,7 +85,7 @@ async function consultarIncidenciasByRestaurante(connection, idRestaurante) {
 }
 
 async function consultarIncidenciasByUsuario(connection, idUser) {
-  const sql = 'SELECT * FROM TIncidencias WHERE idUser = \'' + idUser + '\' ;';
+  const sql = 'SELECT * FROM TIncidencias WHERE idUser = \'' + idUser + '\' ORDER BY FECHA DESC;';
   
   connection.connect(function(err){
     if(err){console.log(err);}

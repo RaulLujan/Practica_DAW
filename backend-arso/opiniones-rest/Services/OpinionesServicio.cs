@@ -23,6 +23,8 @@ namespace Opiniones.Servicio
 
         void AddValoracion(string id, Valoracion valoracion);
 
+         void UpdateValoracion(string id, Valoracion valoracion);
+
     }
 
     public class ServicioOpiniones : IServicioOpiniones
@@ -86,6 +88,14 @@ namespace Opiniones.Servicio
         {
             Opinion opinion = Get(id);
             opinion.AddValoracion(valoracion);
+            Update(id, opinion);
+            EnviarNotificacion(opinion);
+        }
+
+        public void UpdateValoracion(string id, Valoracion valoracion)
+        {
+            Opinion opinion = Get(id);
+            opinion.UpdateValoracion(valoracion);
             Update(id, opinion);
             EnviarNotificacion(opinion);
         }

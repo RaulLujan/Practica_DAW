@@ -49,7 +49,7 @@ public class ServicioControladorRest {
 	@ApiOperation(value = "Consulta un restaurante", notes = "Retorna un restaurante utilizando su id", response = Restaurante.class)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR, AvailableRoles.CLIENTE})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR, AvailableRoles.CLIENTE })
 	public Response getRestaurante(@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id)
 			throws Exception {
 
@@ -61,7 +61,7 @@ public class ServicioControladorRest {
 	// http://localhost:8080/api/restaurantes
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
 	public Response create(RestauranteDTO restauranteDTO) throws Exception {
 		Restaurante restaurante = restauranteDTO.transformarRestaurante();
 		String id = servicio.create(restaurante);
@@ -77,7 +77,7 @@ public class ServicioControladorRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
 	public Response update(@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id,
 			RestauranteDTO restauranteDTO) throws Exception {
 		Restaurante restaurante = restauranteDTO.transformarRestaurante();
@@ -97,7 +97,7 @@ public class ServicioControladorRest {
 	@Path("/{id}")
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
 	public Response removeRestaurante(
 			@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id) throws Exception {
 		servicio.removeRestaurante(id);
@@ -114,7 +114,7 @@ public class ServicioControladorRest {
 	@ApiOperation(value = "Consulta los Sitios Turisticos proximos a un restaurante", notes = "Retorna una lista de sitios turisticos el id del restaurante", response = SitioTuristico.class)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR, AvailableRoles.CLIENTE})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR, AvailableRoles.CLIENTE })
 	public Response getSitiosTuristicosProximos(
 			@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id) throws Exception {
 		return Response.status(Response.Status.OK).entity(servicio.getSitiosTuristicosProximos(id)).build();
@@ -130,11 +130,29 @@ public class ServicioControladorRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
 	public Response setSitiosTuristicosDestacados(
 			@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id,
 			List<SitioTuristico> sitiosTuristicos) throws Exception {
 		servicio.setSitiosTuristicosDestacados(id, sitiosTuristicos);
+		return Response.status(Response.Status.NO_CONTENT).build();
+	}
+
+	// Borra un sitio al restaurante, que contiene el ID introducido por
+	// parametro
+	// curl -i -X DELETE -H "Content-type: application/xml"
+	// http://localhost:8080/api/restaurantes/sitiosturisticos/{id}/{nombre}
+	@DELETE
+	@Path("/sitiosturisticos/{id}/{nombre}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
+			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
+	public Response removeSitioturistico(
+			@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id,
+			@ApiParam(value = "nombre del Sitioturistico", required = true) @PathParam("nombre") String nombre)
+			throws Exception {
+		servicio.removeSitioTuristico(id, nombre);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
@@ -147,7 +165,7 @@ public class ServicioControladorRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
 	public Response addPlato(@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id,
 			Plato plato) throws Exception {
 		servicio.addPlato(id, plato);
@@ -163,7 +181,7 @@ public class ServicioControladorRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
 	public Response updatePlato(@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id,
 			Plato plato) throws Exception {
 		servicio.updatePlato(id, plato);
@@ -179,7 +197,7 @@ public class ServicioControladorRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
 	public Response removePlato(@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id,
 			@ApiParam(value = "nombre del Plato", required = true) @PathParam("nombre") String nombre)
 			throws Exception {
@@ -196,7 +214,7 @@ public class ServicioControladorRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR, AvailableRoles.CLIENTE})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR, AvailableRoles.CLIENTE })
 	public Response altaServicioOpiniones(
 			@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id) throws Exception {
 		servicio.altaServicioOpiniones(id);
@@ -212,7 +230,7 @@ public class ServicioControladorRest {
 	@ApiOperation(value = "Consulta un restaurante", notes = "Retorna un restaurante utilizando su idGestor", response = Restaurante.class)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
 	public Response getRestauranteByIdGestor(
 			@ApiParam(value = "id del gestor", required = true) @PathParam("id") String id) throws Exception {
 
@@ -225,7 +243,7 @@ public class ServicioControladorRest {
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR, AvailableRoles.CLIENTE})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR, AvailableRoles.CLIENTE })
 	public Response getAllRestaurantes() throws Exception {
 		return Response.status(Response.Status.OK).entity(servicio.getAll()).build();
 	}
@@ -237,7 +255,7 @@ public class ServicioControladorRest {
 	@Path("/filtros")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Secured({AvailableRoles.ADMIN, AvailableRoles.GESTOR, AvailableRoles.CLIENTE})
+	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR, AvailableRoles.CLIENTE })
 	public Response getRestauranteFiltros(FiltrosDTO filtrosDTO) throws Exception {
 		return Response.status(Response.Status.OK).entity(servicio.getAllFiltrado(filtrosDTO)).build();
 	}

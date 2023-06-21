@@ -100,7 +100,6 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	public void setResumenValoracion(ResumenValoracion resumenValoracion) {
 		this.resumenValoracion = resumenValoracion;
 	}
-	
 
 	public String getCiudad() {
 		return ciudad;
@@ -142,10 +141,28 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 		return false;
 	}
 
+	public boolean removeSitioTuristico(String nombre) {
+		if (this.sitiosTuristicos == null)
+			this.sitiosTuristicos = new LinkedList<SitioTuristico>();
+		SitioTuristico sitioTuristico = findSitioTuristico(nombre);
+		if (sitioTuristico != null) {
+			this.sitiosTuristicos.remove(sitioTuristico);
+			return true;
+		}
+		return false;
+	}
+
 	protected Plato findPlato(String nombre) {
 		for (Plato plato : platos)
 			if (plato.getNombre().equals(nombre))
 				return plato;
+		return null;
+	}
+
+	protected SitioTuristico findSitioTuristico(String nombre) {
+		for (SitioTuristico sitioTuristico : sitiosTuristicos)
+			if (sitioTuristico.getNombre().equals(nombre))
+				return sitioTuristico;
 		return null;
 	}
 
@@ -156,8 +173,6 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	public void setIdGestor(String idGestor) {
 		this.idGestor = idGestor;
 	}
-	
-
 
 	public Date getFechaAlta() {
 		return fechaAlta;
@@ -166,8 +181,6 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	public void setFechaAlta(Date fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
-
-
 
 	@Override
 	public String toString() {

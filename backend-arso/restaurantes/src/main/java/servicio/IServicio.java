@@ -88,7 +88,12 @@ public interface IServicio {
 	/**
 	 * Obtener todos los Restaurantes fintrando por los parametros.
 	 */
-	List<Restaurante> getAllFiltrado(FiltrosDTO filtros)
-			throws RepositorioException;
+	List<Restaurante> getAllFiltrado(FiltrosDTO filtros) throws RepositorioException;
+
+	/**
+	 * Actualiza un restaurante, borrandole un Plato, utilizando el identificador y
+	 * el nombre del Plato
+	 */
+	void removeSitioTuristico(String id, String nombre) throws RepositorioException, EntidadNoEncontrada;
 
 }

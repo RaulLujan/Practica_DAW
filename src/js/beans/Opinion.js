@@ -7,7 +7,6 @@ class Opinion {
   nombre;  
   valoraciones=[];  
 
-
   // Metodos
   fromJson(json){
     this.nombre = json.nombre;
@@ -19,6 +18,17 @@ class Opinion {
         this.valoraciones.push(valoracion);
       }
     }
+  }
+
+  containsValoracion(valoracion){
+    if (this.valoraciones !== undefined) {
+      for (var i = 0; i < valoraciones.length; i++) {
+        if(valoraciones[i].IdUser === valoracion.IdUser){
+          return true
+        }
+      }
+    }
+    return false
   }
 
   print(){

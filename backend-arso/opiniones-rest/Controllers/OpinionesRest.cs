@@ -84,6 +84,22 @@ namespace OpinionesApi.Controllers
             return NoContent();
         }
 
+
+        [HttpPut("updatevaloracion/{id}")]
+        public IActionResult UpdateValoracion(string id, Valoracion valoracion)
+        {
+            var entidad = _servicio.Get(id);
+
+            if (entidad == null)
+            {
+                return NotFound();
+            }
+
+            _servicio.UpdateValoracion(id, valoracion);
+
+            return NoContent();
+        }
+
     }
 
 }

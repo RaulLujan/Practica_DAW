@@ -25,6 +25,7 @@ import modelo.Restaurante;
 import modelo.SitioTuristico;
 import modelo.filtros.Specification;
 import modelo.filtros.TrueSpecification;
+import modelo.filtros.implementaciones.FiltroCiudadRestaurantes;
 import modelo.filtros.implementaciones.FiltroCoordenadasRestaurantes;
 import modelo.filtros.implementaciones.FiltroNombreParcialRestaurantes;
 import modelo.filtros.implementaciones.FiltroRangoValoracionRestaurantes;
@@ -37,7 +38,6 @@ import utils.Constantes;
 import utils.Utils;
 import utils.api.dbpedia.DbpediaApiConsumer;
 import utils.api.geonames.GeonamesApiConsumer;
-
 
 public class Servicio implements IServicio {
 
@@ -185,9 +185,9 @@ public class Servicio implements IServicio {
 
 		String nombre = "Opinion_" + restaurante.getNombre();
 		String idOpinion = Utils.retrofitOpinionesClient(Constantes.URL_BASE_API_OPINION, nombre);
-	    JsonParser jsonParser = new JsonParser();
-	    JsonObject myJson = (JsonObject) jsonParser.parse(idOpinion);
-	    idOpinion = myJson.get("id").getAsString();
+		JsonParser jsonParser = new JsonParser();
+		JsonObject myJson = (JsonObject) jsonParser.parse(idOpinion);
+		idOpinion = myJson.get("id").getAsString();
 		restaurante.setIdOpinion(idOpinion);
 		update(restaurante);
 	}
@@ -208,19 +208,20 @@ public class Servicio implements IServicio {
 		Specification<Restaurante> specification = new TrueSpecification<Restaurante>();
 
 		// Construccion de Filtros
-		if (filtros.getNombre() != null) 
+		if (filtros.getNombre() != null)
 			listaSpecifications.add(new FiltroNombreParcialRestaurantes(filtros.getNombre()));
-		
 
 		if (filtros.getCoorX() != null && filtros.getCoorY() != null && filtros.getDistancia() != null)
-			listaSpecifications.add(new FiltroCoordenadasRestaurantes(filtros.getCoorX(), filtros.getCoorY(),
-				filtros.getDistancia()));
+			listaSpecifications.add(
+					new FiltroCoordenadasRestaurantes(filtros.getCoorX(), filtros.getCoorY(), filtros.getDistancia()));
 
-		if (filtros.getValoracionMin() != null && filtros.getValoracionMax() != null) 
+		if (filtros.getValoracionMin() != null && filtros.getValoracionMax() != null)
 			listaSpecifications.add(new FiltroRangoValoracionRestaurantes((double) filtros.getValoracionMin(),
-				(double) filtros.getValoracionMax()));
+					(double) filtros.getValoracionMax()));
 
-		
+		if (filtros.getCiudad() != null)
+			listaSpecifications.add(new FiltroCiudadRestaurantes(filtros.getCiudad()));
+
 		Specification<Restaurante> specifications = specification.and(listaSpecifications);
 
 		List<Restaurante> restaurantes = repositorio.getAll();
@@ -231,6 +232,13 @@ public class Servicio implements IServicio {
 				resultado.add(restaurante);
 
 		return resultado;
+	}
+
+	@Override
+	public void removeSitioTuristico(String id, String nombre) throws RepositorioException, EntidadNoEncontrada {
+		Restaurante restaurante = getRestaurante(id);
+		restaurante.removeSitioTuristico(nombre);
+		update(restaurante);
 	}
 
 }
