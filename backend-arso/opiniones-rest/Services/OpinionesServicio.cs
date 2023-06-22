@@ -25,6 +25,8 @@ namespace Opiniones.Servicio
 
          void UpdateValoracion(string id, Valoracion valoracion);
 
+         Valoracion GetValoracion(string id, string idValoracion);
+
     }
 
     public class ServicioOpiniones : IServicioOpiniones
@@ -106,6 +108,12 @@ namespace Opiniones.Servicio
             + "\", \"numeroValoracion\" : \"" + opinion.GetNumValoraciones() 
             + "\", \"calificacionMedia\" : \"" + opinion.GetCalificacionMedia().ToString().Replace(',', '.') + "\" }";
             couldConnect.PublishMessage(CONNECTION_RABBITMQ_EXCHANGE, message);
+        }
+
+        public Valoracion GetValoracion(string id, string idValoracion)
+        {
+            Opinion opinion = Get(id);
+            return opinion.constainsValoracion(idValoracion);
         }
 
     }

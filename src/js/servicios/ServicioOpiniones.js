@@ -20,10 +20,26 @@ async function consultarOpinion(id) {
   return response;
 }
 
+async function consultarValoracion(id, idValoracion) {
+  const response = await fetch(urlbase + '/valoracion/' + id + '/' + idValoracion, 
+          {
+              method: 'GET',
+              headers: {"Content-Type": "application/json"}
+          })
+          .then(res => res.json())
+          .then(function(res) {
+            var valoracion = new va.Valoracion()
+            valoracion.fromJson(res)
+            return valoracion
+          })
+          .catch(err => console.log('Solicitud fallida', err));
+  return response;
+}
+
 async function addValoracion(id, valoracion) {
-  var opinon = await consultarOpinion(id);
+  var valoracion = await consultarValoracion(id, valoracion.Id);
   var path = '/addvaloracion/';
-  if(opinon.containsValoracion(valoracion))
+  if(valoracion.Id !== undefined)
     path = '/updatevaloracion/';
 
   const response = await fetch(urlbase + path + id,
@@ -38,4 +54,5 @@ async function addValoracion(id, valoracion) {
 }
 
 exports.consultarOpinion = consultarOpinion;
+exports.consultarValoracion = consultarValoracion;
 exports.addValoracion = addValoracion;

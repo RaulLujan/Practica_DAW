@@ -29,6 +29,17 @@ namespace Opiniones.Modelo
                 }
             }
         }
+
+         public Valoracion constainsValoracion(string idValoracion) {
+            for (var i = 0; i < Valoraciones.Count; i++) {
+                if(Valoraciones[i].Id == idValoracion){
+                    return Valoraciones[i];
+                }
+            }
+            return null;
+        }
+
+
     }
 
 

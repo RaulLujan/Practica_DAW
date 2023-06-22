@@ -100,6 +100,19 @@ namespace OpinionesApi.Controllers
             return NoContent();
         }
 
+        [HttpGet("valoracion/{id}/{idValoracion}")]
+        public ActionResult<Valoracion> GetValoracion(string id, string idValoracion)
+        {
+            var entidad = _servicio.GetValoracion(id, idValoracion);
+
+            if (entidad == null)
+            {
+                return NotFound();
+            }
+
+            return entidad;
+        }
+
     }
 
 }
