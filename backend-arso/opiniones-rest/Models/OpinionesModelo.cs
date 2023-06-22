@@ -30,9 +30,9 @@ namespace Opiniones.Modelo
             }
         }
 
-         public Valoracion constainsValoracion(string idValoracion) {
+         public Valoracion constainsValoracion(string IdUser) {
             for (var i = 0; i < Valoraciones.Count; i++) {
-                if(Valoraciones[i].Id == idValoracion){
+                if(Valoraciones[i].IdUser == IdUser){
                     return Valoraciones[i];
                 }
             }

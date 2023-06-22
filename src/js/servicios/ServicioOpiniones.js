@@ -20,8 +20,8 @@ async function consultarOpinion(id) {
   return response;
 }
 
-async function consultarValoracion(id, idValoracion) {
-  const response = await fetch(urlbase + '/valoracion/' + id + '/' + idValoracion, 
+async function consultarValoracion(id, idUser) {
+  const response = await fetch(urlbase + '/valoracion/' + id + '/' + idUser, 
           {
               method: 'GET',
               headers: {"Content-Type": "application/json"}
@@ -37,7 +37,7 @@ async function consultarValoracion(id, idValoracion) {
 }
 
 async function addValoracion(id, valoracion) {
-  var valoracion = await consultarValoracion(id, valoracion.Id);
+  var valoracion = await consultarValoracion(id, valoracion.IdUser);
   var path = '/addvaloracion/';
   if(valoracion.Id !== undefined)
     path = '/updatevaloracion/';

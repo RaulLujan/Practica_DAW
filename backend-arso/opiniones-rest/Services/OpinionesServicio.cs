@@ -25,7 +25,7 @@ namespace Opiniones.Servicio
 
          void UpdateValoracion(string id, Valoracion valoracion);
 
-         Valoracion GetValoracion(string id, string idValoracion);
+         Valoracion GetValoracion(string id, string IdUser);
 
     }
 
@@ -110,10 +110,10 @@ namespace Opiniones.Servicio
             couldConnect.PublishMessage(CONNECTION_RABBITMQ_EXCHANGE, message);
         }
 
-        public Valoracion GetValoracion(string id, string idValoracion)
+        public Valoracion GetValoracion(string id, string IdUser)
         {
             Opinion opinion = Get(id);
-            return opinion.constainsValoracion(idValoracion);
+            return opinion.constainsValoracion(IdUser);
         }
 
     }
