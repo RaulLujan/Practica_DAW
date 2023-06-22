@@ -23,9 +23,8 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/restaurantes" class="nav-link px-2 text-white">Restaurantes</a></li>
-          <li><a href="/valoracion" class="nav-link px-2 text-white">Valoraciones</a></li>
-          {{#if userRol === "ADMIN"}}
-          <li><a href="/modRestaurante" class="nav-link px-2 text-white">Opiniones</a></li>
+          {{#if userRol}}
+          <li><a href="/gestRestaurante" class="nav-link px-2 text-white">Gestionar Restaurantes</a></li>
           {{/if}}
         </ul>
 
@@ -45,7 +44,7 @@
             <li><a class="dropdown-item" href="/opinion">Opiniones</a></li>
             <li><a class="dropdown-item" href="/plato">Platos</a></li>
             <li><a class="dropdown-item" href="/restaurantes">Restaurantes</a></li>
-            <li><a class="dropdown-item" href="/sitio_turistico">Sitios turísticos</a></li>
+            <li><a class="dropdown-item" href="/addsitios">Sitios turísticos</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Salir</a></li>
           </ul>
@@ -86,8 +85,8 @@
               <p class="card-text">
                 Descripción del plato
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
+              <a href="#" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
         <article class="card card-plato plato-no-disponible">
@@ -100,8 +99,8 @@
               <p class="card-text">
                 Descripción del plato
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
+              <a href="#" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
         <article class="card card-plato plato-disponible">
@@ -114,8 +113,8 @@
               <p class="card-text">
                 Descripción del plato
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
+              <a href="#" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
         <article class="card card-plato plato-no-disponible">
@@ -128,8 +127,8 @@
               <p class="card-text">
                 Descripción del plato
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
+              <a href="#" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
         <article class="card card-plato plato-disponible">
@@ -142,8 +141,8 @@
               <p class="card-text">
                 Descripción del plato
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
+              <a href="#" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
         <article class="card card-plato plato-no-disponible">
@@ -156,8 +155,8 @@
               <p class="card-text">
                 Descripción del plato
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
+              <a href="#" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
         <article class="card card-plato plato-disponible">
@@ -170,8 +169,8 @@
               <p class="card-text">
                 Descripción del plato
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
+              <a href="#" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
         <article class="card card-plato plato-no-disponible">
@@ -184,8 +183,8 @@
               <p class="card-text">
                 Descripción del plato
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
+              <a href="#" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
       </div>
@@ -198,10 +197,9 @@
                   Nombre del sitio
               </a>
               <p class="card-text">
-                Descripción del plato
+                Descripción del sitio
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         <article class="card">
@@ -211,10 +209,9 @@
                   Nombre del sitio
               </a>
               <p class="card-text">
-                Descripción del plato
+                Descripción del sitio
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         <article class="card">
@@ -224,10 +221,9 @@
                   Nombre del sitio
               </a>
               <p class="card-text">
-                Descripción del plato
+                Descripción del sitio
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         <article class="card">
@@ -237,10 +233,9 @@
                   Nombre del sitio
               </a>
               <p class="card-text">
-                Descripción del plato
+                Descripción del sitio
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         <article class="card">
@@ -250,10 +245,9 @@
                   Nombre del sitio
               </a>
               <p class="card-text">
-                Descripción del plato
+                Descripción del sitio
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         <article class="card">
@@ -263,10 +257,9 @@
                   Nombre del sitio
               </a>
               <p class="card-text">
-                Descripción del plato
+                Descripción del sitio
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         <article class="card">
@@ -276,10 +269,9 @@
                   Nombre del sitio
               </a>
               <p class="card-text">
-                Descripción del plato
+                Descripción del sitio
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         <article class="card">
@@ -289,10 +281,9 @@
                   Nombre del sitio
               </a>
               <p class="card-text">
-                Descripción del plato
+                Descripción del sitio
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         <article class="card">
@@ -302,10 +293,9 @@
                   Nombre del sitio
               </a>
               <p class="card-text">
-                Descripción del plato
+                Descripción del sitio
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         <article class="card">
@@ -315,13 +305,55 @@
                   Nombre del sitio
               </a>
               <p class="card-text">
-                Descripción del plato
+                Descripción del sitio
               </p>
-              <a href="#" class="btn btn-primary">Acción</a>
-              <a href="#" class="btn btn-secondary">Acción</a>
+              <a href="#" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
       </div>
+      <div class="table-responsive">
+        <table class="table table-sm caption-top table-success table-striped">
+            <caption>Listado incidencias</caption>
+            <thead>
+                <tr>
+                  <th scope="col">Plato</th>
+                  <th scope="col">Usuario</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Plato 1</td>
+                    <td>raul@um.es</td>
+                    <td>lalalalalalalaalala</td>
+                    <td>01/01/2023</td>
+                  </tr>
+                  <tr>
+                    <td>Plato 1</td>
+                    <td>raul@um.es</td>
+                    <td>lalalalalalalaalala</td>
+                    <td>01/01/2023</td>
+                  </tr>
+                  <tr>
+                    <td>Plato 1</td>
+                    <td>raul@um.es</td>
+                    <td>lalalalalalalaalala</td>
+                    <td>01/01/2023</td>
+                  </tr>
+                  <tr>
+                    <td>Plato 1</td>
+                    <td>raul@um.es</td>
+                    <td>lalalalalalalaalala</td>
+                    <td>01/01/2023</td>
+                  </tr>
+            </tbody>
+        </table>
+      </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Realizar valoración</button>
+        <button type="submit" class="btn btn-light">Volver</button>
+    </div>
     </main>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> 

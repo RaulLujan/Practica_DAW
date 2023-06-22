@@ -21,9 +21,8 @@
         
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                   <li><a href="/restaurantes" class="nav-link px-2 text-white">Restaurantes</a></li>
-                  <li><a href="/valoracion" class="nav-link px-2 text-white">Valoraciones</a></li>
-                  {{#if userRol === "ADMIN"}}
-                  <li><a href="/modRestaurante" class="nav-link px-2 text-white">Opiniones</a></li>
+                  {{#if userRol}}
+                  <li><a href="/gestRestaurante" class="nav-link px-2 text-white">Gestionar Restaurantes</a></li>
                   {{/if}}
                 </ul>
         
@@ -43,7 +42,7 @@
                     <li><a class="dropdown-item" href="/opinion">Opiniones</a></li>
                     <li><a class="dropdown-item" href="/plato">Platos</a></li>
                     <li><a class="dropdown-item" href="/restaurantes">Restaurantes</a></li>
-                    <li><a class="dropdown-item" href="/sitio_turistico">Sitios turísticos</a></li>
+                    <li><a class="dropdown-item" href="/addsitios">Sitios turísticos</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Salir</a></li>
                   </ul>
@@ -51,15 +50,9 @@
               </div>
             </div>
           </header>
-        <div class="d-flex py-1 border-bottom">
-            <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#" class="nav-link active-link">Ver platos</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Sitios turísticos</a></li>
-            </ul>
-        </div>
         <div class="container">
             <main class="shadow border mt-4 p-4">
-                <h1>Gestionar restaurantes: xx {{ user }} zz</h1>
+                <h1>Gestionar restaurantes:</h1>
                 <form class="row">
                     <div class="col-md-6 mb-2">
                         <label for="nombre" class="form-label">Nombre del restaurante:</label>

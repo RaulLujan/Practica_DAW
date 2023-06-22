@@ -22,9 +22,8 @@
         
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                   <li><a href="/restaurantes" class="nav-link px-2 text-white">Restaurantes</a></li>
-                  <li><a href="/valoracion" class="nav-link px-2 text-white">Valoraciones</a></li>
-                  {{#if userRol === "ADMIN"}}
-                  <li><a href="/modRestaurante" class="nav-link px-2 text-white">Opiniones</a></li>
+                  {{#if userRol}}
+                  <li><a href="/gestRestaurante" class="nav-link px-2 text-white">Gestionar Restaurantes</a></li>
                   {{/if}}
                 </ul>
         
@@ -44,7 +43,7 @@
                     <li><a class="dropdown-item" href="/opinion">Opiniones</a></li>
                     <li><a class="dropdown-item" href="/plato">Platos</a></li>
                     <li><a class="dropdown-item" href="/restaurantes">Restaurantes</a></li>
-                    <li><a class="dropdown-item" href="/sitio_turistico">Sitios turísticos</a></li>
+                    <li><a class="dropdown-item" href="/addsitios">Sitios turísticos</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Salir</a></li>
                   </ul>

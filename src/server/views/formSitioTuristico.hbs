@@ -21,9 +21,8 @@
     
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li><a href="/restaurantes" class="nav-link px-2 text-white">Restaurantes</a></li>
-              <li><a href="/valoracion" class="nav-link px-2 text-white">Valoraciones</a></li>
-              {{#if userRol === "ADMIN"}}
-              <li><a href="/modRestaurante" class="nav-link px-2 text-white">Opiniones</a></li>
+              {{#if userRol}}
+              <li><a href="/gestRestaurante" class="nav-link px-2 text-white">Gestionar Restaurantes</a></li>
               {{/if}}
             </ul>
     
@@ -43,7 +42,7 @@
                 <li><a class="dropdown-item" href="/opinion">Opiniones</a></li>
                 <li><a class="dropdown-item" href="/plato">Platos</a></li>
                 <li><a class="dropdown-item" href="/restaurantes">Restaurantes</a></li>
-                <li><a class="dropdown-item" href="/sitio_turistico">Sitios turísticos</a></li>
+                <li><a class="dropdown-item" href="/addsitios">Sitios turísticos</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Salir</a></li>
               </ul>
@@ -52,7 +51,8 @@
         </div>
       </header>
         <div class="container">
-            <main class="shadow border mt-4 p-4">
+          <!-- La primera parte no la veo necesaria -->
+          <!--  <main class="shadow border mt-4 p-4">
                 <h1>Sitio turístico:</h1>
                 <form>
                     <div class="mb-2">
@@ -80,7 +80,8 @@
                         <button type="reset" class="btn btn-light">Borrar</button>
                     </div>
                 </form>
-            </main>
+            </main> -->
+            <!-- End La primera parte no la veo necesaria -->
             <main class="shadow border mt-4 p-4">
                 <h1>Listado de sitios turísticos:</h1>
                 <form>
@@ -92,7 +93,6 @@
                                   <th scope="col">#</th>
                                   <th scope="col">Nombre</th>
                                   <th scope="col">Ciudad</th>
-                                  <th scope="col" class="text-end">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -103,9 +103,7 @@
                                     </td>
                                     <td>Nombre</td>
                                     <td>Ciudad</td>
-                                    <td class="text-end">
-                                      <a href="#" class="btn btn-sm btn-primary">Editar</a>
-                                    </td>
+
                                   </tr>
                                   <tr>
                                     <td>
@@ -114,9 +112,6 @@
                                     </td>
                                     <td>Nombre</td>
                                     <td>Ciudad</td>
-                                    <td class="text-end">
-                                      <a href="#" class="btn btn-sm btn-primary">Editar</a>
-                                    </td>
                                   </tr>
                                   <tr>
                                     <td>
@@ -125,9 +120,6 @@
                                     </td>
                                     <td>Nombre</td>
                                     <td>Ciudad</td>
-                                    <td class="text-end">
-                                      <a href="#" class="btn btn-sm btn-primary">Editar</a>
-                                    </td>
                                   </tr>
                                   <tr>
                                     <td>
@@ -136,16 +128,13 @@
                                     </td>
                                     <td>Nombre</td>
                                     <td>Ciudad</td>
-                                    <td class="text-end">
-                                      <a href="#" class="btn btn-sm btn-primary">Editar</a>
-                                    </td>
                                   </tr>
                             </tbody>
                         </table>
                       </div>
                     <div>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
-                        <button type="reset" class="btn btn-light">Borrar</button>
+                        <button type="submit" class="btn btn-primary">Añadir</button>
+                        <button type="reset" class="btn btn-light">Volver</button>
                     </div>
                 </form>
             </main>
