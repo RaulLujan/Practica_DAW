@@ -98,8 +98,8 @@ async function añadirSitiosTuristicosProximos(listSitiosTuristicos, id, token) 
     return response;
 }
 
-async function borrarSitioTuristico(nombre, id, token) {
-    const response = await fetch(urlbase + '/sitiosturisticos/' + id + '/' + nombre,
+async function borrarSitioTuristico(idSitio, id, token) {
+    const response = await fetch(urlbase + '/sitiosturisticos/' + id + '/' + idSitio,
         {
             method: 'DELETE',
             headers: {"Content-Type": "application/json", "Cookie": "jwt=" + token,},
@@ -107,6 +107,17 @@ async function borrarSitioTuristico(nombre, id, token) {
         .then(function(res) { return true;})
         .catch(err => console.log('Solicitud fallida', err));
     return response;
+}
+
+async function consultarPlato(idPlato, id, token) {
+    const restaurante = await consultarRestaurante(id, token)
+    if(restaurante !== undefined && restaurante.platos !== undefined){
+        for (var i = 0; i < restaurante.platos.length; i++) {
+            if(restaurante.platos[i].id === idPlato)
+                return restaurante.platos[i]
+        }
+    }
+    return null;
 }
 
 async function añadirPlato(plato, id, token) {
@@ -133,8 +144,8 @@ async function modificarPlato(plato, id, token) {
     return response;
 }
 
-async function borrarPlato(nombre, id, token) {
-    const response = await fetch(urlbase + '/plato/' + id + '/' + nombre,
+async function borrarPlato(idPlato, id, token) {
+    const response = await fetch(urlbase + '/plato/' + id + '/' + idPlato,
         {
             method: 'DELETE',
             headers: {"Content-Type": "application/json", "Cookie": "jwt=" + token,},
@@ -192,6 +203,7 @@ exports.borrarRestaurante = borrarRestaurante;
 exports.consultarSitiosTuristicosProximos = consultarSitiosTuristicosProximos;
 exports.añadirSitiosTuristicosProximos = añadirSitiosTuristicosProximos;
 exports.borrarSitioTuristico = borrarSitioTuristico;
+exports.consultarPlato = consultarPlato;
 exports.añadirPlato = añadirPlato;
 exports.modificarPlato = modificarPlato;
 exports.borrarPlato = borrarPlato;
