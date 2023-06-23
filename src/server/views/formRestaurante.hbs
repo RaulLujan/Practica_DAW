@@ -109,12 +109,12 @@
                 <script>
                     document.getElementById('gestRestaurante').addEventListener('submit', async (event) => {
                         event.preventDefault();
-                        const form = event.currentTarget;
+                        const form = document.getElementById('gestRestaurante');
                         const formData = new FormData(form);
                         document.getElementById('gestRestauranteError').innerHTML = "";
                         fetch('/gestRestaurante', {
                             method: "POST",
-                            body: formData,
+                            body: JSON.stringify(Object.fromEntries(formData.entries())),
                             headers: {"Content-type": "application/json; charset=UTF-8"}
                         })
                             .then((response) => {
@@ -122,7 +122,7 @@
                                     document.getElementById('gestRestauranteError')
                                         .innerHTML = `<div class="alert alert-danger" role="alert">ERROR al crear</div>`;
                                 } else {
-                                    return Promise.resolve(response.json(req.body));
+                                    return Promise.resolve(response.json());
                                 }
                             }) 
                             .then((json) => {

@@ -5,6 +5,7 @@ var routes = require('./src/routes');
 const cookieParser = require("cookie-parser");
 
 var app = express();
+app.use(express.json());
 app.set('port', process.env.PORT || 3000);
 //Quitar para entregar
 app.disable('view cache');

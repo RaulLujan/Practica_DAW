@@ -13,7 +13,7 @@ async function getConnection() {
   return connection;
 }
 
-async function insertarIncidencia(connection, incidencia) {
+async function insertarIncidencia(connection, incidencia) { //TODO: Creo que la incidencia se deberia de crear aqui y no en otro sitio, recibiendo como parametro el idRestaurante, el usuario y el idPlato(nombrePlato o lo que sea)
   const sql = 'INSERT INTO TIncidencias (idUser, idRestaurante, nombrePlato, fecha, descripcion) ' +
   ' VALUES (\'' + incidencia.idUser + '\', \'' + incidencia.idRestaurante + '\', \'' + 
   incidencia.nombrePlato + '\', DATE(NOW()), \'' + incidencia.descripcion +'\');';

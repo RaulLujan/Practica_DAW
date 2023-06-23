@@ -85,6 +85,7 @@
             <main class="shadow border mt-4 p-4">
                 <h1>Listado de sitios turísticos:</h1>
                 <form>
+                  {{#if sitiosTuristicos}}
                     <div class="table-responsive">
                         <table class="table table-sm caption-top table-success table-striped">
                             <caption>Listado de sitios turísticos</caption>
@@ -96,46 +97,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                              {{#each sitiosTuristicos}}
                                 <tr>
                                     <td>
                                       <!-- el id tiene que cambiar, con el name igual con [] manda array (en PHP)-->
-                                      <input class="form-check-input" name="sitioTuristico[]" type="checkbox" id="sitioTuristico_1" value="idDelSitio" aria-label="Selecciona este sitio">
+                                      <input class="form-check-input" name="sitioTuristico[]" type="checkbox" id={{id}} value="idDelSitio" aria-label="Selecciona este sitio">
                                     </td>
-                                    <td>Nombre</td>
-                                    <td>Ciudad</td>
-
+                                    <td>{{nombre}}</td>
+                                    <td>{{ciudad}}</td>
                                   </tr>
-                                  <tr>
-                                    <td>
-                                      <!-- el id tiene que cambiar, con el name igual con [] manda array (en PHP)-->
-                                      <input class="form-check-input" name="sitioTuristico[]" type="checkbox" id="sitioTuristico_1" value="idDelSitio" aria-label="Selecciona este sitio">
-                                    </td>
-                                    <td>Nombre</td>
-                                    <td>Ciudad</td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <!-- el id tiene que cambiar, con el name igual con [] manda array (en PHP)-->
-                                      <input class="form-check-input" name="sitioTuristico[]" type="checkbox" id="sitioTuristico_1" value="idDelSitio" aria-label="Selecciona este sitio">
-                                    </td>
-                                    <td>Nombre</td>
-                                    <td>Ciudad</td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <!-- el id tiene que cambiar, con el name igual con [] manda array (en PHP)-->
-                                      <input class="form-check-input" name="sitioTuristico[]" type="checkbox" id="sitioTuristico_1" value="idDelSitio" aria-label="Selecciona este sitio">
-                                    </td>
-                                    <td>Nombre</td>
-                                    <td>Ciudad</td>
-                                  </tr>
+                                {{/each}}
                             </tbody>
                         </table>
                       </div>
                     <div>
-                        <button type="submit" class="btn btn-primary">Añadir</button>
+                        <button type="submit" class="btn btn-primary">Añadir</button>   <!--TODO: Pendiente, deberia ser un post-->
                         <a href="/modRestaurante/{{restauranteId}}/" class="btn btn-light">Volver</a> <!--TODO: tiene que llevar el id del restaurante, para eso le tiene que llegar aqui-->
                     </div>
+                  {{/if}} 
                 </form>
             </main>
         </div>

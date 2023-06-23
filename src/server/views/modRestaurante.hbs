@@ -74,250 +74,53 @@
                         <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" rows="4"> {{restaurante.descripcion}} </textarea>
                     </div>
                     <div class="mb-2">
-                        <a href="/modRestaurante/{{restaurante.id}}/" class="btn btn-primary">Añadir plato</a>
-                        <a href="/modRestaurante/{{restaurante.id}}/" class="btn btn-light">Añadir sitio turistico</a>
+                        <a href="/plato/{{restaurante.id}}/" class="btn btn-primary">Añadir plato</a>
+                        <a href="/addsitios/{{restaurante.id}}/" class="btn btn-light">Añadir sitio turistico</a>
                     </div>
+                    {{#if restaurante.platos}}
                     <h2>Platos</h2>
                     <div class="gridCards">
+                        {{#each restaurante.platos}}
                         <article class="card card-plato plato-disponible">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del plato">
                         <div class="card-body">
                             <h5 class="card-title">
-                                Nombre del plato (00.00€)<br />
-                                <small>Disponible</small>
+                                {{nombre}} ({{precio}}€)<br />
+                                <small>{{disponibilidad}}</small>
                             </h5>
                             <p class="card-text">
-                                Descripción del plato
+                                {{descripcion}}
                             </p>
-                            <a href="#" class="btn btn-primary">Actualizar</a>
-                            <a href="#" class="btn btn-secondary">Borrar</a>
+                            <a href="/plato/{{restaurante.id}}/{{id}}" class="btn btn-primary">Actualizar</a>
+                            <a href="/delPlato/{{restaurante.id}}/{{id}}" class="btn btn-secondary">Borrar</a> <!-- TODO: Creo que esto seria mejor por post para no recargar la vista...-->
                         </div>
                         </article>
-                        <article class="card card-plato plato-no-disponible">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del plato">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del plato (00.00€)<br />
-                                <small>NO disponible</small>
-                            </h5>
-                            <p class="card-text">
-                                Descripción del plato
-                            </p>
-                            <a href="#" class="btn btn-primary">Actualizar</a>
-                            <a href="#" class="btn btn-secondary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card card-plato plato-disponible">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del plato">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del plato (00.00€)<br />
-                                <small>Disponible</small>
-                            </h5>
-                            <p class="card-text">
-                                Descripción del plato
-                            </p>
-                            <a href="#" class="btn btn-primary">Actualizar</a>
-                            <a href="#" class="btn btn-secondary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card card-plato plato-no-disponible">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del plato">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del plato (00.00€)<br />
-                                <small>NO disponible</small>
-                            </h5>
-                            <p class="card-text">
-                                Descripción del plato
-                            </p>
-                            <a href="#" class="btn btn-primary">Actualizar</a>
-                            <a href="#" class="btn btn-secondary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card card-plato plato-disponible">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del plato">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del plato (00.00€)<br />
-                                <small>Disponible</small>
-                            </h5>
-                            <p class="card-text">
-                                Descripción del plato
-                            </p>
-                            <a href="#" class="btn btn-primary">Actualizar</a>
-                            <a href="#" class="btn btn-secondary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card card-plato plato-no-disponible">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del plato">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del plato (00.00€)<br />
-                                <small>NO disponible</small>
-                            </h5>
-                            <p class="card-text">
-                                Descripción del plato
-                            </p>
-                            <a href="#" class="btn btn-primary">Actualizar</a>
-                            <a href="#" class="btn btn-secondary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card card-plato plato-disponible">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del plato">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del plato (00.00€)<br />
-                                <small>Disponible</small>
-                            </h5>
-                            <p class="card-text">
-                                Descripción del plato
-                            </p>
-                            <a href="#" class="btn btn-primary">Actualizar</a>
-                            <a href="#" class="btn btn-secondary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card card-plato plato-no-disponible">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del plato">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del plato (00.00€)<br />
-                                <small>NO disponible</small>
-                            </h5>
-                            <p class="card-text">
-                                Descripción del plato
-                            </p>
-                            <a href="#" class="btn btn-primary">Actualizar</a>
-                            <a href="#" class="btn btn-secondary">Borrar</a>
-                        </div>
-                        </article>
+                        {{/each}}
                     </div>
+                    {{/if}}
+                    {{#if restaurante.sitiosTuristicos}}
                     <h2>Sitios turísticos</h2>
                     <div class="gridCards">
+                        {{#each restaurante.sitiosTuristicos}}
                         <article class="card">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del sitio">
+                        {{#with imagenesUrls.[0]}}
+                        <img src="{{url}}" class="card-img-top" alt="foto del sitio">
+                        {{/with}}
                         <div class="card-body">
                             <h5 class="card-title">
-                                Nombre del sitio
+                                {{nombre}}
                             </h5>
                             <p class="card-text">
-                                Descripción del sitio
+                                 {{descripcion}}
                             </p>
-                            <a href="#" class="btn btn-primary">Borrar</a>
+                            <a href="/delsitioturistico/{{restaurante.id}}/{{id}}"  class="btn btn-primary">Borrar</a><!-- TODO: Creo que esto seria mejor por post para no recargar la vista...-->
                         </div>
                         </article>
-                        <article class="card">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del sitio">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del sitio
-                            </h5>
-                            <p class="card-text">
-                                Descripción del sitio
-                            </p>
-                            <a href="#" class="btn btn-primary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del sitio">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del sitio
-                            </h5>
-                            <p class="card-text">
-                                Descripción del sitio
-                            </p>
-                            <a href="#" class="btn btn-primary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del sitio">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del sitio
-                            </h5>
-                            <p class="card-text">
-                                Descripción del sitio
-                            </p>
-                            <a href="#" class="btn btn-primary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del sitio">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del sitio
-                            </h5>
-                            <p class="card-text">
-                                Descripción del sitio
-                            </p>
-                            <a href="#" class="btn btn-primary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del sitio">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del sitio
-                            </h5>
-                            <p class="card-text">
-                                Descripción del sitio
-                            </p>
-                            <a href="#" class="btn btn-primary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del sitio">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del sitio
-                            </h5>
-                            <p class="card-text">
-                                Descripción del sitio
-                            </p>
-                            <a href="#" class="btn btn-primary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del sitio">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del sitio
-                            </h5>
-                            <p class="card-text">
-                                Descripción del sitio
-                            </p>
-                            <a href="#" class="btn btn-primary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del sitio">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del sitio
-                            </h5>
-                            <p class="card-text">
-                                Descripción del sitio
-                            </p>
-                            <a href="#" class="btn btn-primary">Borrar</a>
-                        </div>
-                        </article>
-                        <article class="card">
-                        <img src="//picsum.photos/200" class="card-img-top" alt="foto del sitio">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Nombre del sitio
-                            </h5>
-                            <p class="card-text">
-                                Descripción del sitio
-                            </p>
-                            <a href="#" class="btn btn-primary">Borrar</a>
-                        </div>
-                        </article>
+                        {{/each}}
                     </div>
+                    {{/if}}
                     <div class="mb-2">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="submit" class="btn btn-light">Borrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button> <!--TODO: Pendiente-->
+                        <a href="/borrarRestaurante/{{id}}/" class="btn btn-light">Borrar</a>
                         <a href="/gestRestaurante" class="btn btn-light">Volver</a>
                     </div>
                 </form>

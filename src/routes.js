@@ -6,6 +6,11 @@ const servicio = require('./js/servicios/ServicioUsuarios')
 const restauranteServicio = require('./js/servicios/ServicioRestaurantes')
 const restauranteBean = require('./js/beans/Restaurante')
 
+const opinionServicio = require('./js/servicios/ServicioOpiniones')
+
+const incidenciaServicio = require('./js/servicios/ServicioIncidencias')
+
+
 router.get('/', function(req, res, next) {
     res.redirect('http://localhost:8090/restaurantes')
 });
@@ -58,31 +63,28 @@ router.get('/detalleRestaurante/:restauranteId', ensureIfLogged, async function(
     }
 
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
+    const incidencias = await incidenciaServicio.consultarIncidenciasByRestaurante(req.params.restauranteId); // TODO: No deberia de pasarle la conexion, deberia el propio metodo llamar a crear conexion
     res.render('detalleRestaurante', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
         restaurante: restaurante,
+        incidencias: incidencias,
     })
 });
 
 router.get('/gestRestaurante', ensureIfAdmin, async function(req, res, next) {
     const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
     res.render('formRestaurante', {
-        userName: req.cookies.userName || 'Usuario',
+        userName: req.cookies.userName ,
         userRol: res?.usuario?.rol === "ADMIN" ? true : false,
         restaurantes: restaurantes,
     })
 });
 
 router.post('/gestRestaurante', ensureIfAdmin, async function(req, res, next) {
-    res.setHeader('Content-Type', 'application/json');
+    //res.setHeader('Accept', 'application/json');
+    //res.setHeader('Content-Type', 'application/json');
 
-    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-    console.log(req.body);
-    console.log(res.body);
-    console.log(req.params);
-    console.log(req.formData);
-    console.log(req.form);
     var restaurante = new restauranteBean.Restaurante();
     restaurante.nombre = req.body.nombre;
     restaurante.ciudad = req.body.ciudad;
@@ -99,7 +101,7 @@ router.post('/gestRestaurante', ensureIfAdmin, async function(req, res, next) {
 
     const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
     res.render('formRestaurante', {
-        userName: req.cookies.userName || 'Usuario',
+        userName: req.cookies.userName,
         userRol: res?.usuario?.rol === "ADMIN" ? true : false,
         restaurantes: restaurantes,
     })
@@ -132,7 +134,7 @@ router.get('/borrarRestaurante/:restauranteId', ensureIfAdmin, async function(re
 
     const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
     res.render('formRestaurante', {
-        userName: req.cookies.userName || 'Usuario',
+        userName: req.cookies.userName,
         userRol: res?.usuario?.rol === "ADMIN" ? true : false,
         restaurantes: restaurantes,
     })
@@ -146,32 +148,88 @@ router.get('/plato/:restauranteId', ensureIfLogged, async function(req, res, nex
     })
 });
 
+router.get('/plato/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
+    const plato = await restauranteServicio.consultarPlato(req.params.platoId, req.params.restauranteId, req.cookies.jwt);
+    
+    res.render('formPlato', {
+        userName: req.cookies.userName,
+        userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restauranteId: req.params.restauranteId,
+        plato: plato,
+    })
+});
+
+router.get('/delPlato/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
+    try{
+        await restauranteServicio.borrarPlato(req.params.platoId, req.params.restauranteId, req.cookies.jwt);
+        res.end(JSON.stringify({ message : retorno }));
+    } catch(e) {
+        res.status(500).send(JSON.stringify({ message : retorno }));
+    }
+
+    const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
+    res.render('modRestaurante', {
+        userName: req.cookies.userName,
+        userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restaurante: restaurante,
+    })
+});
+
+router.get('/delsitioturistico/:restauranteId/:sitioId', ensureIfLogged, async function(req, res, next) {
+    try{
+        await restauranteServicio.borrarSitioTuristico(req.params.sitioId, req.params.restauranteId, req.cookies.jwt);
+        res.end(JSON.stringify({ message : retorno }));
+    } catch(e) {
+        res.status(500).send(JSON.stringify({ message : retorno }));
+    }
+
+    const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
+    res.render('modRestaurante', {
+        userName: req.cookies.userName,
+        userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restaurante: restaurante,
+    })
+});
+
 router.get('/addsitios/:restauranteId', ensureIfLogged, async function(req, res, next) {
+    const sitios = await restauranteServicio.consultarSitiosTuristicosProximos(req.params.restauranteId, req.cookies.jwt);
     res.render('formSitioTuristico', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
         restauranteId: req.params.restauranteId,
+        sitiosTuristicos: sitios,
     })
 });
 
-router.get('/incidencia', ensureIfLogged, async function(req, res, next) {
+router.get('/incidencia/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
     res.render('formIncidencia', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restauranteId: req.params.restauranteId,
+        platoId: req.params.platoId,
     })
 });
 
-router.get('/opinion', ensureIfLogged, async function(req, res, next) {
+router.get('/opinion/:restauranteId', ensureIfLogged, async function(req, res, next) {
+    const valoracion = await opinionServicio.consultarValoracion(req.params.restauranteId, req.cookies.userName); //TODO: Creo que quedamos que el id de usuario era el username
+    const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
+    
     res.render('formOpinion', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restauranteId: req.params.restauranteId,
+        valoracion: valoracion,
+        nombreRestaurante: restaurante.nombre,
     })
 });
 
-router.get('/valoracion', ensureIfLogged, async function(req, res, next) {
+router.get('/valoracion/:restauranteId', ensureIfLogged, async function(req, res, next) {
+    const opinion = await opinionServicio.consultarOpinion(req.params.restauranteId);
     res.render('getValoracion', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restauranteId: req.params.restauranteId,
+        valoraciones: opinion.valoraciones,
     })
 });
 

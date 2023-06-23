@@ -69,14 +69,14 @@
         <article class="card card-plato plato-{{disponibilidad}}">
           <div class="card-body">
               <h5 class="card-title">
-                {{nombre}} ({{precio}}€)<br />
+                {{id}} ({{precio}}€)<br />
                 <small>{{disponibilidad}}</small>
               </h5>
               <p class="card-text">
                 {{descripcion}}
               </p>
-              <a href="/platos/{{nombre}}" class="btn btn-primary">Ver detalle</a>
-              <a href="#" class="btn btn-secondary">Crear incidencia</a>
+              <a href="/platos/{{id}}" class="btn btn-primary">Ver detalle</a>
+              <a href="/incidencia/{{restaurante.id}}/{{id}}" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
         {{/each}}
@@ -91,18 +91,19 @@
           <img src="{{url}}" class="card-img-top" alt="foto del sitio">
           {{/with}}
           <div class="card-body">
-              <a href="/sitioturistico/{{nombre}}" target="_blank" class="card-title fs-4">
+              <a href="/sitioturistico/{{id}}" target="_blank" class="card-title fs-4">
                   {{nombre}}
               </a>
               <p class="card-text">
                 {{descripcion}}
               </p>
-              <a href="/sitioturistico/{{nombre}}" class="btn btn-primary">Ver detalle</a>
+              <a href="/sitioturistico/{{id}}" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         {{/each}}
       </div>
       {{/if}}
+      {{#if incidencias}}
       <div class="table-responsive">
         <table class="table table-sm caption-top table-success table-striped">
             <caption>Listado incidencias</caption>
@@ -115,36 +116,21 @@
                 </tr>
             </thead>
             <tbody>
+              {{#each incidencias}}
                 <tr>
-                    <td>Plato 1</td>
-                    <td>raul@um.es</td>
-                    <td>lalalalalalalaalala</td>
-                    <td>01/01/2023</td>
-                  </tr>
-                  <tr>
-                    <td>Plato 1</td>
-                    <td>raul@um.es</td>
-                    <td>lalalalalalalaalala</td>
-                    <td>01/01/2023</td>
-                  </tr>
-                  <tr>
-                    <td>Plato 1</td>
-                    <td>raul@um.es</td>
-                    <td>lalalalalalalaalala</td>
-                    <td>01/01/2023</td>
-                  </tr>
-                  <tr>
-                    <td>Plato 1</td>
-                    <td>raul@um.es</td>
-                    <td>lalalalalalalaalala</td>
-                    <td>01/01/2023</td>
-                  </tr>
+                    <td>{{nombrePlato}}</td>
+                    <td>{{idUser}}</td>
+                    <td>{{descripcion}}</td>
+                    <td>{{fecha}}</td>
+                </tr>
+              {{/each}}
             </tbody>
         </table>
       </div>
+      {{/if}}
     <div>
-        <button type="submit" class="btn btn-primary">Realizar valoración</button>
-        <a href="/restaurantes" class="btn btn-light">Volver</a>
+      <a href="/opinion/{{restauranteId}}/" class="btn btn-primary">Realizar valoración</a>
+      <a href="/restaurantes" class="btn btn-light">Volver</a>
     </div>
     </main>
   </div>
