@@ -44,26 +44,25 @@ function ensureIfLogged(req, res, next) {
   }
 
 router.get('/restaurantes', ensureIfLogged, async function(req, res, next) {
-    console.log(' PRE Llamada COOKIE ===== ', req.cookies, res.cookie);
-    console.log(' PRE Llamada ===== ');
-    //const usuario = await servicio.consultarUsuario2('6480d348e5f4150f8683f5fd')
-    //var restaurante = new restauranteBean.Restaurante();
-    //restaurante.nombre = "XXXXXXXXXX"
-    //restaurante.idGestor = "XXXXXXXXXXX"
-    //restaurante.coordenadaX = 37.984
-    //restaurante.coordenadaY = -1.128
-    //restaurante.ciudad = "XXXXXXXXXXX"
-
-    //const id = await restauranteServicio.crearRestaurante(restaurante, req.cookies.jwt)
-    //console.log(id);
-    //const reee = await restauranteServicio.consultarRestaurante(id, req.cookies.jwt)
-    //console.log(reee);
-    //console.log(usuario, usuario.nombre, usuario.email, ' ===== ');
+    const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
     res.render('getListRestaurantes', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
-        //user: JSON.stringify(usuario),
-        //restaurantes: restaurantes,
+        restaurantes: restaurantes,
+    })
+});
+
+router.get('/detalleRestaurante/:restauranteId', ensureIfLogged, async function(req, res, next) {
+    if (!req.params.restauranteId) {
+        res.redirect('/restaurantes')
+    }
+    
+
+    const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
+    res.render('detalleRestaurante', {
+        userName: req.cookies.userName,
+        userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restaurante: restaurante,
     })
 });
 
@@ -111,13 +110,6 @@ router.get('/modRestaurante', ensureIfAdmin, async function(req, res, next) {
 
 router.get('/valoracion', ensureIfLogged, async function(req, res, next) {
     res.render('getValoracion', {
-        userName: req.cookies.userName,
-        userRol: res.usuario.rol === "ADMIN" ? true : false,
-    })
-});
-
-router.get('/detalleRestaurante', ensureIfLogged, async function(req, res, next) {
-    res.render('detalleRestaurante', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
     })
