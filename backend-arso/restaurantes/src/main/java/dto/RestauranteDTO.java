@@ -20,6 +20,8 @@ public class RestauranteDTO {
 	private String nombre;
 	@JsonbProperty("ciudad")
 	private String ciudad;
+	@JsonbProperty("descripcion")
+	private String descripcion;
 	@JsonbProperty("fechaAlta")
 	private Date fechaAlta;
 	@JsonbProperty("idGestor")
@@ -107,6 +109,16 @@ public class RestauranteDTO {
 	public void setFechaAlta(Date fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
+	
+
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
 	public Restaurante transformarRestaurante() {
 		Restaurante res = new Restaurante();
@@ -117,6 +129,7 @@ public class RestauranteDTO {
 		res.setIdGestor(idGestor);
 		res.setPlatos(platos);
 		res.setCiudad(ciudad);
+		res.setDescripcion(descripcion);
 		if (fechaAlta == null)
 			res.setFechaAlta(new Date());
 		else

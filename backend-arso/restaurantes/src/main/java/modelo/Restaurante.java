@@ -32,6 +32,7 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	private Point coordenadas;
 	private String idGestor;
 	private String ciudad;
+	private String descripcion;
 	private Date fechaAlta;
 	private List<SitioTuristico> sitiosTuristicos;
 	private List<Plato> platos;
@@ -196,12 +197,23 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 		this.fechaAlta = fechaAlta;
 	}
 
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Restaurante [id=" + id + ", nombre=" + nombre + ", coordenadas=" + coordenadas + ", idGestor="
-				+ idGestor + ", ciudad=" + ciudad + ", fechaAlta=" + fechaAlta + ", sitiosTuristicos="
-				+ sitiosTuristicos + ", platos=" + platos + ", idOpinion=" + idOpinion + ", resumenValoracion="
-				+ resumenValoracion + "]";
+				+ idGestor + ", ciudad=" + ciudad + ", descripcion=" + descripcion + ", fechaAlta=" + fechaAlta
+				+ ", sitiosTuristicos=" + sitiosTuristicos + ", platos=" + platos + ", idOpinion=" + idOpinion
+				+ ", resumenValoracion=" + resumenValoracion + "]";
 	}
 
 	@Override
