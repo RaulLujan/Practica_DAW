@@ -8,7 +8,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/custom.css">
+        <link rel="stylesheet" href="/css/custom.css">
     </head>
 
     <body class="daweb">
@@ -53,7 +53,8 @@
         <div class="container">
             <main class="shadow border mt-4 p-4">
                 <h1>Gestionar restaurantes:</h1>
-                <form class="row">
+                <div class="row" id="gestRestauranteError"></div>
+                <form class="row" id="gestRestaurante">
                     <div class="col-md-6 mb-2">
                         <label for="nombre" class="form-label">Nombre del restaurante:</label>
                         <input type="text" id="nombre" class="form-control" name="nombre" placeholder="Nombre del restaurante" required />
@@ -75,139 +76,61 @@
                     </div>
                     <div class="mb-2">
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="submit" class="btn btn-light">Volver</button>
+                        <a href="/restaurantes" class="btn btn-light">Volver</a>
                     </div>
-                    <!-- Lista de restaurantes creados-->
+                    {{#if restaurantes}}
                     <div id="restaurantesCreados" class="
                     row
                     row-cols-1
                     row-cols-sm-2
                     row-cols-md-4
                     ">
-                    <!-- Todas las col + card son iguales ahora mismo -->
+                    {{#each restaurantes}}
                         <div class="col mb-4">
                             <article class="card">
-                                <img src="//picsum.photos/200" class="card-img-top" alt="foto del restaurante">
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                        Nombre restaurante<br>
-                                        <small class="small">Ciudad</small>
+                                        {{nombre}}<br>
+                                        <small class="small">{{ciudad}}</small>
                                     </h5>
-                                        Descripción.
-                                    </p>
-                                    <a href="#" class="btn btn-primary">Modificar</a>
-                                    <a href="#" class="btn btn-secondary">Borrar</a>
+                                    <br>
+                                    Fecha de alta:{{fechaAlta}}
+                                    <br>
+                                    <a href="/modRestaurante/{{id}}/" class="btn btn-primary">Modificar</a>
+                                    <a href="/borrarRestaurante/{{id}}/" class="btn btn-secondary">Borrar</a>
                                 </div>
                             </article>
                         </div>
-                        <div class="col mb-4">
-                            <article class="card">
-                                <img src="//picsum.photos/200" class="card-img-top" alt="foto del restaurante">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        Nombre restaurante<br>
-                                        <small class="small">Ciudad</small>
-                                    </h5>
-                                        Descripción.
-                                    </p>
-                                    <a href="#" class="btn btn-primary">Modificar</a>
-                                    <a href="#" class="btn btn-secondary">Borrar</a>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col mb-4">
-                            <article class="card">
-                                <img src="//picsum.photos/200" class="card-img-top" alt="foto del restaurante">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        Nombre restaurante<br>
-                                        <small class="small">Ciudad</small>
-                                    </h5>
-                                        Descripción.
-                                    </p>
-                                    <a href="#" class="btn btn-primary">Modificar</a>
-                                    <a href="#" class="btn btn-secondary">Borrar</a>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col mb-4">
-                            <article class="card">
-                                <img src="//picsum.photos/200" class="card-img-top" alt="foto del restaurante">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        Nombre restaurante<br>
-                                        <small class="small">Ciudad</small>
-                                    </h5>
-                                        Descripción.
-                                    </p>
-                                    <a href="#" class="btn btn-primary">Modificar</a>
-                                    <a href="#" class="btn btn-secondary">Borrar</a>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col mb-4">
-                            <article class="card">
-                                <img src="//picsum.photos/200" class="card-img-top" alt="foto del restaurante">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        Nombre restaurante<br>
-                                        <small class="small">Ciudad</small>
-                                    </h5>
-                                        Descripción.
-                                    </p>
-                                    <a href="#" class="btn btn-primary">Modificar</a>
-                                    <a href="#" class="btn btn-secondary">Borrar</a>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col mb-4">
-                            <article class="card">
-                                <img src="//picsum.photos/200" class="card-img-top" alt="foto del restaurante">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        Nombre restaurante<br>
-                                        <small class="small">Ciudad</small>
-                                    </h5>
-                                        Descripción.
-                                    </p>
-                                    <a href="#" class="btn btn-primary">Modificar</a>
-                                    <a href="#" class="btn btn-secondary">Borrar</a>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col mb-4">
-                            <article class="card">
-                                <img src="//picsum.photos/200" class="card-img-top" alt="foto del restaurante">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        Nombre restaurante<br>
-                                        <small class="small">Ciudad</small>
-                                    </h5>
-                                        Descripción.
-                                    </p>
-                                    <a href="#" class="btn btn-primary">Modificar</a>
-                                    <a href="#" class="btn btn-secondary">Borrar</a>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col mb-4">
-                            <article class="card">
-                                <img src="//picsum.photos/200" class="card-img-top" alt="foto del restaurante">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        Nombre restaurante<br>
-                                        <small class="small">Ciudad</small>
-                                    </h5>
-                                        Descripción.
-                                    </p>
-                                    <a href="#" class="btn btn-primary">Modificar</a>
-                                    <a href="#" class="btn btn-secondary">Borrar</a>
-                                </div>
-                            </article>
-                        </div>
+                    {{/each}}
                     </div>
+                    {{/if}}
                     <!--Fin lista restaurantes creados-->
                 </form>
+                <script>
+                    document.getElementById('gestRestaurante').addEventListener('submit', async (event) => {
+                        event.preventDefault();
+                        const form = event.currentTarget;
+                        const formData = new FormData(form);
+                        document.getElementById('gestRestauranteError').innerHTML = "";
+                        fetch('/gestRestaurante', {
+                            method: "POST",
+                            body: formData,
+                            headers: {"Content-type": "application/json; charset=UTF-8"}
+                        })
+                            .then((response) => {
+                                if (response.status !== 200 ) {
+                                    document.getElementById('gestRestauranteError')
+                                        .innerHTML = `<div class="alert alert-danger" role="alert">ERROR al crear</div>`;
+                                } else {
+                                    return Promise.resolve(response.json(req.body));
+                                }
+                            }) 
+                            .then((json) => {
+                                document.getElementById('gestRestaurante')
+                                    .innerHTML = `<div class="alert alert-success" role="alert">${json.message}</div>`
+                            });
+                    });
+                </script>
             </main>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>       

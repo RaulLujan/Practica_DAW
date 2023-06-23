@@ -10,6 +10,7 @@ class Restaurante {
   coordenadaX;
   coordenadaY;
   ciudad;
+  descripcion;
   fechaAlta;
   idGestor;
   sitiosTuristicos = [];
@@ -17,12 +18,13 @@ class Restaurante {
   idOpinion;
   resumenValoracion;
 
-  constructor(nombre, coordenadaX, coordenadaY, idGestor, ciudad) {
+  constructor(nombre, coordenadaX, coordenadaY, idGestor, ciudad, descripcion) {
     this.nombre = nombre;  
     this.coordenadaX = coordenadaX;
     this.coordenadaY = coordenadaY;
     this.idGestor = idGestor;
     this.ciudad = ciudad;
+    this.descripcion = descripcion;
   }
 
   // Metodos
@@ -39,6 +41,7 @@ class Restaurante {
    
     this.idGestor = json.idGestor;
     this.ciudad = json.ciudad;
+    this.descripcion = json.descripcion;
     this.fechaAlta = json.fechaAlta;
 
     const sitiosTuristicos = json['sitiosTuristicos'];
@@ -70,7 +73,7 @@ class Restaurante {
 
   print(){
       console.log("Restauratne: { id: " + this.id + ", nombre: " + this.nombre + ", " + ", coordenadaX: " + this.coordenadaX + ", " + 
-      ", coordenadaY: " + this.coordenadaY + ", "  + ", idGestor: " + this.idGestor + ", ciudad: " + this.ciudad + ", fechaAlta: " + this.fechaAlta + ", ");
+      ", coordenadaY: " + this.coordenadaY + ", "  + ", idGestor: " + this.idGestor + ", ciudad: " + this.ciudad + ", descripcion: " + this.descripcion + ", fechaAlta: " + this.fechaAlta + ", ");
       if(this.sitiosTuristicos !== undefined){
         this.sitiosTuristicos.forEach(function(v){
           v.print()
