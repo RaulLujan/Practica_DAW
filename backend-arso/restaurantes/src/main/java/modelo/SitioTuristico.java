@@ -4,11 +4,23 @@ import java.util.List;
 
 public class SitioTuristico {
 
+	private String id;
 	private String nombre;
 	private String descripcion;
-	private Double distancia; // TODO: distancia Double, int...??
 	private List<String> imagenesUrls;
 	private List<String> enlacesInformativos;
+
+	
+	
+	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -26,13 +38,6 @@ public class SitioTuristico {
 		this.descripcion = descripcion;
 	}
 
-	public Double getDistancia() {
-		return distancia;
-	}
-
-	public void setDistancia(Double distancia) {
-		this.distancia = distancia;
-	}
 
 	public List<String> getImagenesUrls() {
 		return imagenesUrls;
@@ -52,8 +57,11 @@ public class SitioTuristico {
 
 	@Override
 	public String toString() {
-		return "SitioTuristico [nombre=" + nombre + ", descripcion=" + descripcion + ", distancia=" + distancia
-				+ ", imagenesUrls=" + imagenesUrls + ", enlacesInformativos=" + enlacesInformativos + "]";
+		return "SitioTuristico [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", imagenesUrls="
+				+ imagenesUrls + ", enlacesInformativos=" + enlacesInformativos + "]";
 	}
+
+
+	
 
 }

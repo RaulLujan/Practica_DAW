@@ -67,7 +67,7 @@ public interface IServicio {
 	 * Actualiza un restaurante, borrandole un Plato, utilizando el identificador y
 	 * el nombre del Plato
 	 */
-	void removePlato(String id, String nombre) throws RepositorioException, EntidadNoEncontrada;
+	void removePlato(String id, String idPlato) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * Crea un aopinion y se asigna el ID de la Opinion al restauratne para dar de
@@ -78,7 +78,7 @@ public interface IServicio {
 	/**
 	 * Obtener un Restaurante utilizando el identificador del Gestor.
 	 */
-	Restaurante getRestauranteByIdGestor(String id) throws RepositorioException, EntidadNoEncontrada;
+	List<Restaurante> getRestauranteByIdGestor(String id) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * Obtener todos los Restaurantes.
@@ -94,6 +94,9 @@ public interface IServicio {
 	 * Actualiza un restaurante, borrandole un Plato, utilizando el identificador y
 	 * el nombre del Plato
 	 */
-	void removeSitioTuristico(String id, String nombre) throws RepositorioException, EntidadNoEncontrada;
+	void removeSitioTuristico(String id, String idST) throws RepositorioException, EntidadNoEncontrada;
+	
+	
+
 
 }

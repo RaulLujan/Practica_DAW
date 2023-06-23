@@ -2,10 +2,22 @@ package modelo;
 
 public class Plato {
 
+	private String id;
 	private String nombre;
 	private String descripcion;
 	private double precio;
 	private boolean disponible;
+
+	
+	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -42,9 +54,13 @@ public class Plato {
 
 	@Override
 	public String toString() {
-		return "Plato [nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio + ", disponible="
-				+ disponible + "]";
+		return "Plato [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio
+				+ ", disponible=" + disponible + "]";
 	}
+	
+	
+
+
 
 }
 

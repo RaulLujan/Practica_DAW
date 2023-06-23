@@ -1,5 +1,7 @@
 package repositorio.implementaciones;
 
+import java.util.List;
+
 import modelo.Restaurante;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
@@ -13,8 +15,8 @@ public class RepositorioRestaurantesMemoria extends RepositorioMemoria<Restauran
 	}
 
 	@Override
-	public Restaurante getByIdGestor(String id) throws RepositorioException, EntidadNoEncontrada {
-		return getAll().stream().filter(r -> r.getIdGestor().equals(id)).findFirst().orElse(null);
+	public List<Restaurante> getByIdGestor(String id) throws RepositorioException, EntidadNoEncontrada {
+		return getAll();
 	}
 	
 }

@@ -171,9 +171,9 @@ public class Servicio implements IServicio {
 	}
 
 	@Override
-	public void removePlato(String id, String nombre) throws RepositorioException, EntidadNoEncontrada {
+	public void removePlato(String id, String idplato) throws RepositorioException, EntidadNoEncontrada {
 		Restaurante restaurante = getRestaurante(id);
-		restaurante.removePlato(nombre);
+		restaurante.removePlato(idplato);
 		update(restaurante);
 	}
 
@@ -193,7 +193,7 @@ public class Servicio implements IServicio {
 	}
 
 	@Override
-	public Restaurante getRestauranteByIdGestor(String id) throws RepositorioException, EntidadNoEncontrada {
+	public List<Restaurante> getRestauranteByIdGestor(String id) throws RepositorioException, EntidadNoEncontrada {
 		return repositorio.getByIdGestor(id);
 	}
 
@@ -235,9 +235,9 @@ public class Servicio implements IServicio {
 	}
 
 	@Override
-	public void removeSitioTuristico(String id, String nombre) throws RepositorioException, EntidadNoEncontrada {
+	public void removeSitioTuristico(String id, String idST) throws RepositorioException, EntidadNoEncontrada {
 		Restaurante restaurante = getRestaurante(id);
-		restaurante.removeSitioTuristico(nombre);
+		restaurante.removeSitioTuristico(idST);
 		update(restaurante);
 	}
 

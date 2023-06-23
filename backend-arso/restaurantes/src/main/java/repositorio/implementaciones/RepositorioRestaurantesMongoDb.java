@@ -83,13 +83,15 @@ public class RepositorioRestaurantesMongoDb extends RepositorioMongoDb<Restauran
 	}
 
 	@Override
-	public Restaurante getByIdGestor(String id) throws RepositorioException, EntidadNoEncontrada {
+	public List<Restaurante> getByIdGestor(String id) throws RepositorioException, EntidadNoEncontrada {
 		Bson query = Filters.eq("idGestor", id);
 		FindIterable<Restaurante> resultados = collection.find(query);
 		MongoCursor<Restaurante> it = resultados.iterator();
-		if (!it.hasNext())
-			throw new EntidadNoEncontrada(id + " no existe");
-		return it.tryNext();
+		List<Restaurante> restaurantes = new ArrayList<Restaurante>();
+		while (it.hasNext()) {
+			restaurantes.add(it.next());
+		}
+		return restaurantes;
 	}
 	
 }

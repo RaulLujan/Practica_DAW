@@ -2,6 +2,7 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -20,6 +21,8 @@ import utils.Identificable;
 public class Restaurante implements Identificable, Serializable, Specificable<Restaurante> {
 
 	private static final long serialVersionUID = 1L;
+	private static int CONT_PLATO = 1;
+	private static int CONT_ST = 1;
 
 	@BsonId
 	@BsonRepresentation(BsonType.OBJECT_ID)
@@ -74,6 +77,12 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	}
 
 	public void addSitiosTuristicos(List<SitioTuristico> sitiosTuristicos) {
+		if (CONT_ST == 1 && this.sitiosTuristicos != null && this.sitiosTuristicos.size() > 0)
+			CONT_ST = Integer.parseInt(sitiosTuristicos.get(sitiosTuristicos.size() - 1).getId()) + 1;
+		for (SitioTuristico sitioTuristico : sitiosTuristicos) {
+			sitioTuristico.setId(CONT_ST + "");
+			CONT_ST++;
+		}
 		this.sitiosTuristicos.addAll(sitiosTuristicos);
 	}
 
@@ -112,6 +121,10 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	public void addPlato(Plato plato) {
 		if (this.platos == null)
 			this.platos = new LinkedList<Plato>();
+		else if (CONT_PLATO == 1)
+			CONT_PLATO = Integer.parseInt(platos.get(platos.size() - 1).getId()) + 1;
+		plato.setId(CONT_PLATO + "");
+		CONT_PLATO++;
 		this.platos.add(plato);
 	}
 
@@ -121,7 +134,8 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 		ListIterator<Plato> it = platos.listIterator();
 		while (it.hasNext()) {
 			Plato p = it.next();
-			if (p.getNombre().equals(plato.getNombre())) {
+			if (p.getId().equals(plato.getId())) {
+				p.setNombre(plato.getNombre());
 				p.setDescripcion(plato.getDescripcion());
 				p.setPrecio(plato.getPrecio());
 				return true;
@@ -130,10 +144,10 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 		return false;
 	}
 
-	public boolean removePlato(String nombre) {
+	public boolean removePlato(String idplato) {
 		if (this.platos == null)
 			this.platos = new LinkedList<Plato>();
-		Plato plato = findPlato(nombre);
+		Plato plato = findPlato(idplato);
 		if (plato != null) {
 			this.platos.remove(plato);
 			return true;
@@ -141,10 +155,10 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 		return false;
 	}
 
-	public boolean removeSitioTuristico(String nombre) {
+	public boolean removeSitioTuristico(String idST) {
 		if (this.sitiosTuristicos == null)
 			this.sitiosTuristicos = new LinkedList<SitioTuristico>();
-		SitioTuristico sitioTuristico = findSitioTuristico(nombre);
+		SitioTuristico sitioTuristico = findSitioTuristico(idST);
 		if (sitioTuristico != null) {
 			this.sitiosTuristicos.remove(sitioTuristico);
 			return true;
@@ -152,16 +166,16 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 		return false;
 	}
 
-	protected Plato findPlato(String nombre) {
+	protected Plato findPlato(String idPlato) {
 		for (Plato plato : platos)
-			if (plato.getNombre().equals(nombre))
+			if (plato.getId().equals(idPlato))
 				return plato;
 		return null;
 	}
 
-	protected SitioTuristico findSitioTuristico(String nombre) {
+	protected SitioTuristico findSitioTuristico(String idST) {
 		for (SitioTuristico sitioTuristico : sitiosTuristicos)
-			if (sitioTuristico.getNombre().equals(nombre))
+			if (sitioTuristico.getId().equals(idST))
 				return sitioTuristico;
 		return null;
 	}

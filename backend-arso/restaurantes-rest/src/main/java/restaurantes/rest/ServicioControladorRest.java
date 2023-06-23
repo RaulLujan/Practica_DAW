@@ -143,16 +143,16 @@ public class ServicioControladorRest {
 	// curl -i -X DELETE -H "Content-type: application/xml"
 	// http://localhost:8080/api/restaurantes/sitiosturisticos/{id}/{nombre}
 	@DELETE
-	@Path("/sitiosturisticos/{id}/{nombre}")
+	@Path("/sitiosturisticos/{id}/{idst}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
 	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
 	public Response removeSitioturistico(
 			@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id,
-			@ApiParam(value = "nombre del Sitioturistico", required = true) @PathParam("nombre") String nombre)
+			@ApiParam(value = "nombre del Sitioturistico", required = true) @PathParam("idst") String idst)
 			throws Exception {
-		servicio.removeSitioTuristico(id, nombre);
+		servicio.removeSitioTuristico(id, idst);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
@@ -193,15 +193,15 @@ public class ServicioControladorRest {
 	// curl -i -X DELETE -H "Content-type: application/xml"
 	// http://localhost:8080/api/restaurantes/plato/{id}/{nombre}
 	@DELETE
-	@Path("/plato/{id}/{nombre}")
+	@Path("/plato/{id}/{idPlato}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiResponses(value = { @ApiResponse(code = HttpServletResponse.SC_OK, message = ""),
 			@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Restaurante no encontrado") })
 	@Secured({ AvailableRoles.ADMIN, AvailableRoles.GESTOR })
 	public Response removePlato(@ApiParam(value = "id del restaurante", required = true) @PathParam("id") String id,
-			@ApiParam(value = "nombre del Plato", required = true) @PathParam("nombre") String nombre)
+			@ApiParam(value = "nombre del Plato", required = true) @PathParam("idPlato") String idPlato)
 			throws Exception {
-		servicio.removePlato(id, nombre);
+		servicio.removePlato(id, idPlato);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
