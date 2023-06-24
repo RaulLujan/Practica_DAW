@@ -13,11 +13,11 @@ async function getConnection() {
   return connection;
 }
 
-async function insertarIncidencia(connection, incidencia) { //TODO: Creo que la incidencia se deberia de crear aqui y no en otro sitio, recibiendo como parametro el idRestaurante, el usuario y el idPlato(nombrePlato o lo que sea)
+async function insertarIncidencia(incidencia) { //TODO: Creo que la incidencia se deberia de crear aqui y no en otro sitio, recibiendo como parametro el idRestaurante, el usuario y el idPlato(nombrePlato o lo que sea)
   const sql = 'INSERT INTO TIncidencias (idUser, idRestaurante, nombrePlato, fecha, descripcion) ' +
   ' VALUES (\'' + incidencia.idUser + '\', \'' + incidencia.idRestaurante + '\', \'' + 
   incidencia.nombrePlato + '\', DATE(NOW()), \'' + incidencia.descripcion +'\');';
-
+  const connection = await getConnection();
   connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
@@ -26,9 +26,9 @@ async function insertarIncidencia(connection, incidencia) { //TODO: Creo que la 
     }});
 }
 
-async function consultarAllIncidencias(connection) {
+async function consultarAllIncidencias() {
   const sql = 'SELECT * FROM TIncidencias ORDER BY FECHA DESC;';
-  
+  const connection = await getConnection();
   connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
@@ -45,9 +45,9 @@ async function consultarAllIncidencias(connection) {
     }});
 }
 
-async function consultarIncidenciasByPlato(connection, nombrePlato) {
+async function consultarIncidenciasByPlato(nombrePlato) {
   const sql = 'SELECT * FROM TIncidencias WHERE nombrePlato = \'' + nombrePlato + '\' ORDER BY FECHA DESC;';
-  
+  const connection = await getConnection();
   connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
@@ -65,9 +65,9 @@ async function consultarIncidenciasByPlato(connection, nombrePlato) {
 }
   
 
-async function consultarIncidenciasByRestaurante(connection, idRestaurante) {
+async function consultarIncidenciasByRestaurante(idRestaurante) {
   const sql = 'SELECT * FROM TIncidencias WHERE idRestaurante = \'' + idRestaurante + '\' ORDER BY FECHA DESC;';
-  
+  const connection = await getConnection();
   connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
@@ -84,9 +84,9 @@ async function consultarIncidenciasByRestaurante(connection, idRestaurante) {
     }});
 }
 
-async function consultarIncidenciasByUsuario(connection, idUser) {
+async function consultarIncidenciasByUsuario(idUser) {
   const sql = 'SELECT * FROM TIncidencias WHERE idUser = \'' + idUser + '\' ORDER BY FECHA DESC;';
-  
+  const connection = await getConnection();
   connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
@@ -103,9 +103,9 @@ async function consultarIncidenciasByUsuario(connection, idUser) {
     }});
 }
 
-async function borrarIncidencia(connection, id) {
+async function borrarIncidencia(id) {
   const sql = 'DELETE FROM TIncidencias WHERE id = \'' + id + '\' ;';
-  
+  const connection = await getConnection();
   connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){

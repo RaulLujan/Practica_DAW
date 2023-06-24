@@ -63,7 +63,7 @@ router.get('/detalleRestaurante/:restauranteId', ensureIfLogged, async function(
     }
 
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
-    const incidencias = await incidenciaServicio.consultarIncidenciasByRestaurante(req.params.restauranteId); // TODO: No deberia de pasarle la conexion, deberia el propio metodo llamar a crear conexion
+    const incidencias = await incidenciaServicio.consultarIncidenciasByRestaurante(req.params.restauranteId);
     res.render('detalleRestaurante', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
@@ -211,7 +211,7 @@ router.get('/incidencia/:restauranteId/:platoId', ensureIfLogged, async function
 });
 
 router.get('/opinion/:restauranteId', ensureIfLogged, async function(req, res, next) {
-    const valoracion = await opinionServicio.consultarValoracion(req.params.restauranteId, req.cookies.userName); //TODO: Creo que quedamos que el id de usuario era el username
+    const valoracion = await opinionServicio.consultarValoracion(req.params.restauranteId, req.cookies.userName);
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
     
     res.render('formOpinion', {
@@ -225,11 +225,13 @@ router.get('/opinion/:restauranteId', ensureIfLogged, async function(req, res, n
 
 router.get('/valoracion/:restauranteId', ensureIfLogged, async function(req, res, next) {
     const opinion = await opinionServicio.consultarOpinion(req.params.restauranteId);
+    const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
     res.render('getValoracion', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
         restauranteId: req.params.restauranteId,
         valoraciones: opinion.valoraciones,
+        nombreRestaurante: restaurante.nombre,
     })
 });
 
@@ -253,6 +255,44 @@ router.get('/platos/:restauranteId/:platoId', ensureIfLogged, async function(req
         plato: plato,
     })
 });
+
+router.get('/buscarRestaurantes', ensureIfLogged, async function(req, res, next) {
+    if (!req.query.nombre && !req.query.ciudad && !req.query.distancia && !req.query.valoracion) {
+        res.redirect('/restaurantes')
+    }
+    
+    const filtro = new filtroBean.Filtro();
+    if (req.query.nombre)
+        filtro.nombre = req.query.nombre;
+    if (req.query.ciudad)
+        filtro.ciudad = req.query.ciudad;
+    if (req.query.distancia){
+        filtro.distancia = req.query.distancia;
+        if(navigator.geolocation){
+            var success = function(position){
+                filtro.coorX = position.coords.latitude,
+                filtro.coorY = position.coords.longitude;
+            }
+            navigator.geolocation.getCurrentPosition(success, function(msg){
+            console.error( msg );
+            });
+        }
+    }   
+    if (req.query.valoracion)
+        filtro.valoracion = req.query.valoracion;
+
+    console.log("XXXXXXXXXXXXXXXXXXXXX " + filtro.nombre);
+    const restaurantes = await restauranteServicio.consultarRestaurantesFiltrado(filtro, req.cookies.jwt);
+    console.log(restaurantes);
+    res.render('getListRestaurantes', {
+        userName: req.cookies.userName,
+        userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restaurantes: restaurantes,
+    })
+    
+});
+
+
 
 router.get('/logout', ensureIfLogged, async function(req, res, next) {
     res.clearCookie("jwt")
