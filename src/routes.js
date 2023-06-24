@@ -233,6 +233,27 @@ router.get('/valoracion/:restauranteId', ensureIfLogged, async function(req, res
     })
 });
 
+router.get('/sitioturistico/:restauranteId/:sitioId', ensureIfLogged, async function(req, res, next) {
+    const sitio = await restauranteServicio.consultarSitio(req.params.sitioId, req.params.restauranteId, req.cookies.jwt);
+
+    res.render('detalleSitioTuristico', {
+        userName: req.cookies.userName,
+        userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restauranteId: req.params.restauranteId,
+        sitioTuristico: sitio,
+    })
+});
+
+router.get('/platos/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
+    const plato = await restauranteServicio.consultarPlato(req.params.platoId, req.params.restauranteId, req.cookies.jwt);
+    res.render('detallePlato', {
+        userName: req.cookies.userName,
+        userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restauranteId: req.params.restauranteId,
+        plato: plato,
+    })
+});
+
 router.get('/logout', ensureIfLogged, async function(req, res, next) {
     res.clearCookie("jwt")
     res.clearCookie("userName")

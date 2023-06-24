@@ -120,6 +120,17 @@ async function consultarPlato(idPlato, id, token) {
     return null;
 }
 
+async function consultarSitio(idSitio, id, token) {
+    const restaurante = await consultarRestaurante(id, token)
+    if(restaurante !== undefined && restaurante.sitiosTuristicos !== undefined){
+        for (var i = 0; i < restaurante.sitiosTuristicos.length; i++) {
+            if(restaurante.sitiosTuristicos[i].id === idSitio)
+                return restaurante.sitiosTuristicos[i]
+        }
+    }
+    return null;
+}
+
 async function añadirPlato(plato, id, token) {
     const response = await fetch(urlbase + '/plato/' + id,
         {

@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title> Detalle de restaurante </title>
+  <title> Detalle de sitio turistico </title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,90 +52,48 @@
       </div>
     </div>
   </header>
-  {{#if restaurante}} 
+  {{#if sitioTuristico}} 
   <div class="container">
     <div class="px-4 py-5 my-5 text-center">
-      <h1 class="display-5 fw-bold">{{restaurante.nombre}}</h1>
-      <div class="col-lg-6 mx-auto">
-        <span class="stars fs-1" data-calificacion={{restaurante.resumenValoracion.calificacionMedia}}>
-      </span>
-      </div>
+      <h1 class="display-5 fw-bold">{{sitioTuristico.nombre}}</h1>
+      <p class="card-text">
+        {{sitioTuristico.descripcion}}
+      </p>
     </div>
     <main class="shadow border mt-4 p-4">
-      {{#if restaurante.platos}}
-      <h2>Nuestros platos</h2>
+      {{#if sitioTuristico.imagenesUrls}}
+      <h2>Imagenes</h2>
       <div class="gridCards">
-        {{#each restaurante.platos}}
+        {{#each sitioTuristico.imagenesUrls}}
         <article class="card card-plato plato-{{disponibilidad}}">
           <div class="card-body">
-              <h5 class="card-title">
-                {{id}} ({{precio}}€)<br />
-                <small>{{disponibilidad}}</small>
-              </h5>
-              <p class="card-text">
-                {{descripcion}}
-              </p>
-              <a href="/platos/{{restaurante.id}}/{{id}}" class="btn btn-primary">Ver detalle</a>
-              <a href="/incidencia/{{restaurante.id}}/{{id}}" class="btn btn-secondary">Crear incidencia</a>
-          </div>
-        </article>
-        {{/each}}
-      </div>
-      {{/if}}
-      {{#if restaurante.sitiosTuristicos}}
-      <h2>Sitios turísticos</h2>
-      <div class="gridCards">
-        {{#each restaurante.sitiosTuristicos}}
-        <article class="card">
-          {{#with imagenesUrls.[0]}}
+          {{#with url}}
           <img src="{{url}}" class="card-img-top" alt="foto del sitio">
           {{/with}}
-          <div class="card-body">
-              <a href="/sitioturistico/{{restaurante.id}}/{{id}}" target="_blank" class="card-title fs-4">
-                  {{nombre}}
-              </a>
-              <p class="card-text">
-                {{descripcion}}
-              </p>
-              <a href="/sitioturistico/{{restaurante.id}}/{{id}}" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         {{/each}}
       </div>
       {{/if}}
-      {{#if incidencias}}
-      <div class="table-responsive">
-        <table class="table table-sm caption-top table-success table-striped">
-            <caption>Listado incidencias</caption>
-            <thead>
-                <tr>
-                  <th scope="col">Plato</th>
-                  <th scope="col">Usuario</th>
-                  <th scope="col">Descripción</th>
-                  <th scope="col">Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-              {{#each incidencias}}
-                <tr>
-                    <td>{{nombrePlato}}</td>
-                    <td>{{idUser}}</td>
-                    <td>{{descripcion}}</td>
-                    <td>{{fecha}}</td>
-                </tr>
-              {{/each}}
-            </tbody>
-        </table>
+      {{#if sitioTuristico.enlacesInformativos}}
+      <h2>Referencias con información</h2>
+      <div class="gridCards">
+        {{#each restaurante.enlacesInformativos}}
+        <article class="card">
+          <div class="card-body">
+              <a href={{this}} target="_blank" class="card-title fs-4">
+                  {{this}}
+              </a>
+          </div>
+        </article>
+        {{/each}}
       </div>
       {{/if}}
-    <div>
-      <a href="/opinion/{{restauranteId}}/" class="btn btn-primary">Realizar valoración</a>
-      <a href="/restaurantes" class="btn btn-light">Volver</a>
+      <a href="/detalleRestaurante/{{restauranteId}}/" class="btn btn-primary">Volver</a>
     </div>
     </main>
   </div>
   {{/if}}
-  <script src="stars.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> 
 </body>
 
