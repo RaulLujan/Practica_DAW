@@ -20,10 +20,11 @@ async function consultarRestaurante(id, token) {
 }
 
 async function crearRestaurante(restaurante, token) {
+    console.log(JSON.stringify(restaurante));
     const response = await fetch(urlbase, 
         {
             method: 'POST',
-            headers: {"Content-Type": "application/json", "Cookie": "jwt=" + token,},
+            headers: {"Content-Type": "application/json; charset=UTF-8", "Cookie": "jwt=" + token,},
             body: JSON.stringify(restaurante)
         })
         .then(res => res.text())

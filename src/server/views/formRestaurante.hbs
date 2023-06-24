@@ -53,7 +53,7 @@
         <div class="container">
             <main class="shadow border mt-4 p-4">
                 <h1>Gestionar restaurantes:</h1>
-                <div class="row" id="gestRestauranteError"></div>
+                <div class="row" id="gestRestauranteError">{{message}}</div>
                 <form class="row" id="gestRestaurante">
                     <div class="col-md-6 mb-2">
                         <label for="nombre" class="form-label">Nombre del restaurante:</label>
@@ -114,8 +114,7 @@
                         document.getElementById('gestRestauranteError').innerHTML = "";
                         fetch('/gestRestaurante', {
                             method: "POST",
-                            body: JSON.stringify(Object.fromEntries(formData.entries())),
-                            headers: {"Content-type": "application/json; charset=UTF-8"}
+                            body: JSON.stringify(Object.fromEntries(formData.entries()))
                         })
                             .then((response) => {
                                 if (response.status !== 200 ) {

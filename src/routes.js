@@ -76,35 +76,37 @@ router.get('/gestRestaurante', ensureIfAdmin, async function(req, res, next) {
     const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
     res.render('formRestaurante', {
         userName: req.cookies.userName ,
-        userRol: res?.usuario?.rol === "ADMIN" ? true : false,
+        userRol: res.usuario.rol === "ADMIN" ? true : false,
         restaurantes: restaurantes,
     })
 });
 
 router.post('/gestRestaurante', ensureIfAdmin, async function(req, res, next) {
-    //res.setHeader('Accept', 'application/json');
+    res.setHeader('Accept', 'application/json');
     //res.setHeader('Content-Type', 'application/json');
 
+    console.log(req.body.coordsX);
+    console.log(req.body.coordsY);
     var restaurante = new restauranteBean.Restaurante();
     restaurante.nombre = req.body.nombre;
     restaurante.ciudad = req.body.ciudad;
     restaurante.coordenadaX = req.body.coordsX;
     restaurante.coordenadaY = req.body.coordsY;
     restaurante.desccripcion = req.body.desccripcion;
-
-    try {
-        retorno = await restauranteServicio.borrarRestaurante(req.params.restauranteId, req.cookies.jwt);
-        res.end(JSON.stringify({ message : retorno }));
-    } catch(e) {
-        res.status(500).send(JSON.stringify({ message : retorno }));
-    }
+    //try {
+        retorno = await restauranteServicio.crearRestaurante(restaurante, req.cookies.jwt);
+        //res.end(JSON.stringify({ message : retorno }));
+    //} catch(e) {
+    //    res.status(500).send(JSON.stringify({ message : retorno }));
+    //}
 
     const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
-    res.render('formRestaurante', {
-        userName: req.cookies.userName,
-        userRol: res?.usuario?.rol === "ADMIN" ? true : false,
-        restaurantes: restaurantes,
-    })
+    res.send({restaurantes: restaurantes, message: 'Restaurante creado'});
+    //res.render('formRestaurante', {
+    //    userName: req.cookies.userName,
+    //    userRol: res.usuario.rol === "ADMIN" ? true : false,
+    //    restaurantes: restaurantes,
+    //})
 });
 
 router.get('/modRestaurante/:restauranteId', ensureIfAdmin, async function(req, res, next) {
@@ -125,17 +127,17 @@ router.get('/borrarRestaurante/:restauranteId', ensureIfAdmin, async function(re
         res.redirect('/gestRestaurante')
     }
 
-    try {
+    //try {
         retorno = await restauranteServicio.borrarRestaurante(req.params.restauranteId, req.cookies.jwt);
-        res.end(JSON.stringify({ message : retorno }));
-    } catch(e) {
-        res.status(500).send(JSON.stringify({ message : retorno }));
-    }
+        //res.end(JSON.stringify({ message : retorno }));
+    //} catch(e) {
+      //res.status(500).send(JSON.stringify({ message : retorno }));
+    //}
 
     const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
     res.render('formRestaurante', {
         userName: req.cookies.userName,
-        userRol: res?.usuario?.rol === "ADMIN" ? true : false,
+        userRol: res.usuario.rol === "ADMIN" ? true : false,
         restaurantes: restaurantes,
     })
 });
