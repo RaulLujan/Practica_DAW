@@ -190,7 +190,7 @@ async function consultarAllRestaurantes(token) {
 async function consultarRestaurantesFiltrado(filtro, token) {
     const response = await fetch(urlbase + '/filtros', 
         {
-            method: 'GET',
+            method: 'POST',
             headers: {"Content-Type": "application/json", "Cookie": "jwt=" + token,},
             body: JSON.stringify(filtro)
         })
@@ -212,6 +212,7 @@ exports.consultarRestaurante = consultarRestaurante;
 exports.crearRestaurante = crearRestaurante;
 exports.modificarRestaurante = modificarRestaurante;
 exports.borrarRestaurante = borrarRestaurante;
+exports.consultarSitio = consultarSitio;
 exports.consultarSitiosTuristicosProximos = consultarSitiosTuristicosProximos;
 exports.añadirSitiosTuristicosProximos = añadirSitiosTuristicosProximos;
 exports.borrarSitioTuristico = borrarSitioTuristico;

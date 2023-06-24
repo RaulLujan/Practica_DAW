@@ -5,6 +5,9 @@ const jwt_decode = require('jwt-decode')
 const servicio = require('./js/servicios/ServicioUsuarios')
 const restauranteServicio = require('./js/servicios/ServicioRestaurantes')
 const restauranteBean = require('./js/beans/Restaurante')
+const filtroBean = require('./js/beans/Filtro')
+const incidenciaBean = require('./js/beans/Incidencia')
+const valoracionBean = require('./js/beans/Valoracion')
 
 const opinionServicio = require('./js/servicios/ServicioOpiniones')
 
@@ -57,6 +60,38 @@ router.get('/restaurantes', ensureIfLogged, async function(req, res, next) {
     })
 });
 
+router.post('/restaurantes', ensureIfLogged, async function(req, res, next) {
+    res.setHeader('Accept', 'application/json');
+    const filtro = new filtroBean.Filtro();
+    if (req.body.nombre)
+        filtro.nombre = req.body.nombre;
+    if (req.body.ciudad)
+        filtro.ciudad = req.body.ciudad;
+    if (req.body.km){
+        filtro.distancia = req.body.km;
+        if(global.navigator.geolocation){
+            var success = function(position){
+                filtro.coorX = position.coords.latitude,
+                filtro.coorY = position.coords.longitude;
+            }
+            global.navigator.geolocation.getCurrentPosition(success, function(msg){
+            console.error( msg );
+            });
+        }
+    }   
+    if (req.body.valoracion)
+        filtro.valoracion = req.body.valoracion;
+    const restaurantes = await restauranteServicio.consultarRestaurantesFiltrado(filtro, req.cookies.jwt);
+
+    res.render('getListRestaurantes', {
+        userName: req.cookies.userName,
+        userRol: res.usuario.rol === "ADMIN" ? true : false,
+        restaurantes: restaurantes,
+    })
+    //res.send({restaurantes: restaurantes});
+    
+});
+
 router.get('/detalleRestaurante/:restauranteId', ensureIfLogged, async function(req, res, next) {
     if (!req.params.restauranteId) {
         res.redirect('/restaurantes')
@@ -69,6 +104,7 @@ router.get('/detalleRestaurante/:restauranteId', ensureIfLogged, async function(
         userRol: res.usuario.rol === "ADMIN" ? true : false,
         restaurante: restaurante,
         incidencias: incidencias,
+        restauranteId: restaurante.id,
     })
 });
 
@@ -83,30 +119,17 @@ router.get('/gestRestaurante', ensureIfAdmin, async function(req, res, next) {
 
 router.post('/gestRestaurante', ensureIfAdmin, async function(req, res, next) {
     res.setHeader('Accept', 'application/json');
-    //res.setHeader('Content-Type', 'application/json');
-
-    console.log(req.body.coordsX);
-    console.log(req.body.coordsY);
     var restaurante = new restauranteBean.Restaurante();
     restaurante.nombre = req.body.nombre;
     restaurante.ciudad = req.body.ciudad;
     restaurante.coordenadaX = req.body.coordsX;
     restaurante.coordenadaY = req.body.coordsY;
     restaurante.desccripcion = req.body.desccripcion;
-    //try {
-        retorno = await restauranteServicio.crearRestaurante(restaurante, req.cookies.jwt);
-        //res.end(JSON.stringify({ message : retorno }));
-    //} catch(e) {
-    //    res.status(500).send(JSON.stringify({ message : retorno }));
-    //}
+
+    retorno = await restauranteServicio.crearRestaurante(restaurante, req.cookies.jwt);
 
     const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
     res.send({restaurantes: restaurantes, message: 'Restaurante creado'});
-    //res.render('formRestaurante', {
-    //    userName: req.cookies.userName,
-    //    userRol: res.usuario.rol === "ADMIN" ? true : false,
-    //    restaurantes: restaurantes,
-    //})
 });
 
 router.get('/modRestaurante/:restauranteId', ensureIfAdmin, async function(req, res, next) {
@@ -150,9 +173,9 @@ router.get('/plato/:restauranteId', ensureIfLogged, async function(req, res, nex
     })
 });
 
-router.get('/plato/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
+router.get('/platos/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
+
     const plato = await restauranteServicio.consultarPlato(req.params.platoId, req.params.restauranteId, req.cookies.jwt);
-    
     res.render('formPlato', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
@@ -212,10 +235,21 @@ router.get('/incidencia/:restauranteId/:platoId', ensureIfLogged, async function
     })
 });
 
+router.post('/incidencia', ensureIfLogged, async function(req, res, next) {
+    res.setHeader('Accept', 'application/json');
+    const incidencia = new incidenciaBean.Incidencia();
+    incidencia.idUser = req.cookies.userName;
+    incidencia.idRestaurante = req.body.restauranteId;
+    incidencia.idPalto = req.body.platoId;
+    incidencia.descripcion = req.body.descripcion;
+    await incidenciaServicio.insertarIncidencia(incidencia);
+    res.send({message: 'Incidencia creada'});
+});
+
 router.get('/opinion/:restauranteId', ensureIfLogged, async function(req, res, next) {
-    const valoracion = await opinionServicio.consultarValoracion(req.params.restauranteId, req.cookies.userName);
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
-    
+    const valoracion = await opinionServicio.consultarValoracion(restaurante.idOpinion, req.cookies.userName);
+
     res.render('formOpinion', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
@@ -223,6 +257,29 @@ router.get('/opinion/:restauranteId', ensureIfLogged, async function(req, res, n
         valoracion: valoracion,
         nombreRestaurante: restaurante.nombre,
     })
+});
+
+router.post('/opinion', ensureIfLogged, async function(req, res, next) {
+    res.setHeader('Accept', 'application/json');
+    const restaurante = await restauranteServicio.consultarRestaurante(req.body.restauranteId, req.cookies.jwt);
+    const valoracion = await opinionServicio.consultarValoracion(restaurante.idOpinion, req.cookies.userName);
+
+    if(valoracion === undefined){
+        valoracion = new valoracionBean.Valoracion();
+        const opinion = await opinionServicio.consultarOpinion(restaurante.idOpinion);
+        if(opinion.valoraciones === undefined) valoracion.Id = 1;
+        else valoracion.Id = opinion.valoraciones[opinion.valoraciones.length -1] + 1;
+    }
+
+    valoracion.Correo = "RaulLujan@um.es"   //req.cookies.correo; // TODO: sacar el correo de JWT o meterlo como campo visual
+    valoracion.Calificacion = 5 //req.body.valoracion
+    valoracion.Comentario = req.body.comentario
+    valoracion.IdUser = req.cookies.userName
+
+    valoracion.print()
+
+    await opinionServicio.addValoracion(restaurante.idOpinion, valoracion);
+    res.send({message: 'Opinion añadida'});
 });
 
 router.get('/valoracion/:restauranteId', ensureIfLogged, async function(req, res, next) {
@@ -257,44 +314,6 @@ router.get('/platos/:restauranteId/:platoId', ensureIfLogged, async function(req
         plato: plato,
     })
 });
-
-router.get('/buscarRestaurantes', ensureIfLogged, async function(req, res, next) {
-    if (!req.query.nombre && !req.query.ciudad && !req.query.distancia && !req.query.valoracion) {
-        res.redirect('/restaurantes')
-    }
-    
-    const filtro = new filtroBean.Filtro();
-    if (req.query.nombre)
-        filtro.nombre = req.query.nombre;
-    if (req.query.ciudad)
-        filtro.ciudad = req.query.ciudad;
-    if (req.query.distancia){
-        filtro.distancia = req.query.distancia;
-        if(navigator.geolocation){
-            var success = function(position){
-                filtro.coorX = position.coords.latitude,
-                filtro.coorY = position.coords.longitude;
-            }
-            navigator.geolocation.getCurrentPosition(success, function(msg){
-            console.error( msg );
-            });
-        }
-    }   
-    if (req.query.valoracion)
-        filtro.valoracion = req.query.valoracion;
-
-    console.log("XXXXXXXXXXXXXXXXXXXXX " + filtro.nombre);
-    const restaurantes = await restauranteServicio.consultarRestaurantesFiltrado(filtro, req.cookies.jwt);
-    console.log(restaurantes);
-    res.render('getListRestaurantes', {
-        userName: req.cookies.userName,
-        userRol: res.usuario.rol === "ADMIN" ? true : false,
-        restaurantes: restaurantes,
-    })
-    
-});
-
-
 
 router.get('/logout', ensureIfLogged, async function(req, res, next) {
     res.clearCookie("jwt")

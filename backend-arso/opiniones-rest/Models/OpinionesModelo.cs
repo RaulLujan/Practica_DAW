@@ -23,10 +23,14 @@ namespace Opiniones.Modelo
         }
 
         public void UpdateValoracion(Valoracion valoracion) {
+            Console.Write(valoracion.Id);
             for (var i = 0; i < Valoraciones.Count; i++) {
+                Console.Write(Valoraciones[i].Id);
                 if(Valoraciones[i].Id == valoracion.Id){
                     Valoraciones[i] = valoracion;
+                    Console.Write(" MODIFICO");
                 }
+                Console.Write(" MODIFICO " + Valoraciones[i].Comentario);
             }
         }
 

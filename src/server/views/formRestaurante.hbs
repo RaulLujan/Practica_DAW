@@ -93,8 +93,9 @@
                                         {{nombre}}<br>
                                         <small class="small">{{ciudad}}</small>
                                     </h5>
+                                     Calificación Media: <span class="stars fs-6">{{resumenValoracion.calificacionMedia}}</span>
                                     <br>
-                                    Fecha de alta:{{fechaAlta}}
+                                    Fecha de alta: {{fechaAlta}}
                                     <br>
                                     <a href="/modRestaurante/{{id}}/" class="btn btn-primary">Modificar</a>
                                     <a href="/borrarRestaurante/{{id}}/" class="btn btn-secondary">Borrar</a>
@@ -114,6 +115,7 @@
                         document.getElementById('gestRestauranteError').innerHTML = "";
                         fetch('/gestRestaurante', {
                             method: "POST",
+                            headers: {"Content-Type": "application/json; charset=UTF-8"},
                             body: JSON.stringify(Object.fromEntries(formData.entries()))
                         })
                             .then((response) => {

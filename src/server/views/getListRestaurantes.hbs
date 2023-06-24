@@ -56,7 +56,8 @@
             <div class="row py-4">
                 <h1 class="col"> Lista de restaurantes </h1>
             </div>
-            <form class="row">
+             <div class="row" id="restaurantesError">{{message}}</div>
+            <form class="row" id="restaurantes">
                 <h2 class="col"> Filtrar </h2>
                 <div class="mb-2">
                     <label for="nombre" class="form-label">Nombre:</label>
@@ -72,7 +73,7 @@
                 </div>
                 <div class="col-md-6 mb-2">
                     <label for="calificacion" class="form-label">Calificación Media:</label>
-                    <select class="form-select mb-2" aria-label="Elige tu valoración entre 1 y 5">
+                    <select class="form-select mb-2" id="valoracion" name="valoracion" aria-label="Elige tu valoración entre 1 y 5">
                         <option disabled selected>Elige tu valoración entre 1 y 5</option>
                         <option value="1">
                             <!-- Estrellas -->
@@ -141,6 +142,24 @@
                     <button type="reset" class="btn btn-light">Limpiar filtro</button>
                 </div>
             </form>
+            <script>
+                    document.getElementById('restaurantes').addEventListener('submit', async (event) => {
+                        event.preventDefault();
+                        const form = document.getElementById('restaurantes');
+                        const formData = new FormData(form);
+                        document.getElementById('restaurantesError').innerHTML = "";
+                        fetch('/restaurantes', {
+                            method: "POST",
+                            headers: {"Content-Type": "application/json; charset=UTF-8"},
+                            body: JSON.stringify(Object.fromEntries(formData.entries()))
+                        })
+                            .then((response) => {
+                                if (response.status === 200 ) {
+                                    return Promise.resolve(response.json());
+                                }
+                            }); 
+                    });
+                </script>
             {{#if restaurantes}}
             <div class="
                 row
@@ -157,10 +176,9 @@
                                 <small class="small">{{ciudad}}</small>
                             </h5>
                             <p class="card-text">
-                                Calificación Media: <br><span class="stars fs-6" data-calificacion={{resumenValoracion.calificacionMedia}}>
-                                </span>
+                                Calificación Media: <span class="stars fs-6">{{resumenValoracion.calificacionMedia}}</span>
                                 <br>
-                                Fecha de alta:{{fechaAlta}}
+                                Fecha de alta: {{fechaAlta}}
                             </p>
                             <a href="/detalleRestaurante/{{id}}/" class="btn btn-primary">Detalles</a>
                             <a href="/valoracion/{{id}}/" class="btn btn-secondary">Ver valoraciones</a>

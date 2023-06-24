@@ -69,14 +69,14 @@
         <article class="card card-plato plato-{{disponibilidad}}">
           <div class="card-body">
               <h5 class="card-title">
-                {{id}} ({{precio}}€)<br />
+                {{nombre}} ({{precio}}€)<br />
                 <small>{{disponibilidad}}</small>
               </h5>
               <p class="card-text">
                 {{descripcion}}
               </p>
-              <a href="/platos/{{restaurante.id}}/{{id}}" class="btn btn-primary">Ver detalle</a>
-              <a href="/incidencia/{{restaurante.id}}/{{id}}" class="btn btn-secondary">Crear incidencia</a>
+              <a href="/platos/{{../restauranteId}}/{{id}}" class="btn btn-primary">Ver detalle</a>
+              <a href="/incidencia/{{../restauranteId}}/{{id}}" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
         {{/each}}
@@ -91,13 +91,13 @@
           <img src="{{url}}" class="card-img-top" alt="foto del sitio">
           {{/with}}
           <div class="card-body">
-              <a href="/sitioturistico/{{restaurante.id}}/{{id}}" target="_blank" class="card-title fs-4">
+              <a href="/sitioturistico/{{restauranteId}}/{{id}}" target="_blank" class="card-title fs-4">
                   {{nombre}}
               </a>
               <p class="card-text">
                 {{descripcion}}
               </p>
-              <a href="/sitioturistico/{{restaurante.id}}/{{id}}" class="btn btn-primary">Ver detalle</a>
+              <a href="/sitioturistico/{{restauranteId}}/{{id}}" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         {{/each}}

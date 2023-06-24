@@ -42,13 +42,14 @@ async function addValoracion(id, valoracion) {
   if(valoracion.Id !== undefined)
     path = '/updatevaloracion/';
 
+  console.log(urlbase + path + id);
   const response = await fetch(urlbase + path + id,
           {
               method: 'PUT',
               headers: {"Content-Type": "application/json"},
               body: JSON.stringify(valoracion)
           })
-          .then(res => {return true})
+          .then(res => {console.log(res);return true})
           .catch(err => console.log('Solicitud fallida', err));
   return response;
 }

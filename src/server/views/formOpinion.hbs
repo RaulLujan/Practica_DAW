@@ -54,12 +54,13 @@
         <div class="container">
             <main class="shadow border mt-4 p-4">
                 <h1>Opinión:</h1>
-                <form>
+                <div class="row" id="opinionError">{{message}}</div>
+                <form class="row" id="opinion">
                     <div class="mb-2">
                         <label for="nombre" class="form-label">Nombre del restaurante:</label>
-                        <input type="text" id="nombre" class="form-control" name="nombre" placeholder="Nombre del restaurante" required value={{nombreRestaurante}} />
+                        <input type="text" id="nombre" class="form-control" name="nombre" placeholder="Nombre del restaurante" required value="{{nombreRestaurante}}" />
                     </div>
-                    <select class="form-select mb-2" aria-label="Elige tu valoración entre 1 y 5">
+                    <select class="form-select mb-2" id="valoracion" name="valoracion" aria-label="Elige tu valoración entre 1 y 5">
                         <option disabled selected>Elige tu valoración entre 1 y 5</option>
                         <option value="1">
                             <!-- Estrellas -->
@@ -124,13 +125,39 @@
                     </select>
                     <div class="mb-2">
                         <label for="comentario" class="form-label">Deja tu comentario:</label>
-                        <textarea class="form-control form-control-sm" id="comentario" name="comentario" rows="4" value={{valoracion.Comentario}}></textarea>
+                        <textarea class="form-control form-control-sm" id="comentario" name="comentario" rows="4" >{{valoracion.Comentario}}</textarea>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary">Comentar</button> <!--TODO: Implementar el POST-->
                         <a href="/detalleRestaurante/{{restauranteId}}/" class="btn btn-light">Volver</a> <!--TODO: tiene que llevar el id del restaurante, para eso le tiene que llegar aqui-->
                     </div>
                 </form>
+                <script>
+                    document.getElementById('opinion').addEventListener('submit', async (event) => {
+                        event.preventDefault();
+                        const form = document.getElementById('opinion');
+                        const formData = new FormData(form);
+                        formData.append("restauranteId", '{{restauranteId}}');
+                        document.getElementById('opinionError').innerHTML = "";
+                        fetch('/opinion', {
+                            method: "POST",
+                            headers: {"Content-Type": "application/json; charset=UTF-8"},
+                            body: JSON.stringify(Object.fromEntries(formData.entries()))
+                        })
+                            .then((response) => {
+                                if (response.status !== 200 ) {
+                                    document.getElementById('opinionError')
+                                        .innerHTML = `<div class="alert alert-danger" role="alert">ERROR al Opinar</div>`;
+                                } else {
+                                    return Promise.resolve(response.json());
+                                }
+                            }) 
+                            .then((json) => {
+                                document.getElementById('opinion')
+                                    .innerHTML = `<div class="alert alert-success" role="alert">${json.message}</div>`
+                            });
+                    });
+                </script>
             </main>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>   

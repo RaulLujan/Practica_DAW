@@ -13,23 +13,57 @@ async function getConnection() {
   return connection;
 }
 
-async function insertarIncidencia(incidencia) { //TODO: Creo que la incidencia se deberia de crear aqui y no en otro sitio, recibiendo como parametro el idRestaurante, el usuario y el idPlato(nombrePlato o lo que sea)
-  const sql = 'INSERT INTO TIncidencias (idUser, idRestaurante, nombrePlato, fecha, descripcion) ' +
-  ' VALUES (\'' + incidencia.idUser + '\', \'' + incidencia.idRestaurante + '\', \'' + 
-  incidencia.nombrePlato + '\', DATE(NOW()), \'' + incidencia.descripcion +'\');';
+async function consultaGenerica(sql) { 
   const connection = await getConnection();
-  connection.connect(function(err){
+  const response = connection.connect(function(err){
+    if(err){console.log(err);}
+    else{connection.query(sql ,function(err, result){
+      if(err){console.log(err);}
+      else{return result;}}); 
+    }});
+    return response;
+}
+
+
+async function crearTablaIncidencias() { 
+  const sql =  'CREATE TABLE TIncidencias (' +
+  'id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,' +
+  'idUser VARCHAR(256),' +
+  'idRestaurante VARCHAR(256),' +
+  'idPalto VARCHAR(256),' +
+  'titulo VARCHAR(256),' +
+  'fecha DATE,' +
+  'descripcion VARCHAR(256)' +
+  ');';
+  const connection = await getConnection();
+  const response = connection.connect(function(err){
+    if(err){console.log(err);}
+    else{connection.query(sql ,function(err, result){
+      if(err){console.log(err);}
+      else{return result;}}); 
+    }});
+    return response;
+}
+
+
+async function insertarIncidencia(incidencia) { //TODO: Creo que la incidencia se deberia de crear aqui y no en otro sitio, recibiendo como parametro el idRestaurante, el usuario y el idPlato(nombrePlato o lo que sea)
+  const sql = 'INSERT INTO TIncidencias (idUser, idRestaurante, idPalto, titulo, fecha, descripcion) ' +
+  ' VALUES (\'' + incidencia.idUser + '\', \'' + incidencia.idRestaurante + '\', \'' + 
+  incidencia.idPalto +  '\', \'' +  incidencia.titulo + '\', DATE(NOW()), \'' + incidencia.descripcion +'\');';
+  const connection = await getConnection();
+  const response = connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
       if(err){console.log(err);}
       else{return result.insertId;}}); 
     }});
+    return response;
 }
 
 async function consultarAllIncidencias() {
   const sql = 'SELECT * FROM TIncidencias ORDER BY FECHA DESC;';
   const connection = await getConnection();
-  connection.connect(function(err){
+  const response = connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
       if(err){console.log(err);}
@@ -43,12 +77,13 @@ async function consultarAllIncidencias() {
         console.log(listIncidencias);
         return listIncidencias;}}); 
     }});
+    return response;
 }
 
-async function consultarIncidenciasByPlato(nombrePlato) {
-  const sql = 'SELECT * FROM TIncidencias WHERE nombrePlato = \'' + nombrePlato + '\' ORDER BY FECHA DESC;';
+async function consultarIncidenciasByPlato(idPalto) {
+  const sql = 'SELECT * FROM TIncidencias WHERE nombrePlato = \'' + idPalto + '\' ORDER BY FECHA DESC;';
   const connection = await getConnection();
-  connection.connect(function(err){
+  const response = connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
       if(err){console.log(err);}
@@ -62,13 +97,14 @@ async function consultarIncidenciasByPlato(nombrePlato) {
         console.log(listIncidencias);
         return listIncidencias;}}); 
     }});
+    return response;
 }
   
 
 async function consultarIncidenciasByRestaurante(idRestaurante) {
   const sql = 'SELECT * FROM TIncidencias WHERE idRestaurante = \'' + idRestaurante + '\' ORDER BY FECHA DESC;';
   const connection = await getConnection();
-  connection.connect(function(err){
+  const response = connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
       if(err){console.log(err);}
@@ -82,12 +118,13 @@ async function consultarIncidenciasByRestaurante(idRestaurante) {
         console.log(listIncidencias);
         return listIncidencias;}}); 
     }});
+    return response;
 }
 
 async function consultarIncidenciasByUsuario(idUser) {
   const sql = 'SELECT * FROM TIncidencias WHERE idUser = \'' + idUser + '\' ORDER BY FECHA DESC;';
   const connection = await getConnection();
-  connection.connect(function(err){
+  const response = connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
       if(err){console.log(err);}
@@ -101,20 +138,24 @@ async function consultarIncidenciasByUsuario(idUser) {
         console.log(listIncidencias);
         return listIncidencias;}}); 
     }});
+    return response;
 }
 
 async function borrarIncidencia(id) {
   const sql = 'DELETE FROM TIncidencias WHERE id = \'' + id + '\' ;';
   const connection = await getConnection();
-  connection.connect(function(err){
+  const response = connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
       if(err){console.log(err);}
       else{return true}}); 
     }});
+    return response;
 }
 
 exports.getConnection = getConnection;
+exports.consultaGenerica = consultaGenerica;
+exports.crearTablaIncidencias = crearTablaIncidencias;
 exports.insertarIncidencia = insertarIncidencia;
 exports.consultarAllIncidencias = consultarAllIncidencias;
 exports.consultarIncidenciasByPlato = consultarIncidenciasByPlato;

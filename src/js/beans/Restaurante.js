@@ -38,11 +38,12 @@ class Restaurante {
       this.coordenadaX = values[0];
       this.coordenadaY = values[1];
     }
-   
+    
     this.idGestor = json.idGestor;
     this.ciudad = json.ciudad;
     this.descripcion = json.descripcion;
-    this.fechaAlta = json.fechaAlta;
+    const date = new Date(json.fechaAlta);
+    this.fechaAlta = date.toLocaleString('es-ES', { timeZone: 'UTC' });
 
     const sitiosTuristicos = json['sitiosTuristicos'];
     if (sitiosTuristicos !== undefined) {

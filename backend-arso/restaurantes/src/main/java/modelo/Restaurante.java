@@ -122,7 +122,7 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	public void addPlato(Plato plato) {
 		if (this.platos == null)
 			this.platos = new LinkedList<Plato>();
-		else if (CONT_PLATO == 1)
+		else if (CONT_PLATO == 1 && platos.size() > 0)
 			CONT_PLATO = Integer.parseInt(platos.get(platos.size() - 1).getId()) + 1;
 		plato.setId(CONT_PLATO + "");
 		CONT_PLATO++;
