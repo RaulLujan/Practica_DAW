@@ -16,6 +16,7 @@ const incidenciaServicio = require('./js/servicios/ServicioIncidencias')
 
 
 router.get('/', function(req, res, next) {
+    incidenciaServicio.crearTablaIncidencias();
     res.redirect('http://localhost:8090/restaurantes')
 });
 
@@ -65,6 +66,40 @@ router.get('/restaurantes', ensureIfLogged, async function(req, res, next) {
     })
 });
 
+router.post('/restaurantes/filter', ensureIfLogged, async function(req, res, next) {
+    /*
+     * Falta aplicar los filtros, que lo tengo mockeado
+    */
+    //const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
+
+    const filtro = new filtroBean.Filtro();
+    if (req.body.nombre)
+        filtro.nombre = req.body.nombre;
+    if (req.body.ciudad)
+        filtro.ciudad = req.body.ciudad;
+    if (req.body.km){
+        filtro.distancia = req.body.km;
+        if(global.navigator.geolocation){
+            var success = function(position){
+                filtro.coorX = position.coords.latitude,
+                filtro.coorY = position.coords.longitude;
+            }
+            global.navigator.geolocation.getCurrentPosition(success, function(msg){
+            console.error( msg );
+            });
+        }
+    }   
+    if (req.body.valoracion) {
+        filtro.valoracionMax = req.body.valoracion + 1;
+        filtro.valoracionMin = req.body.valoracion;
+    }
+    const restaurantes = await restauranteServicio.consultarRestaurantesFiltrado(filtro, req.cookies.jwt);
+
+    res.render('getPartialListRestaurantes', {
+        restaurantes: restaurantes,
+    })
+});
+
 router.post('/restaurantes', ensureIfLogged, async function(req, res, next) {
     res.setHeader('Accept', 'application/json');
     const filtro = new filtroBean.Filtro();
@@ -84,8 +119,11 @@ router.post('/restaurantes', ensureIfLogged, async function(req, res, next) {
             });
         }
     }   
-    if (req.body.valoracion)
-        filtro.valoracion = req.body.valoracion;
+    if (req.body.valoracion) {
+        filtro.valoracionMax = req.body.valoracion + 1;
+        filtro.valoracionMin = req.body.valoracion;
+    }
+
     const restaurantes = await restauranteServicio.consultarRestaurantesFiltrado(filtro, req.cookies.jwt);
 
     res.render('getListRestaurantes', {
@@ -144,6 +182,7 @@ router.get('/modRestaurante/:restauranteId', ensureIfAdmin, async function(req, 
     }
 
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
+
     res.render('modRestaurante', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
@@ -273,8 +312,11 @@ router.post('/addsitios', ensureIfLogged, async function(req, res, next) {
 
     // Recorremos la lista de indices seleccionados y agregamos los sitios turisticos a la lista final
     const listST = [];
-    for (var i = 0; i < listSelect.length; i++) {
-        listST.push(list[listSelect[i]])
+
+    if(valoracion !== undefined){
+        for (var i = 0; i < listSelect.length; i++) {
+            listST.push(list[listSelect[i]])
+        }
     }
 
    // await restauranteServicio.añadirSitiosTuristicosProximos(listST , req.body.restauranteId, req.cookies.jwt);
@@ -351,6 +393,7 @@ router.get('/valoracion/:restauranteId/:idOpinion', ensureIfLogged, async functi
 
 router.get('/sitioturistico/:restauranteId/:sitioId', ensureIfLogged, async function(req, res, next) {
     const sitio = await restauranteServicio.consultarSitio(req.params.sitioId, req.params.restauranteId, req.cookies.jwt);
+    sitio.imagenesUrls = sitio.imagenesUrls.map(el => { return { url: el } })
 
     res.render('detalleSitioTuristico', {
         userName: req.cookies.userName,

@@ -56,7 +56,7 @@
                     </div>
                     <select class="form-select mb-2" id="valorOpinion" name="valorOpinion" aria-label="Elige tu valoración entre 1 y 5">
                         <option disabled selected>Elige tu valoración entre 1 y 5</option>
-                        <option value="1">
+                        <option value="1" {{#ifeq valoracion.Calificacion 1}}selected="selected"{{/ifeq}}>
                             <!-- Estrellas -->
                             <!-- Estrellas doradas -->
                             &#9733;
@@ -68,7 +68,7 @@
                             <!-- Fin estrellas -->
                             Uno
                         </option>
-                        <option value="2">
+                        <option value="2" {{#ifeq valoracion.Calificacion 2}}selected="selected"{{/ifeq}}>
                             <!-- Estrellas -->
                             <!-- Estrellas doradas -->
                             &#9733;
@@ -80,7 +80,7 @@
                             <!-- Fin estrellas -->
                             Dos
                         </option>
-                        <option value="3">
+                        <option value="3" {{#ifeq valoracion.Calificacion 3}}selected="selected"{{/ifeq}}>
                             <!-- Estrellas -->
                             <!-- Estrellas doradas -->
                             &#9733;
@@ -92,7 +92,7 @@
                             <!-- Fin estrellas -->
                             Tres
                         </option>
-                        <option value="4">
+                        <option value="4" {{#ifeq valoracion.Calificacion 4}}selected="selected"{{/ifeq}}>
                             <!-- Estrellas -->
                             <!-- Estrellas doradas -->
                             &#9733;
@@ -104,7 +104,7 @@
                             <!-- Fin estrellas -->
                             Cuatro
                         </option>
-                        <option value="5">
+                        <option value="5"{{#ifeq valoracion.Calificacion 5}}selected="selected"{{/ifeq}}>
                             <!-- Estrellas -->
                             <!-- Estrellas doradas -->
                             &#9733;
@@ -148,7 +148,10 @@
                             }) 
                             .then((json) => {
                                 document.getElementById('opinion')
-                                    .innerHTML = `<div class="alert alert-success" role="alert">${json.message}</div>`
+                                    .innerHTML = `<div class="alert alert-success" role="alert"
+                                        ${json.message}
+                                    </div>
+                                    <a class="btn btn-primary" onclick="location.reload()">Recargar</a>`
                             });
                     });
                 </script>

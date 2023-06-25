@@ -1,0 +1,21 @@
+{{#if restaurantes}}
+{{#each restaurantes}}
+    <div class="col mb-4">
+        <article class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{nombre}}<br>
+                    <small class="small">{{ciudad}}</small>
+                </h5>
+                <p class="card-text">
+                    Calificación Media: <br><span class="stars fs-6" data-calificacion={{resumenValoracion.calificacionMedia}}></span>
+                    <br>
+                    Fecha de alta: {{fechaAlta}}
+                </p>
+                <a href="/detalleRestaurante/{{id}}/" class="btn btn-primary">Detalles</a>
+                <a href="/valoracion/{{id}}/{{idOpinion}}/" class="btn btn-secondary">Ver valoraciones</a>
+            </div>
+        </article>
+    </div>
+    {{/each}}
+{{/if}}

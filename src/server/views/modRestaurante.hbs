@@ -95,9 +95,7 @@
                     <div class="gridCards">
                         {{#each restaurante.sitiosTuristicos}}
                         <article class="card">
-                        {{#with imagenesUrls.[0]}}
-                        <img src="{{url}}" class="card-img-top" alt="foto del sitio">
-                        {{/with}}
+                        <img src="https://es.wikipedia.org/wiki/Archivo:{{imagenesUrls.[0]}}" class="card-img-top" alt="foto del sitio">
                         <div class="card-body">
                             <h5 class="card-title">
                                 {{nombre}}

@@ -45,38 +45,6 @@
         </div>
       </header>
         <div class="container">
-          
-          <!-- La primera parte no la veo necesaria -->
-          <!--  <main class="shadow border mt-4 p-4">
-                <h1>Sitio turístico:</h1>
-                <form>
-                    <div class="mb-2">
-                        <label for="titulo" class="form-label">Título:</label>
-                        <input type="text" id="titulo" class="form-control" name="titulo" placeholder="titulo" required />
-                    </div>
-                    <div class="mb-2">
-                        <label for="url" class="form-label">Dirección Web:</label>
-                        <input type="url" id="url" class="form-control" name="url" placeholder="https://" required />
-                    </div>
-                    <div class="mb-2">
-                        <label for="coords" id="coords" class="form-label">Coordenadas:</label>
-                        <div class="row">
-                            <div class="col">
-                                <input type="text" id="latitud" class="form-control" name="latitud" placeholder="Latitud" required aria-labelledby="coords" />
-                            </div>
-                            <div class="col">
-                                <input type="text" id="longitud" class="form-control" name="longitud" placeholder="Longitud" required  aria-labelledby="coords" />
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
-                        <button type="submit" class="btn btn-light">Modificar</button>
-                        <button type="reset" class="btn btn-light">Borrar</button>
-                    </div>
-                </form>
-            </main> -->
-            <!-- End La primera parte no la veo necesaria -->
           <main class="shadow border mt-4 p-4">
                 <h1>Listado de sitios turísticos:</h1>
                 <div class="row" id="addsitiosError">{{message}}</div>
@@ -97,7 +65,7 @@
                                 <tr>
                                     <td>
                                       <!-- el id tiene que cambiar, con el name igual con [] manda array (en PHP)-->
-                                      <input class="form-check-input" name="sitioTuristico[]" type="checkbox" id={{id}} value="idDelSitio" aria-label="Selecciona este sitio">
+                                      <input class="form-check-input" name="sitioTuristico[{{id}}]" type="checkbox" id={{id}} value="idDelSitio" aria-label="Selecciona este sitio">
                                     </td>
                                     <td>{{nombre}}</td>
                                     <td>{{ciudad}}</td>
@@ -135,7 +103,10 @@
                             }) 
                             .then((json) => {
                                 document.getElementById('addsitios')
-                                    .innerHTML = `<div class="alert alert-success" role="alert">${json.message}</div>`
+                                    .innerHTML = `<div class="alert alert-success" role="alert"
+                                        ${json.message}
+                                    </div>
+                                    <a class="btn btn-primary" onclick="location.reload()">Recargar</a>`
                             });
                     });
                 </script>

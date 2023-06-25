@@ -100,26 +100,26 @@ async function consultarIncidenciasByPlato(idPalto) {
   
 
 async function consultarIncidenciasByRestaurante(idRestaurante) {
-  const sql = 'SELECT * FROM TIncidencias WHERE idRestaurante = \'' + idRestaurante + '\' ORDER BY FECHA DESC;';
-  const connection = await getConnection();
-  const response = await connection.connect(function(err){
-    if(err){console.log(err);}
-    else{connection.query(sql ,function(err, result){
-      if(err){console.log(err);}
-      else{
-        const listIncidencias = [];
-        for (var i = 0; i < result.length; i++) {
-          var incidencia = new inc.Incidencia();
-          incidencia.fromJson(result[i]);
-          listIncidencias.push(incidencia);
-        }
-        console.log(listIncidencias)
-        return listIncidencias;
-      }});
-    }})
-   
-
-    return response;
+  return new Promise( async () => {
+    const sql = 'SELECT * FROM TIncidencias WHERE idRestaurante = \'' + idRestaurante + '\' ORDER BY FECHA DESC;';
+    const connection = await getConnection();
+    const response = await connection.connect(function(err){
+      if(err){Promise.reject(err);}
+      else{connection.query(sql ,function(err, result){
+        if(err){console.log(err);}
+        else{
+          const listIncidencias = [];
+          for (var i = 0; i < result.length; i++) {
+            var incidencia = new inc.Incidencia();
+            incidencia.fromJson(result[i]);
+            listIncidencias.push(incidencia);
+          }
+          console.log(listIncidencias)
+          return Promise.resolve(listIncidencias);
+        }});
+      }})
+      return Promise.resolve(response);
+  })
 }
 
 async function consultarIncidenciasByUsuario(idUser) {

@@ -61,10 +61,10 @@
                         <label for="disponibilidad" class="form-label">Disponibilidad:</label>
                         <select id="disponibilidad" name="disponibilidad" class="form-select mb-2" aria-label="Elige Si o No">
                         <option disabled selected>Elige Si o No</option>
-                        <option value="true">
+                        <option value="true" {{#ifeq plato.disponible 'true'}}selected="selected"{{/ifeq}}>
                             Si
                         </option>
-                        <option value="false">
+                        <option value="false" {{#ifeq plato.disponible 'false'}}selected="selected"{{/ifeq}}>
                             No
                         </option>
                     </select>
@@ -102,7 +102,10 @@
                             }) 
                             .then((json) => {
                                 document.getElementById('plato')
-                                    .innerHTML = `<div class="alert alert-success" role="alert">${json.message}</div>`
+                                    .innerHTML = `<div class="alert alert-success" role="alert"
+                                        ${json.message}
+                                    </div>
+                                    <a class="btn btn-primary" onclick="location.reload()">Recargar</a>`
                             });
                     });
                 </script>
