@@ -104,6 +104,7 @@ router.get('/detalleRestaurante/:restauranteId', ensureIfLogged, async function(
 
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
     const incidencias = await incidenciaServicio.consultarIncidenciasByRestaurante(req.params.restauranteId);
+    console.log("#3" +incidencias)
     res.render('detalleRestaurante', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
@@ -200,9 +201,6 @@ router.post('/plato', ensureIfLogged, async function(req, res, next) {
     plato.precio = req.body.precio;
     plato.disponible = req.body.disponibilidad;
     plato.descripcion = req.body.descripcion;
-
-    console.log(JSON.stringify(plato))
-
     var accion = req.body.accion
     if(accion === 'Modificar'){
         plato.id = req.body.platoId
@@ -281,6 +279,7 @@ router.post('/incidencia', ensureIfLogged, async function(req, res, next) {
     incidencia.idUser = req.cookies.userName;
     incidencia.idRestaurante = req.body.restauranteId;
     incidencia.idPalto = req.body.platoId;
+    incidencia.titulo = req.body.titulo;
     incidencia.descripcion = req.body.descripcion;
     await incidenciaServicio.insertarIncidencia(incidencia);
     res.send({message: 'Incidencia creada'});

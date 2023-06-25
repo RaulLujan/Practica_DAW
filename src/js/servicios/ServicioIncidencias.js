@@ -46,7 +46,7 @@ async function crearTablaIncidencias() {
 }
 
 
-async function insertarIncidencia(incidencia) { //TODO: Creo que la incidencia se deberia de crear aqui y no en otro sitio, recibiendo como parametro el idRestaurante, el usuario y el idPlato(nombrePlato o lo que sea)
+async function insertarIncidencia(incidencia) { 
   const sql = 'INSERT INTO TIncidencias (idUser, idRestaurante, idPalto, titulo, fecha, descripcion) ' +
   ' VALUES (\'' + incidencia.idUser + '\', \'' + incidencia.idRestaurante + '\', \'' + 
   incidencia.idPalto +  '\', \'' +  incidencia.titulo + '\', DATE(NOW()), \'' + incidencia.descripcion +'\');';
@@ -74,7 +74,6 @@ async function consultarAllIncidencias() {
           incidencia.fromJson(result[i]);
           listIncidencias.push(incidencia);
         }
-        console.log(listIncidencias);
         return listIncidencias;}}); 
     }});
     return response;
@@ -94,7 +93,6 @@ async function consultarIncidenciasByPlato(idPalto) {
           incidencia.fromJson(result[i]);
           listIncidencias.push(incidencia);
         }
-        console.log(listIncidencias);
         return listIncidencias;}}); 
     }});
     return response;
@@ -104,7 +102,7 @@ async function consultarIncidenciasByPlato(idPalto) {
 async function consultarIncidenciasByRestaurante(idRestaurante) {
   const sql = 'SELECT * FROM TIncidencias WHERE idRestaurante = \'' + idRestaurante + '\' ORDER BY FECHA DESC;';
   const connection = await getConnection();
-  const response = connection.connect(function(err){
+  const response = await connection.connect(function(err){
     if(err){console.log(err);}
     else{connection.query(sql ,function(err, result){
       if(err){console.log(err);}
@@ -115,9 +113,12 @@ async function consultarIncidenciasByRestaurante(idRestaurante) {
           incidencia.fromJson(result[i]);
           listIncidencias.push(incidencia);
         }
-        console.log(listIncidencias);
-        return listIncidencias;}}); 
-    }});
+        console.log(listIncidencias)
+        return listIncidencias;
+      }}).then(listIncidencias => {return listIncidencias});
+    }})
+   
+    console.log("#2" +response)
     return response;
 }
 
@@ -135,7 +136,6 @@ async function consultarIncidenciasByUsuario(idUser) {
           incidencia.fromJson(result[i]);
           listIncidencias.push(incidencia);
         }
-        console.log(listIncidencias);
         return listIncidencias;}}); 
     }});
     return response;
