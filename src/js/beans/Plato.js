@@ -5,7 +5,7 @@ class Plato {
     nombre;
     descripcion;
     precio;
-    disponibilidad;
+    disponible;
   
     // Metodos
     fromJson(json){
@@ -13,11 +13,11 @@ class Plato {
       this.nombre = json.nombre;
       this.descripcion = json.descripcion;
       this.precio = json.precio;
-      this.disponibilidad = json.disponibilidad;
+      this.disponible = json.disponible;
     }
   
     print(){
-      console.log("Plato: { id: " + this.id +  ", nombre: " + this.nombre +  ", descripcion: " + this.descripcion + ", precio: " +  this.precio + ", " + this.disponibilidad +" }");
+      console.log("Plato: { id: " + this.id +  ", nombre: " + this.nombre +  ", descripcion: " + this.descripcion + ", precio: " +  this.precio + ", disponible: " + this.disponible +" }");
     }
 }
 

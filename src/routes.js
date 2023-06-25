@@ -194,12 +194,10 @@ router.post('/plato', ensureIfLogged, async function(req, res, next) {
     const plato = new platoBean.Plato();
     plato.nombre = req.body.nombre;
     plato.precio = req.body.precio;
-    console.log(req.body.disponibilidad)
-    if(req.body.disponibilidad === 'NO')
-        plato.disponibilidad = false;
-    else
-        plato.disponibilidad = true;
+    plato.disponible = req.body.disponibilidad;
     plato.descripcion = req.body.descripcion;
+
+    console.log(JSON.stringify(plato))
 
     var accion = req.body.accion
     if(accion === 'Modificar'){

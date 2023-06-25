@@ -6,7 +6,7 @@ public class Plato {
 	private String nombre;
 	private String descripcion;
 	private double precio;
-	private boolean disponible;
+	private String disponible;
 
 	
 	
@@ -43,12 +43,11 @@ public class Plato {
 		this.precio = precio;
 	}
 	
-	
-	public boolean isDisponible() {
+	public String getDisponible() {
 		return disponible;
 	}
 
-	public void setDisponible(boolean disponible) {
+	public void setDisponible(String disponible) {
 		this.disponible = disponible;
 	}
 
