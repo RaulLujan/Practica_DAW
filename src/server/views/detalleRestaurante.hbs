@@ -60,6 +60,7 @@
         <span class="stars fs-1" data-calificacion={{restaurante.resumenValoracion.calificacionMedia}}>
       </span>
       </div>
+      <h5 class="display-8">{{restaurante.descripcion}}</h5>
     </div>
     <main class="shadow border mt-4 p-4">
       {{#if restaurante.platos}}
@@ -91,13 +92,13 @@
           <img src="{{url}}" class="card-img-top" alt="foto del sitio">
           {{/with}}
           <div class="card-body">
-              <a href="/sitioturistico/{{restauranteId}}/{{id}}" target="_blank" class="card-title fs-4">
+              <a href="/sitioturistico/{{../restauranteId}}/{{id}}" target="_blank" class="card-title fs-4">
                   {{nombre}}
               </a>
               <p class="card-text">
                 {{descripcion}}
               </p>
-              <a href="/sitioturistico/{{restauranteId}}/{{id}}" class="btn btn-primary">Ver detalle</a>
+              <a href="/sitioturistico/{{../restauranteId}}/{{id}}" class="btn btn-primary">Ver detalle</a>
           </div>
         </article>
         {{/each}}
@@ -135,7 +136,23 @@
     </main>
   </div>
   {{/if}}
-  <script src="stars.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+        document.querySelectorAll('.stars').forEach((el, index) => {
+            const stars = [];
+            const calificacion = parseInt(el.dataset.calificacion, 10) || 0;
+            for(let i = 1; i <= calificacion; i+=1) {
+                stars.push('&#9733;'); // Estrellas doradas
+            }
+            if (calificacion < 5) {
+                for(let i = calificacion + 1; i <= 5; i+=1) {
+                    stars.push('&#x2606;'); // Estrellas sin marcar
+                }
+            }
+            el.innerHTML = stars.join('');
+        });
+    });
+</script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> 
 </body>
 
