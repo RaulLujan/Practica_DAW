@@ -21,12 +21,7 @@
           <svg height="64px" width="64px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 254.019 254.019" xml:space="preserve" fill="#4e5a0c" stroke="#4e5a0c" transform="matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <path style="fill:#F3F9D2;" d="M126.514,48.282c-43.428,0-78.738,35.319-78.738,78.738c0,43.389,35.309,78.718,78.738,78.718 c43.389,0,78.738-35.329,78.738-78.708C205.252,83.601,169.932,48.282,126.514,48.282z M126.514,198.898 c-39.647,0-71.879-32.232-71.879-71.869s32.222-71.928,71.879-71.928s71.879,32.29,71.879,71.928 S166.171,198.898,126.514,198.898z M193.352,127.029c0,36.882-29.926,66.808-66.828,66.808 c-36.912,0-66.838-29.936-66.838-66.808c0-36.921,29.936-66.847,66.838-66.847C163.426,60.172,193.352,90.108,193.352,127.029z M41.308,56.733l0.02,38.836h-0.059c-0.391,12.389-13.971,17.117-13.971,17.117v24.924h0.02l-0.02,57.312 c0,0-5.491,7.093-12.604,0v-82.226h0.166c-8.285-3.527-14.411-4.748-14.802-17.117H0V56.733l6.224-0.029L9.252,94.28H16.6 l0.928-38.348h5.989l0.723,38.348h8.617l1.983-37.547L41.308,56.733L41.308,56.733z M252.1,122.857h-15.232v77.038h-17.596 V54.144h17.596C236.878,54.134,260.844,84.548,252.1,122.857z"></path> </g> </g> </g> </g></svg>
         </a>
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="/restaurantes" class="nav-link px-2 text-white">Restaurantes</a></li>
-          {{#if userRol}}
-          <li><a href="/gestRestaurante" class="nav-link px-2 text-white">Gestionar Restaurantes</a></li>
-          {{/if}}
-        </ul>
+        <h1 class="col text-white"> Detalle del restaurante {{restaurante.nombre}}</h1>
 
         <!-- mostrar si logueado -->
         <div class="text-end">
@@ -40,13 +35,12 @@
           <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="">
             <li><span class="dropdown-item fw-bold">Administración</span></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/incidencia">Incidencias</a></li>
-            <li><a class="dropdown-item" href="/opinion">Opiniones</a></li>
-            <li><a class="dropdown-item" href="/plato">Platos</a></li>
-            <li><a class="dropdown-item" href="/restaurantes">Restaurantes</a></li>
-            <li><a class="dropdown-item" href="/addsitios">Sitios turísticos</a></li>
+            <li><a class="dropdown-item" href="/restaurantes">Lista Restaurantes</a></li>
+            {{#if userRol}}
+            <li><a class="dropdown-item" href="/gestRestaurante">Gestionar Restaurantes</a></li>
+            {{/if}}
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Salir</a></li>
+            <li><a class="dropdown-item" href="/logout">Salir</a></li>
           </ul>
         </div>
       </div>
@@ -76,7 +70,7 @@
               <p class="card-text">
                 {{descripcion}}
               </p>
-              <a href="/platos/{{../restauranteId}}/{{id}}" class="btn btn-primary">Ver detalle</a>
+              <a href="/detalleplatos/{{../restauranteId}}/{{id}}" class="btn btn-primary">Ver detalle</a>
               <a href="/incidencia/{{../restauranteId}}/{{id}}" class="btn btn-secondary">Crear incidencia</a>
           </div>
         </article>
