@@ -83,8 +83,8 @@
                             <p class="card-text">
                                 {{descripcion}}
                             </p>
-                            <a href="/plato/{{restaurante.id}}/{{id}}" class="btn btn-primary">Actualizar</a>
-                            <a href="/delPlato/{{restaurante.id}}/{{id}}" class="btn btn-secondary">Borrar</a> <!-- TODO: Creo que esto seria mejor por post para no recargar la vista...-->
+                            <a href="/plato/{{../restaurante.id}}/{{id}}" class="btn btn-primary">Actualizar</a>
+                            <a href="/delPlato/{{../restaurante.id}}/{{id}}" class="btn btn-secondary">Borrar</a> <!-- TODO: Creo que esto seria mejor por post para no recargar la vista...-->
                         </div>
                         </article>
                         {{/each}}

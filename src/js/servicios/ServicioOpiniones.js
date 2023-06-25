@@ -37,12 +37,18 @@ async function consultarValoracion(id, idUser) {
 }
 
 async function addValoracion(id, valoracion) {
-  var valoracion = await consultarValoracion(id, valoracion.IdUser);
+  var valo = await consultarValoracion(id, valoracion.IdUser);
   var path = '/addvaloracion/';
-  if(valoracion.Id !== undefined)
+  if(valo.Id !== undefined)
     path = '/updatevaloracion/';
+  else{
+    const opinion = await consultarOpinion(restaurante.idOpinion);
+    if(opinion.valoraciones === undefined) valoracion.Id = 1;
+    else valoracion.Id = opinion.valoraciones[opinion.valoraciones.length -1] + 1;
+  }
 
   console.log(urlbase + path + id);
+  console.log(JSON.stringify(valoracion))
   const response = await fetch(urlbase + path + id,
           {
               method: 'PUT',
