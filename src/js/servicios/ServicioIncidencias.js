@@ -115,10 +115,10 @@ async function consultarIncidenciasByRestaurante(idRestaurante) {
         }
         console.log(listIncidencias)
         return listIncidencias;
-      }}).then(listIncidencias => {return listIncidencias});
+      }});
     }})
    
-    console.log("#2" +response)
+
     return response;
 }
 

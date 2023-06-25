@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -78,13 +79,28 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	}
 
 	public void addSitiosTuristicos(List<SitioTuristico> sitiosTuristicos) {
-		if (CONT_ST == 1 && this.sitiosTuristicos != null && this.sitiosTuristicos.size() > 0)
-			CONT_ST = Integer.parseInt(sitiosTuristicos.get(sitiosTuristicos.size() - 1).getId()) + 1;
+		List<SitioTuristico> result = new ArrayList<SitioTuristico>();
+		boolean contenido = false;
 		for (SitioTuristico sitioTuristico : sitiosTuristicos) {
-			sitioTuristico.setId(CONT_ST + "");
-			CONT_ST++;
+			for (SitioTuristico st : this.sitiosTuristicos) {
+				if (st.getNombre().equals(sitioTuristico.getNombre())) {
+					contenido = true;
+					break;
+				}
+				if (!contenido)
+					result.add(sitioTuristico);
+			}
 		}
-		this.sitiosTuristicos.addAll(sitiosTuristicos);
+
+		if (result.size() > 0) {
+			if (CONT_ST == 1 && this.sitiosTuristicos != null && this.sitiosTuristicos.size() > 0)
+				CONT_ST = Integer.parseInt(result.get(result.size() - 1).getId()) + 1;
+			for (SitioTuristico sitioTuristico : result) {
+				sitioTuristico.setId(CONT_ST + "");
+				CONT_ST++;
+			}
+			this.sitiosTuristicos.addAll(result);
+		}
 	}
 
 	public List<Plato> getPlatos() {
@@ -197,7 +213,6 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 		this.fechaAlta = fechaAlta;
 	}
 
-
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -205,8 +220,6 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
-
 
 	@Override
 	public String toString() {

@@ -264,6 +264,23 @@ router.get('/addsitios/:restauranteId', ensureIfLogged, async function(req, res,
     })
 });
 
+
+router.post('/addsitios', ensureIfLogged, async function(req, res, next) {
+    res.setHeader('Accept', 'application/json');
+    const list =  req.body.listsitiosTuristicos;
+    // Si obtenemos los indices de los sitios Turisticos seleccionados
+    const listSelect = req.body.listSelect;
+
+    // Recorremos la lista de indices seleccionados y agregamos los sitios turisticos a la lista final
+    const listST = [];
+    for (var i = 0; i < listSelect.length; i++) {
+        listST.push(list[listSelect[i]])
+    }
+
+   // await restauranteServicio.añadirSitiosTuristicosProximos(listST , req.body.restauranteId, req.cookies.jwt);
+    res.send({message: 'Sitios Turisticos Agregados'});
+});
+
 router.get('/incidencia/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
     res.render('formIncidencia', {
         userName: req.cookies.userName,
