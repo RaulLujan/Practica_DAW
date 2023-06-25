@@ -34,7 +34,7 @@
                   <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="">
                     <li><span class="dropdown-item fw-bold">Administración</span></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="/restaurantes">Lista Restaurantes</a></li>
+                    <li><a class="dropdown-item" id="listRestaurants" href="/restaurantes">Lista Restaurantes</a></li>
                     {{#if userRol}}
                     <li><a class="dropdown-item" href="/gestRestaurante">Gestionar Restaurantes</a></li>
                     {{/if}}
@@ -208,9 +208,7 @@
                     document.getElementById('filteredRestaurants').innerHTML = html;
                 })
                 document.getElementById('cleanFilterRestaurants').addEventListener('click', () => {
-                    document.getElementById('filteredRestaurants').innerHTML = '';
-                    document.getElementById('searchRestaurants').click();
-                    document.getElementById('cleanFilterRestaurants').click();
+                    document.getElementById('listRestaurants').click();
                 })
             });
         </script>

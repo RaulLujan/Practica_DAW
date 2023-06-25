@@ -1,3 +1,4 @@
+
 {{#if restaurantes}}
 {{#each restaurantes}}
     <div class="col mb-4">
@@ -9,6 +10,7 @@
                 </h5>
                 <p class="card-text">
                     Calificación Media: <br><span class="stars fs-6" data-calificacion={{resumenValoracion.calificacionMedia}}></span>
+                    {{resumenValoracion.calificacionMedia}}
                     <br>
                     Fecha de alta: {{fechaAlta}}
                 </p>
@@ -19,3 +21,4 @@
     </div>
     {{/each}}
 {{/if}}
+<script src="/js/stars.js"></script>

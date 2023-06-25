@@ -90,7 +90,8 @@ router.post('/restaurantes/filter', ensureIfLogged, async function(req, res, nex
         }
     }   
     if (req.body.valoracion) {
-        filtro.valoracionMax = req.body.valoracion + 1;
+        var vaMax = Number(req.body.valoracion) + 0.99;
+        filtro.valoracionMax = vaMax;
         filtro.valoracionMin = req.body.valoracion;
     }
     const restaurantes = await restauranteServicio.consultarRestaurantesFiltrado(filtro, req.cookies.jwt);
@@ -118,9 +119,11 @@ router.post('/restaurantes', ensureIfLogged, async function(req, res, next) {
             console.error( msg );
             });
         }
-    }   
+    } 
+
     if (req.body.valoracion) {
-        filtro.valoracionMax = req.body.valoracion + 1;
+        var vaMax = Number(req.body.valoracion) + 0.99;
+        filtro.valoracionMax = vaMax;
         filtro.valoracionMin = req.body.valoracion;
     }
 
