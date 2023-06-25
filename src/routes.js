@@ -313,7 +313,9 @@ router.post('/addsitios', ensureIfLogged, async function(req, res, next) {
     // Recorremos la lista de indices seleccionados y agregamos los sitios turisticos a la lista final
     const listST = [];
 
-    if(valoracion !== undefined){
+    console.log("BBBBBBBBBBBBbb")
+    console.log(listSelect)
+    if(listSelect !== undefined){
         for (var i = 0; i < listSelect.length; i++) {
             listST.push(list[listSelect[i]])
         }
