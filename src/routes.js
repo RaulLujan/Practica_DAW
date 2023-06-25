@@ -24,11 +24,13 @@ function ensureIfLogged(req, res, next) {
         var decoded = jwt_decode(req.cookies.jwt);
         res.cookie('jwt', req.cookies.jwt)
         res.cookie('userName', decoded.sub)
+        res.cookie('userMail', decoded.usuario)
         res.usuario = { ...decoded };
         next();
     } else {
         res.clearCookie("jwt")
         res.clearCookie("userName")
+        res.clearCookie("userMail")
         res.redirect('/');
     }
   }
@@ -38,6 +40,7 @@ function ensureIfLogged(req, res, next) {
         var decoded = jwt_decode(req.cookies.jwt);
         res.cookie('jwt', req.cookies.jwt)
         res.cookie('userName', decoded.sub)
+        res.cookie('userMail', decoded.usuario)
         res.usuario = { ...decoded };
         if (decoded.rol === "ADMIN"){
             next();
@@ -48,6 +51,7 @@ function ensureIfLogged(req, res, next) {
     } else {
         res.clearCookie("jwt")
         res.clearCookie("userName")
+        res.clearCookie("userMail")
         res.redirect('/');
     }
   }
@@ -304,8 +308,8 @@ router.post('/opinion', ensureIfLogged, async function(req, res, next) {
         valoracion = new valoracionBean.Valoracion();
     }
 
-    valoracion.Correo = "RaulLujan@um.es"   //req.cookies.correo; // TODO: sacar el correo de JWT o meterlo como campo visual
-    valoracion.Calificacion = 5 //req.body.valoracion
+    valoracion.Correo = req.cookies.userMail
+    valoracion.Calificacion = req.body.valorOpinion
     valoracion.Comentario = req.body.comentario
     valoracion.IdUser = req.cookies.userName
 
@@ -315,8 +319,10 @@ router.post('/opinion', ensureIfLogged, async function(req, res, next) {
     res.send({message: 'Opinion añadida'});
 });
 
-router.get('/valoracion/:restauranteId', ensureIfLogged, async function(req, res, next) {
-    const opinion = await opinionServicio.consultarOpinion(req.params.restauranteId);
+router.get('/valoracion/:restauranteId/:idOpinion', ensureIfLogged, async function(req, res, next) {
+    const opinion = await opinionServicio.consultarOpinion(req.params.idOpinion);
+    console.log("XXXXXXXXXXXXXXXXX - 2")
+    console.log(opinion);
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
     res.render('getValoracion', {
         userName: req.cookies.userName,
