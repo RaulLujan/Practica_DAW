@@ -281,11 +281,15 @@ router.get('/delPlato/:restauranteId/:platoId', ensureIfLogged, async function(r
 });
 
 router.get('/delsitioturistico/:restauranteId/:sitioId', ensureIfLogged, async function(req, res, next) {
+
+    let message = '';
     try{
         await restauranteServicio.borrarSitioTuristico(req.params.sitioId, req.params.restauranteId, req.cookies.jwt);
-        res.end(JSON.stringify({ message : 'Sitio turistico eliminado' }));
+        message = 'Sitio turistico eliminado';
+        //res.end(JSON.stringify({ message : 'Sitio turistico eliminado' }));
     } catch(e) {
         res.status(500).send(JSON.stringify({ message : retorno }));
+        message = 'Error al eliminar el sitio turistico';
     }
 
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
@@ -293,6 +297,7 @@ router.get('/delsitioturistico/:restauranteId/:sitioId', ensureIfLogged, async f
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
         restaurante: restaurante,
+        messageDel : message,
     })
 });
 
