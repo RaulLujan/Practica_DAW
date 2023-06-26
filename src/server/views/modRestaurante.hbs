@@ -96,7 +96,11 @@
                         {{#each restaurante.sitiosTuristicos}}
                         <article class="card">
                         <!-- <img crossorigin="anonymous" src="//es.wikipedia.org/wiki/Archivo:{{imagenesUrls.[0]}}?not-from-cache-please" class="card-img-top" alt="foto del sitio"> -->
-                        <a href="https://es.wikipedia.org/wiki/Archivo:{{imagenesUrls.[0]}}" target="_blank" class="text-center"> Enlace a imagenes</a>
+                        {{#if imagenesUrls}}
+                            {{#each imagenesUrls}}
+                                <a href="https://es.wikipedia.org/wiki/Archivo:{{this}}" target="_blank" class="text-center">  Enlace a imagen {{this}}</a>
+                               {{/each}}
+                        {{/if}}
                         <div class="card-body">
                             <h5 class="card-title">
                                 {{nombre}}
@@ -104,7 +108,7 @@
                             <p class="card-text">
                                  {{descripcion}}
                             </p>
-                            <a href="/delsitioturistico/{{restaurante.id}}/{{id}}"  class="btn btn-primary">Borrar</a>
+                            <a href="/delsitioturistico/{{../restaurante.id}}/{{id}}"  class="btn btn-primary">Borrar</a>
                         </div>
                         </article>
                         {{/each}}

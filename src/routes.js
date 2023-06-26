@@ -222,7 +222,7 @@ router.get('/plato/:restauranteId', ensureIfLogged, async function(req, res, nex
     })
 });
 
-router.get('/plato/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
+router.get('/detalleplatos/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
 
     const plato = await restauranteServicio.consultarPlato(req.params.platoId, req.params.restauranteId, req.cookies.jwt);
     res.render('formPlato', {
