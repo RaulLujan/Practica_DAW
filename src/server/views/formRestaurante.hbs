@@ -121,15 +121,16 @@
                             }) 
                             .then((json) => {
                                 document.getElementById('gestRestaurante')
-                                    .innerHTML = `<div class="alert alert-success" role="alert"
+                                    .innerHTML = `<div class="alert alert-success" role="alert">
                                         ${json.message}
                                     </div>
-                                    <a class="btn btn-primary" onclick="location.reload()">Recargar</a>`
+                                    <a class="btn btn-primary" onclick="location.reload()">Volver</a>`
                             });
                     });
                 </script>
             </main>
         </div>
+        <script src="/js/stars.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>       
     </body>
 </html>

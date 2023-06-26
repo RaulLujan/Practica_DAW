@@ -2,7 +2,7 @@ const inc = require('../beans/Incidencia');
 const mysql = require('mysql2');
 
 async function getConnection() {
-  const connection = mysql.createConnection(
+  const connection = await mysql.createConnection(
   {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -97,7 +97,43 @@ async function consultarIncidenciasByPlato(idPalto) {
     }});
     return response;
 }
-  
+
+async function consultarIncidenciasByRestaurante2(idRestaurante) {
+    const sql = 'SELECT * FROM TIncidencias WHERE idRestaurante = \'' + idRestaurante + '\' ORDER BY FECHA DESC;';
+    const connection = await getConnection();
+
+    connection.promise().query(sql)
+    .then(res => res.json())
+        .then(function(res) {
+          const listIncidencias = [];
+          for (var i = 0; i < result.length; i++) {
+            var incidencia = new inc.Incidencia();
+            incidencia.fromJson(result[i]);
+            listIncidencias.push(incidencia);
+          }
+          console.log(listIncidencias)
+          return listIncidencias;
+        })
+        .catch(err => console.log('Solicitud fallida', err));
+
+//    const response = await connection.connect(function(err){
+//      if(err){Promise.reject(err);}
+//      else{connection.query(sql ,function(err, result){
+//        if(err){console.log(err);}
+//        else{
+//          const listIncidencias = [];
+//          for (var i = 0; i < result.length; i++) {
+//            var incidencia = new inc.Incidencia();
+//            incidencia.fromJson(result[i]);
+//            listIncidencias.push(incidencia);
+//          }
+//          console.log(listIncidencias)
+//          return Promise.resolve(listIncidencias);
+//        }});
+//      }})
+//      return Promise.resolve(response);
+//  })
+}
 
 async function consultarIncidenciasByRestaurante(idRestaurante) {
   return new Promise( async () => {
@@ -161,5 +197,6 @@ exports.consultarAllIncidencias = consultarAllIncidencias;
 exports.consultarIncidenciasByPlato = consultarIncidenciasByPlato;
 exports.consultarIncidenciasByUsuario = consultarIncidenciasByUsuario;
 exports.consultarIncidenciasByRestaurante = consultarIncidenciasByRestaurante;
+exports.consultarIncidenciasByRestaurante2 = consultarIncidenciasByRestaurante2;
 exports.borrarIncidencia = borrarIncidencia;
 

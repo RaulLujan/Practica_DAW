@@ -61,9 +61,8 @@
         {{#each sitioTuristico.imagenesUrls}}
         <article class="card card-plato plato-{{disponibilidad}}">
           <div class="card-body">
-          {{#with url}}
-          <img src="https://es.wikipedia.org/wiki/Archivo:{{url}}" class="card-img-top" alt="foto del sitio">
-          {{/with}}
+          <!-- <img crossorigin="anonymous" src="https://es.wikipedia.org/wiki/Archivo:{{url}}?not-from-cache-please" class="card-img-top" alt="foto del sitio"> -->
+          <a href="https://es.wikipedia.org/wiki/Archivo:{{url}}" target="_blank" class="text-center"> Enlace a imagenes</a>
           </div>
         </article>
         {{/each}}

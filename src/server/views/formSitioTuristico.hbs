@@ -64,8 +64,7 @@
                               {{#each sitiosTuristicos}}
                                 <tr>
                                     <td>
-                                      <!-- el id tiene que cambiar, con el name igual con [] manda array (en PHP)-->
-                                      <input class="form-check-input" name="sitioTuristico[{{id}}]" type="checkbox" id={{id}} value="idDelSitio" aria-label="Selecciona este sitio">
+                                      <input class="form-check-input" name="sitioTuristico[{{nombre}}]" type="checkbox" id="sitioTuristico[{{nombre}}]" value="{{nombre}}" aria-label="Selecciona este sitio">
                                     </td>
                                     <td>{{nombre}}</td>
                                     <td>{{ciudad}}</td>
@@ -85,9 +84,9 @@
                         event.preventDefault();
                         const form = document.getElementById('addsitios');
                         const formData = new FormData(form);
-                        formData.append("listsitiosTuristicos", '{{sitiosTuristicos}}');
                         formData.append("restauranteId", '{{restauranteId}}');
                         document.getElementById('addsitiosError').innerHTML = "";
+                        console.log(JSON.stringify(Object.fromEntries(formData.entries())))
                         fetch('/addsitios', {
                             method: "POST",
                             headers: {"Content-Type": "application/json; charset=UTF-8"},
@@ -103,10 +102,10 @@
                             }) 
                             .then((json) => {
                                 document.getElementById('addsitios')
-                                    .innerHTML = `<div class="alert alert-success" role="alert"
+                                    .innerHTML = `<div class="alert alert-success" role="alert">
                                         ${json.message}
                                     </div>
-                                    <a class="btn btn-primary" onclick="location.reload()">Recargar</a>`
+                                    <a class="btn btn-primary" onclick="location.reload()">Volver</a>`
                             });
                     });
                 </script>

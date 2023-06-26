@@ -84,7 +84,7 @@
                                 {{descripcion}}
                             </p>
                             <a href="/plato/{{../restaurante.id}}/{{id}}" class="btn btn-primary">Actualizar</a>
-                            <a href="/delPlato/{{../restaurante.id}}/{{id}}" class="btn btn-secondary">Borrar</a> <!-- TODO: Creo que esto seria mejor por post para no recargar la vista...-->
+                            <a href="/delPlato/{{../restaurante.id}}/{{id}}" class="btn btn-secondary">Borrar</a>
                         </div>
                         </article>
                         {{/each}}
@@ -95,7 +95,8 @@
                     <div class="gridCards">
                         {{#each restaurante.sitiosTuristicos}}
                         <article class="card">
-                        <img src="https://es.wikipedia.org/wiki/Archivo:{{imagenesUrls.[0]}}" class="card-img-top" alt="foto del sitio">
+                        <!-- <img crossorigin="anonymous" src="//es.wikipedia.org/wiki/Archivo:{{imagenesUrls.[0]}}?not-from-cache-please" class="card-img-top" alt="foto del sitio"> -->
+                        <a href="https://es.wikipedia.org/wiki/Archivo:{{imagenesUrls.[0]}}" target="_blank" class="text-center"> Enlace a imagenes</a>
                         <div class="card-body">
                             <h5 class="card-title">
                                 {{nombre}}
@@ -103,7 +104,7 @@
                             <p class="card-text">
                                  {{descripcion}}
                             </p>
-                            <a href="/delsitioturistico/{{restaurante.id}}/{{id}}"  class="btn btn-primary">Borrar</a><!-- TODO: Creo que esto seria mejor por post para no recargar la vista...-->
+                            <a href="/delsitioturistico/{{restaurante.id}}/{{id}}"  class="btn btn-primary">Borrar</a>
                         </div>
                         </article>
                         {{/each}}

@@ -144,7 +144,7 @@ router.get('/detalleRestaurante/:restauranteId', ensureIfLogged, async function(
     }
 
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
-    const incidencias = await incidenciaServicio.consultarIncidenciasByRestaurante(req.params.restauranteId);
+    const incidencias = await incidenciaServicio.consultarIncidenciasByRestaurante2(req.params.restauranteId);
     console.log("#3" +incidencias)
     res.render('detalleRestaurante', {
         userName: req.cookies.userName,
@@ -267,7 +267,7 @@ router.get('/detallePlato/:restauranteId/:platoId', ensureIfLogged, async functi
 router.get('/delPlato/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
     try{
         await restauranteServicio.borrarPlato(req.params.platoId, req.params.restauranteId, req.cookies.jwt);
-        res.end(JSON.stringify({ message : retorno }));
+        res.end(JSON.stringify({ message : 'Plato eliminado' }));
     } catch(e) {
         res.status(500).send(JSON.stringify({ message : retorno }));
     }
@@ -283,7 +283,7 @@ router.get('/delPlato/:restauranteId/:platoId', ensureIfLogged, async function(r
 router.get('/delsitioturistico/:restauranteId/:sitioId', ensureIfLogged, async function(req, res, next) {
     try{
         await restauranteServicio.borrarSitioTuristico(req.params.sitioId, req.params.restauranteId, req.cookies.jwt);
-        res.end(JSON.stringify({ message : retorno }));
+        res.end(JSON.stringify({ message : 'Sitio turistico eliminado' }));
     } catch(e) {
         res.status(500).send(JSON.stringify({ message : retorno }));
     }
@@ -309,22 +309,26 @@ router.get('/addsitios/:restauranteId', ensureIfLogged, async function(req, res,
 
 router.post('/addsitios', ensureIfLogged, async function(req, res, next) {
     res.setHeader('Accept', 'application/json');
-    const list =  req.body.listsitiosTuristicos;
-    // Si obtenemos los indices de los sitios Turisticos seleccionados
-    const listSelect = req.body.listSelect;
 
-    // Recorremos la lista de indices seleccionados y agregamos los sitios turisticos a la lista final
+    const sitios = await restauranteServicio.consultarSitiosTuristicosProximos(req.body.restauranteId, req.cookies.jwt);
+    const sitioTuristico = Object.keys(req.body).filter(el => el.indexOf('sitioTuristico') !== -1).map(el => el.replace(']', '').split('[')).map(el => el[1])
     const listST = [];
 
-    console.log("BBBBBBBBBBBBbb")
-    console.log(listSelect)
-    if(listSelect !== undefined){
-        for (var i = 0; i < listSelect.length; i++) {
-            listST.push(list[listSelect[i]])
+    if(sitioTuristico !== undefined){
+        for (var i = 0; i < sitioTuristico.length; i++) {
+            for (var j = 0; j < sitios.length; j++) {
+                console.log(sitios[j].nombre)
+                if(sitios[j].nombre === sitioTuristico[i]){
+                    console.log('ENTRA!!!!')
+                    listST.push(sitios[j]);
+                }
+            }
         }
     }
 
-   // await restauranteServicio.añadirSitiosTuristicosProximos(listST , req.body.restauranteId, req.cookies.jwt);
+    console.log('Tengo lo que quier?')
+    console.log(listST)
+    await restauranteServicio.añadirSitiosTuristicosProximos(listST , req.body.restauranteId, req.cookies.jwt);
     res.send({message: 'Sitios Turisticos Agregados'});
 });
 
@@ -384,8 +388,6 @@ router.post('/opinion', ensureIfLogged, async function(req, res, next) {
 
 router.get('/valoracion/:restauranteId/:idOpinion', ensureIfLogged, async function(req, res, next) {
     const opinion = await opinionServicio.consultarOpinion(req.params.idOpinion);
-    console.log("XXXXXXXXXXXXXXXXX - 2")
-    console.log(opinion);
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
     res.render('getValoracion', {
         userName: req.cookies.userName,

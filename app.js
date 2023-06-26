@@ -7,6 +7,8 @@ var hbs =  require('express-handlebars');
 
 var app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.set('port', process.env.PORT || 3000);
 //Quitar para entregar
 app.disable('view cache');
