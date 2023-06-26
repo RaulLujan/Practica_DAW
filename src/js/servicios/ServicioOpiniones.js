@@ -14,8 +14,6 @@ async function consultarOpinion(id) {
             var opinion = new opi.Opinion()
             opinion.id = id
             opinion.fromJson(res)
-            console.log("XXXXXXXXXXXXXXXXX - 1")
-            console.log(opinion);
             return opinion
           })
           .catch(err => console.log('Solicitud fallida', err));

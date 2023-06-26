@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", (event) => {
+const stars = () => {
     document.querySelectorAll('.stars').forEach((el, index) => {
         const stars = [];
         const calificacion = parseInt(el.dataset.calificacion, 10) || 0;
@@ -12,4 +12,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
         el.innerHTML = stars.join('');
     });
+};
+
+document.addEventListener("DOMContentLoaded", (event) => {
+    stars();
 });

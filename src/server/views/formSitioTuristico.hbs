@@ -80,13 +80,18 @@
                   {{/if}} 
                 </form>
                 <script>
+                  window.addEventListener("DOMContentLoaded", (event) => {
+                    const sitiosRestaurante = '{{{sitiosRestaurante}}}'.split(',');
+                    sitiosRestaurante.forEach((sitio) => {
+                      document.getElementById(`sitioTuristico[${sitio}]`).checked = true
+                    });
+                  });
                     document.getElementById('addsitios').addEventListener('submit', async (event) => {
                         event.preventDefault();
                         const form = document.getElementById('addsitios');
                         const formData = new FormData(form);
                         formData.append("restauranteId", '{{restauranteId}}');
                         document.getElementById('addsitiosError').innerHTML = "";
-                        console.log(JSON.stringify(Object.fromEntries(formData.entries())))
                         fetch('/addsitios', {
                             method: "POST",
                             headers: {"Content-Type": "application/json; charset=UTF-8"},

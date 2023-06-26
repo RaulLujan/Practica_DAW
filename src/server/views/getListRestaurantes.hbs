@@ -206,6 +206,7 @@
                         });
                     const html = await response.text();
                     document.getElementById('filteredRestaurants').innerHTML = html;
+                    stars();
                 })
                 document.getElementById('cleanFilterRestaurants').addEventListener('click', () => {
                     document.getElementById('listRestaurants').click();

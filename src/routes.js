@@ -298,11 +298,14 @@ router.get('/delsitioturistico/:restauranteId/:sitioId', ensureIfLogged, async f
 
 router.get('/addsitios/:restauranteId', ensureIfLogged, async function(req, res, next) {
     const sitios = await restauranteServicio.consultarSitiosTuristicosProximos(req.params.restauranteId, req.cookies.jwt);
+    const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
+
     res.render('formSitioTuristico', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
         restauranteId: req.params.restauranteId,
         sitiosTuristicos: sitios,
+        sitiosRestaurante: restaurante.sitiosTuristicos.map(el => el.nombre),
     })
 });
 
