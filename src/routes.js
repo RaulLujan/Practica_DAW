@@ -79,21 +79,15 @@ router.post('/restaurantes/filter', ensureIfLogged, async function(req, res, nex
         filtro.ciudad = req.body.ciudad;
     if (req.body.km){
         filtro.distancia = req.body.km;
-        if(global.navigator.geolocation){
-            var success = function(position){
-                filtro.coorX = position.coords.latitude,
-                filtro.coorY = position.coords.longitude;
-            }
-            global.navigator.geolocation.getCurrentPosition(success, function(msg){
-            console.error( msg );
-            });
-        }
-    }   
+        filtro.coorX = req.body.latitude;
+        filtro.coorY = req.body.longitude;
+    }
     if (req.body.valoracion) {
         var vaMax = Number(req.body.valoracion) + 0.99;
         filtro.valoracionMax = vaMax;
         filtro.valoracionMin = req.body.valoracion;
     }
+
     const restaurantes = await restauranteServicio.consultarRestaurantesFiltrado(filtro, req.cookies.jwt);
 
     res.render('getPartialListRestaurantes', {

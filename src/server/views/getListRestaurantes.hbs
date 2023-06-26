@@ -67,16 +67,16 @@
                 <script>
                     window.addEventListener("DOMContentLoaded", (event) => {
                         try{
-       
-                            if (navigator.geolocation) {
+                           if (navigator.geolocation) {
                                 navigator.geolocation.getCurrentPosition((position) => {
-                                    document.getElementById('latitude').value = position.latitude; 
-                                    document.getElementById('longitude').value = position.longitude; 
+                                    document.getElementById('latitude').value = position.coords.latitude; 
+                                    document.getElementById('longitude').value = position.coords.longitude; 
                                 });
+                               
                             }
                         } catch(e) {
                             document.getElementById('latitude').value = "37.984"; 
-                            document.getElementById('longitude').value = "-1.128""; 
+                            document.getElementById('longitude').value = "-1.128"; 
                          }
                     });
                 </script>
