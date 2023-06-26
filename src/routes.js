@@ -255,11 +255,13 @@ router.post('/plato', ensureIfLogged, async function(req, res, next) {
 
 router.get('/detallePlato/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
     const plato = await restauranteServicio.consultarPlato(req.params.platoId, req.params.restauranteId, req.cookies.jwt);
+    const incidencias = await incidenciaServicio.consultarIncidenciasByPlato(req.params.restauranteId, req.params.platoId);
     res.render('detallePlato', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
         restauranteId: req.params.restauranteId,
         plato: plato,
+        incidencias: incidencias,
     })
 });
 

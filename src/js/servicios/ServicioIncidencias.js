@@ -79,23 +79,18 @@ async function consultarAllIncidencias() {
     return response;
 }
 
-async function consultarIncidenciasByPlato(idPalto) {
-  const sql = 'SELECT * FROM TIncidencias WHERE nombrePlato = \'' + idPalto + '\' ORDER BY FECHA DESC;';
-  const connection = await getConnection();
-  const response = connection.connect(function(err){
-    if(err){console.log(err);}
-    else{connection.query(sql ,function(err, result){
-      if(err){console.log(err);}
-      else{
-        const listIncidencias = [];
-        for (var i = 0; i < result.length; i++) {
-          var incidencia = new inc.Incidencia();
-          incidencia.fromJson(result[i]);
-          listIncidencias.push(incidencia);
-        }
-        return listIncidencias;}}); 
-    }});
-    return response;
+async function consultarIncidenciasByPlato(idRestaurante, idPalto) {
+  const sql = 'SELECT * FROM TIncidencias WHERE idRestaurante = \'' + idRestaurante + '\' AND idPalto  = \'' + idPalto + '\' ORDER BY FECHA DESC;';
+    const connection = await getConnection();
+
+const response = await connection.promise().query(sql)
+                const listIncidencias = [];
+                for (var i = 0; i < response[0].length; i++) {
+                  var incidencia = new inc.Incidencia();
+                  incidencia.fromJson(response[0][i]);
+                  listIncidencias.push(incidencia);
+                }
+                return Promise.resolve(listIncidencias);
 }
 
 async function consultarIncidenciasByRestaurante(idRestaurante) {
