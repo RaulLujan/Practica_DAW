@@ -85,22 +85,24 @@ public class Restaurante implements Identificable, Serializable, Specificable<Re
 			for (SitioTuristico st : this.sitiosTuristicos) {
 				if (st.getNombre().equals(sitioTuristico.getNombre())) {
 					contenido = true;
-					break;
 				}
-				if (!contenido)
-					result.add(sitioTuristico);
 			}
+			if (!contenido)
+				result.add(sitioTuristico);
+			contenido = false;
 		}
+		
 
 		if (result.size() > 0) {
 			if (CONT_ST == 1 && this.sitiosTuristicos != null && this.sitiosTuristicos.size() > 0)
-				CONT_ST = Integer.parseInt(result.get(result.size() - 1).getId()) + 1;
+				CONT_ST = Integer.parseInt(this.sitiosTuristicos.get(this.sitiosTuristicos.size() - 1).getId()) + 1;
 			for (SitioTuristico sitioTuristico : result) {
 				sitioTuristico.setId(CONT_ST + "");
 				CONT_ST++;
 			}
 			this.sitiosTuristicos.addAll(result);
 		}
+		
 	}
 
 	public List<Plato> getPlatos() {

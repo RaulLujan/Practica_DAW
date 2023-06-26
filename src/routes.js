@@ -317,17 +317,13 @@ router.post('/addsitios', ensureIfLogged, async function(req, res, next) {
     if(sitioTuristico !== undefined){
         for (var i = 0; i < sitioTuristico.length; i++) {
             for (var j = 0; j < sitios.length; j++) {
-                console.log(sitios[j].nombre)
                 if(sitios[j].nombre === sitioTuristico[i]){
-                    console.log('ENTRA!!!!')
                     listST.push(sitios[j]);
                 }
             }
         }
     }
 
-    console.log('Tengo lo que quier?')
-    console.log(listST)
     await restauranteServicio.añadirSitiosTuristicosProximos(listST , req.body.restauranteId, req.cookies.jwt);
     res.send({message: 'Sitios Turisticos Agregados'});
 });
