@@ -84,7 +84,7 @@
                             <p class="card-text">
                                 {{descripcion}}
                             </p>
-                            <a href="/plato/{{../restaurante.id}}/{{id}}" class="btn btn-primary">Actualizar</a>
+                            <a href="/detalleplatos/{{../restaurante.id}}/{{id}}" class="btn btn-primary">Actualizar</a>
                             <a href="/delPlato/{{../restaurante.id}}/{{id}}" class="btn btn-secondary">Borrar</a>
                         </div>
                         </article>
@@ -117,7 +117,7 @@
                     {{/if}}
                     <div class="mb-2">
                         <button type="submit" class="btn btn-primary">Guardar</button> <!--TODO: Pendiente-->
-                        <a href="/borrarRestaurante/{{id}}/" class="btn btn-light">Borrar</a>
+                        <a href="/borrarRestaurante/{{restaurante.id}}/" class="btn btn-light">Borrar</a>
                         <a href="/gestRestaurante" class="btn btn-light">Volver</a>
                     </div>
                 </form>

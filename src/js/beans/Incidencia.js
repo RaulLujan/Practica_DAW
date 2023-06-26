@@ -8,6 +8,7 @@ class Incidencia {
   titulo;
   fecha; 
   descripcion;
+  nombrePlato; 
 
   // Metodos
   fromJson(json){
@@ -16,7 +17,8 @@ class Incidencia {
     this.idRestaurante = json.idRestaurante;
     this.idPalto = json.idPalto; 
     this.titulo = json.titulo;
-    this.fecha = json.fecha;
+    const date = new Date(json.fecha);
+    this.fecha = date.toLocaleString('es-ES', { timeZone: 'UTC' });
     this.descripcion = json.descripcion;
   }
   

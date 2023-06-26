@@ -41,14 +41,7 @@ async function addValoracion(id, valoracion) {
   var path = '/addvaloracion/';
   if(valo.Id !== undefined)
     path = '/updatevaloracion/';
-  else{
-    const opinion = await consultarOpinion(restaurante.idOpinion);
-    if(opinion.valoraciones === undefined) valoracion.Id = 1;
-    else valoracion.Id = opinion.valoraciones[opinion.valoraciones.length -1] + 1;
-  }
 
-  console.log(urlbase + path + id);
-  console.log(JSON.stringify(valoracion))
   const response = await fetch(urlbase + path + id,
           {
               method: 'PUT',

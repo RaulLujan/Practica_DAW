@@ -145,6 +145,10 @@ router.get('/detalleRestaurante/:restauranteId', ensureIfLogged, async function(
 
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
     const incidencias = await incidenciaServicio.consultarIncidenciasByRestaurante(req.params.restauranteId);
+    for (var i = 0; i < incidencias.length; i++) {
+       var plato = await restauranteServicio.consultarPlato(incidencias[i].idPalto, restaurante.id, req.cookies.jwt)
+       incidencias[i].nombrePlato = plato.nombre
+    }
 
     res.render('detalleRestaurante', {
         userName: req.cookies.userName,
@@ -199,11 +203,12 @@ router.get('/borrarRestaurante/:restauranteId', ensureIfAdmin, async function(re
     }
 
     //try {
-        retorno = await restauranteServicio.borrarRestaurante(req.params.restauranteId, req.cookies.jwt);
+    retorno = await restauranteServicio.borrarRestaurante(req.params.restauranteId, req.cookies.jwt);
         //res.end(JSON.stringify({ message : retorno }));
     //} catch(e) {
       //res.status(500).send(JSON.stringify({ message : retorno }));
     //}
+    await incidenciaServicio.consultaGenerica('DELETE FROM TIncidencias WHERE idRestaurante = \'' + req.params.restauranteId+ '\';' );
 
     const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
     res.render('formRestaurante', {
@@ -265,11 +270,15 @@ router.get('/detallePlato/:restauranteId/:platoId', ensureIfLogged, async functi
 });
 
 router.get('/delPlato/:restauranteId/:platoId', ensureIfLogged, async function(req, res, next) {
+    let message = '';
     try{
         await restauranteServicio.borrarPlato(req.params.platoId, req.params.restauranteId, req.cookies.jwt);
-        res.end(JSON.stringify({ message : 'Plato eliminado' }));
+        await incidenciaServicio.consultaGenerica('DELETE FROM TIncidencias WHERE idRestaurante = \'' + 
+        req.params.restauranteId + '\' AND idPalto = \'' + req.params.platoId + '\' ;' );
+        message = 'Plato eliminado';
     } catch(e) {
         res.status(500).send(JSON.stringify({ message : retorno }));
+        message = 'Error al eliminar el Plato';
     }
 
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
@@ -277,6 +286,7 @@ router.get('/delPlato/:restauranteId/:platoId', ensureIfLogged, async function(r
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
         restaurante: restaurante,
+        messageDel : message,
     })
 });
 
@@ -375,10 +385,10 @@ router.post('/opinion', ensureIfLogged, async function(req, res, next) {
     const restaurante = await restauranteServicio.consultarRestaurante(req.body.restauranteId, req.cookies.jwt);
     const valoracion = await opinionServicio.consultarValoracion(restaurante.idOpinion, req.cookies.userName);
 
-    if(valoracion === undefined){
-        valoracion = new valoracionBean.Valoracion();
+    if(valoracion.Id === undefined){
+        valoracion.Id = "-1";
     }
-
+    
     valoracion.Correo = req.cookies.userMail
     valoracion.Calificacion = req.body.valorOpinion
     valoracion.Comentario = req.body.comentario
@@ -387,6 +397,15 @@ router.post('/opinion', ensureIfLogged, async function(req, res, next) {
     valoracion.print()
 
     await opinionServicio.addValoracion(restaurante.idOpinion, valoracion);
+    const opinion = await opinionServicio.consultarOpinion(restaurante.idOpinion);
+
+    restaurante.resumenValoracion.numValoracion = opinion.valoraciones.length;
+    var media = 0;
+    for (var i = 0; i < opinion.valoraciones.length; i++) {
+        media = media + opinion.valoraciones[i].Calificacion;
+    }
+    restaurante.resumenValoracion.calificacionMedia = media/opinion.valoraciones.length;
+    await restauranteServicio.modificarRestaurante(restaurante,  req.cookies.jwt);
     res.send({message: 'Opinion añadida'});
 });
 
@@ -404,7 +423,8 @@ router.get('/valoracion/:restauranteId/:idOpinion', ensureIfLogged, async functi
 
 router.get('/sitioturistico/:restauranteId/:sitioId', ensureIfLogged, async function(req, res, next) {
     const sitio = await restauranteServicio.consultarSitio(req.params.sitioId, req.params.restauranteId, req.cookies.jwt);
-    sitio.imagenesUrls = sitio.imagenesUrls.map(el => { return { url: el } })
+    if( sitio.imagenesUrls !== undefined)
+        sitio.imagenesUrls = sitio.imagenesUrls.map(el => { return { url: el } })
 
     res.render('detalleSitioTuristico', {
         userName: req.cookies.userName,

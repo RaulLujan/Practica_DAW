@@ -32,7 +32,7 @@ async function crearTablaIncidencias() {
   'idRestaurante VARCHAR(256),' +
   'idPalto VARCHAR(256),' +
   'titulo VARCHAR(256),' +
-  'fecha DATE,' +
+  'fecha DATETIME,' +
   'descripcion VARCHAR(256)' +
   ');';
   const connection = await getConnection();
@@ -49,7 +49,7 @@ async function crearTablaIncidencias() {
 async function insertarIncidencia(incidencia) { 
   const sql = 'INSERT INTO TIncidencias (idUser, idRestaurante, idPalto, titulo, fecha, descripcion) ' +
   ' VALUES (\'' + incidencia.idUser + '\', \'' + incidencia.idRestaurante + '\', \'' + 
-  incidencia.idPalto +  '\', \'' +  incidencia.titulo + '\', DATE(NOW()), \'' + incidencia.descripcion +'\');';
+  incidencia.idPalto +  '\', \'' +  incidencia.titulo + '\', NOW(), \'' + incidencia.descripcion +'\');';
   const connection = await getConnection();
   const response = connection.connect(function(err){
     if(err){console.log(err);}

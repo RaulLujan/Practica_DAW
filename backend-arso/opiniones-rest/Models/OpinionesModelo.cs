@@ -19,18 +19,23 @@ namespace Opiniones.Modelo
         public double GetCalificacionMedia() { return  Valoraciones.Sum( e => e.Calificacion)/(double) GetNumValoraciones(); }
 
         public void AddValoracion(Valoracion valoracion) {
+            if(Valoraciones.Count == 0){
+                valoracion.Id = "1";
+            }else{
+                int num = Valoraciones.Count -1;
+                num = Int32.Parse(Valoraciones[num].Id) +1;
+                valoracion.Id = num + "";
+            }
+           
             Valoraciones.Add(valoracion);
         }
 
         public void UpdateValoracion(Valoracion valoracion) {
             Console.Write(valoracion.Id);
             for (var i = 0; i < Valoraciones.Count; i++) {
-                Console.Write(Valoraciones[i].Id);
                 if(Valoraciones[i].Id == valoracion.Id){
                     Valoraciones[i] = valoracion;
-                    Console.Write(" MODIFICO");
                 }
-                Console.Write(" MODIFICO " + Valoraciones[i].Comentario);
             }
         }
 

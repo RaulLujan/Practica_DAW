@@ -66,12 +66,18 @@
                 <input type="hidden" name="longitude" id="longitude" value="-1" />
                 <script>
                     window.addEventListener("DOMContentLoaded", (event) => {
-                        if (navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition((position) => {
-                                document.getElementById('latitude').value = position.latitude; 
-                                document.getElementById('longitude').value = position.longitude; 
-                            });
-                        }
+                        try{
+       
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition((position) => {
+                                    document.getElementById('latitude').value = position.latitude; 
+                                    document.getElementById('longitude').value = position.longitude; 
+                                });
+                            }
+                        } catch(e) {
+                            document.getElementById('latitude').value = "37.984"; 
+                            document.getElementById('longitude').value = "-1.128""; 
+                         }
                     });
                 </script>
                 <div class="col-md-6 mb-2">
