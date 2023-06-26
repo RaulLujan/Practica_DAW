@@ -144,8 +144,8 @@ router.get('/detalleRestaurante/:restauranteId', ensureIfLogged, async function(
     }
 
     const restaurante = await restauranteServicio.consultarRestaurante(req.params.restauranteId, req.cookies.jwt);
-    const incidencias = await incidenciaServicio.consultarIncidenciasByRestaurante2(req.params.restauranteId);
-    console.log("#3" +incidencias)
+    const incidencias = await incidenciaServicio.consultarIncidenciasByRestaurante(req.params.restauranteId);
+
     res.render('detalleRestaurante', {
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
