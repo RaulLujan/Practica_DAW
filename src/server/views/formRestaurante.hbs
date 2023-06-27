@@ -46,6 +46,9 @@
           </header>
         <div class="container">
             <main class="shadow border mt-4 p-4">
+                {{#if messageDel}}
+                    <div class="alert alert-success" role="alert">{{messageDel}}</div>
+                {{/if}}
                 <div class="row" id="gestRestauranteError">{{message}}</div>
                 <form class="row" id="gestRestaurante">
                     <div class="col-md-6 mb-2">

@@ -67,10 +67,6 @@ router.get('/restaurantes', ensureIfLogged, async function(req, res, next) {
 });
 
 router.post('/restaurantes/filter', ensureIfLogged, async function(req, res, next) {
-    /*
-     * Falta aplicar los filtros, que lo tengo mockeado
-    */
-    //const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
 
     const filtro = new filtroBean.Filtro();
     if (req.body.nombre)
@@ -128,8 +124,6 @@ router.post('/restaurantes', ensureIfLogged, async function(req, res, next) {
         userRol: res.usuario.rol === "ADMIN" ? true : false,
         restaurantes: restaurantes,
     })
-    //res.send({restaurantes: restaurantes});
-    
 });
 
 router.get('/detalleRestaurante/:restauranteId', ensureIfLogged, async function(req, res, next) {
@@ -196,12 +190,15 @@ router.get('/borrarRestaurante/:restauranteId', ensureIfAdmin, async function(re
         res.redirect('/gestRestaurante')
     }
 
-    //try {
-    retorno = await restauranteServicio.borrarRestaurante(req.params.restauranteId, req.cookies.jwt);
-        //res.end(JSON.stringify({ message : retorno }));
-    //} catch(e) {
-      //res.status(500).send(JSON.stringify({ message : retorno }));
-    //}
+    let message = '';
+    try{
+        retorno = await restauranteServicio.borrarRestaurante(req.params.restauranteId, req.cookies.jwt);
+        message = 'Restaurante eliminado';
+    } catch(e) {
+        res.status(500).send(JSON.stringify({ message : retorno }));
+        message = 'Error al eliminar el restaurante';
+    }
+
     await incidenciaServicio.consultaGenerica('DELETE FROM TIncidencias WHERE idRestaurante = \'' + req.params.restauranteId+ '\';' );
 
     const restaurantes = await restauranteServicio.consultarAllRestaurantes(req.cookies.jwt);
@@ -209,6 +206,7 @@ router.get('/borrarRestaurante/:restauranteId', ensureIfAdmin, async function(re
         userName: req.cookies.userName,
         userRol: res.usuario.rol === "ADMIN" ? true : false,
         restaurantes: restaurantes,
+        messageDel : message,
     })
 });
 
@@ -292,7 +290,6 @@ router.get('/delsitioturistico/:restauranteId/:sitioId', ensureIfLogged, async f
     try{
         await restauranteServicio.borrarSitioTuristico(req.params.sitioId, req.params.restauranteId, req.cookies.jwt);
         message = 'Sitio turistico eliminado';
-        //res.end(JSON.stringify({ message : 'Sitio turistico eliminado' }));
     } catch(e) {
         res.status(500).send(JSON.stringify({ message : retorno }));
         message = 'Error al eliminar el sitio turistico';
@@ -437,11 +434,5 @@ router.get('/logout', ensureIfLogged, async function(req, res, next) {
     res.redirect('https://github.com/logout')
     res.end()
 });
-
-/*
-router.get('/whoami', ensureIfLogged, async function(req, res, next) {
-    res.render('formIncidencia')
-});
-*/
 
 module.exports = router; 

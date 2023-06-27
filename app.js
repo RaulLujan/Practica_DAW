@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set('port', process.env.PORT || 3000);
 //Quitar para entregar
-app.disable('view cache');
+//app.disable('view cache');
 
 app.set('views', path.join(__dirname, 'src/server/views')); 
 app.set('view engine', 'hbs');
