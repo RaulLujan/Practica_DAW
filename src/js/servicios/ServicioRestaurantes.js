@@ -50,6 +50,7 @@ async function modificarRestaurante(restaurante, token) {
         {
             method: 'PUT',
             headers: {"Content-Type": "application/json", "Cookie": "jwt=" + token,},
+            body: JSON.stringify(restaurante),
         })
         .then(function(res) { return true;})
         .catch(err => console.log('Solicitud fallida', err));

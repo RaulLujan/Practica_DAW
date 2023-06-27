@@ -317,6 +317,21 @@ router.get('/addsitios/:restauranteId', ensureIfLogged, async function(req, res,
     })
 });
 
+router.post('/guardarRestaurante', ensureIfLogged, async function(req, res, next) {
+    res.setHeader('Accept', 'application/json');
+
+    const restaurante = await restauranteServicio.consultarRestaurante(req.body.restauranteId, req.cookies.jwt);
+    restaurante.nombre = req.body.nombre;
+    restaurante.ciudad = req.body.ciudad;
+    restaurante.coordenadaX = req.body.coordsX;
+    restaurante.coordenadaY = req.body.coordsY;
+    restaurante.descripcion = req.body.descripcion;
+    restaurante.fechaAlta = null;
+
+    await restauranteServicio.modificarRestaurante(restaurante, req.cookies.jwt);
+    res.send({message: 'Cambios Guardados'});
+});
+
 
 router.post('/addsitios', ensureIfLogged, async function(req, res, next) {
     res.setHeader('Accept', 'application/json');
